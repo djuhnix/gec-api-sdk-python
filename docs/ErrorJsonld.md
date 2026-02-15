@@ -6,9 +6,9 @@ A representation of common errors.
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**context** | [**ConstraintViolationJsonldJsonldContext**](ConstraintViolationJsonldJsonldContext.md) |  | [optional] 
-**id** | **str** |  | [optional] [readonly] 
-**type** | **str** |  | [optional] [readonly] 
+**context** | [**HydraItemBaseSchemaContext**](HydraItemBaseSchemaContext.md) |  | [optional] 
+**id** | **str** |  | 
+**type** | **str** |  | 
 **title** | **str** | A short, human-readable summary of the problem. | [optional] [readonly] 
 **detail** | **str** | A human-readable explanation specific to this occurrence of the problem. | [optional] [readonly] 
 **status** | **float** |  | [optional] [default to 400]

@@ -1,14 +1,15 @@
 # ApiTasksGetCollection200Response
 
+Task.jsonld-task.read collection.
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**member** | [**List[TaskJsonldTaskRead]**](TaskJsonldTaskRead.md) |  | 
 **total_items** | **int** |  | [optional] 
-**view** | [**ApiDocumentsGetCollection200ResponseView**](ApiDocumentsGetCollection200ResponseView.md) |  | [optional] 
-**search** | [**ApiDocumentsGetCollection200ResponseSearch**](ApiDocumentsGetCollection200ResponseSearch.md) |  | [optional] 
+**search** | [**HydraCollectionBaseSchemaNoPaginationSearch**](HydraCollectionBaseSchemaNoPaginationSearch.md) |  | [optional] 
+**view** | [**HydraCollectionBaseSchemaAllOfView**](HydraCollectionBaseSchemaAllOfView.md) |  | [optional] 
+**member** | [**List[TaskJsonldTaskRead]**](TaskJsonldTaskRead.md) |  | 
 
 ## Example
 

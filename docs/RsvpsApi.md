@@ -245,7 +245,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **api_rsvps_id_put**
-> RsvpsJsonldRsvpRead api_rsvps_id_put(id, rsvps_jsonld_rsvp_write)
+> RsvpsJsonldRsvpRead api_rsvps_id_put(id, rsvps_rsvp_write)
 
 Replaces the rsvps resource.
 
@@ -258,7 +258,7 @@ Replaces the rsvps resource.
 ```python
 import gec_api_sdk
 from gec_api_sdk.models.rsvps_jsonld_rsvp_read import RsvpsJsonldRsvpRead
-from gec_api_sdk.models.rsvps_jsonld_rsvp_write import RsvpsJsonldRsvpWrite
+from gec_api_sdk.models.rsvps_rsvp_write import RsvpsRsvpWrite
 from gec_api_sdk.rest import ApiException
 from pprint import pprint
 
@@ -283,11 +283,11 @@ with gec_api_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = gec_api_sdk.RsvpsApi(api_client)
     id = 'id_example' # str | rsvps identifier
-    rsvps_jsonld_rsvp_write = gec_api_sdk.RsvpsJsonldRsvpWrite() # RsvpsJsonldRsvpWrite | The updated rsvps resource
+    rsvps_rsvp_write = gec_api_sdk.RsvpsRsvpWrite() # RsvpsRsvpWrite | The updated rsvps resource
 
     try:
         # Replaces the rsvps resource.
-        api_response = api_instance.api_rsvps_id_put(id, rsvps_jsonld_rsvp_write)
+        api_response = api_instance.api_rsvps_id_put(id, rsvps_rsvp_write)
         print("The response of RsvpsApi->api_rsvps_id_put:\n")
         pprint(api_response)
     except Exception as e:
@@ -302,7 +302,7 @@ with gec_api_sdk.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| rsvps identifier | 
- **rsvps_jsonld_rsvp_write** | [**RsvpsJsonldRsvpWrite**](RsvpsJsonldRsvpWrite.md)| The updated rsvps resource | 
+ **rsvps_rsvp_write** | [**RsvpsRsvpWrite**](RsvpsRsvpWrite.md)| The updated rsvps resource | 
 
 ### Return type
 
@@ -329,7 +329,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **api_rsvps_post**
-> RsvpsJsonldRsvpRead api_rsvps_post(rsvps_jsonld_rsvp_write)
+> RsvpsJsonldRsvpRead api_rsvps_post(rsvps_rsvp_write)
 
 Creates a rsvps resource.
 
@@ -342,7 +342,7 @@ Creates a rsvps resource.
 ```python
 import gec_api_sdk
 from gec_api_sdk.models.rsvps_jsonld_rsvp_read import RsvpsJsonldRsvpRead
-from gec_api_sdk.models.rsvps_jsonld_rsvp_write import RsvpsJsonldRsvpWrite
+from gec_api_sdk.models.rsvps_rsvp_write import RsvpsRsvpWrite
 from gec_api_sdk.rest import ApiException
 from pprint import pprint
 
@@ -366,11 +366,11 @@ configuration = gec_api_sdk.Configuration(
 with gec_api_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = gec_api_sdk.RsvpsApi(api_client)
-    rsvps_jsonld_rsvp_write = gec_api_sdk.RsvpsJsonldRsvpWrite() # RsvpsJsonldRsvpWrite | The new rsvps resource
+    rsvps_rsvp_write = gec_api_sdk.RsvpsRsvpWrite() # RsvpsRsvpWrite | The new rsvps resource
 
     try:
         # Creates a rsvps resource.
-        api_response = api_instance.api_rsvps_post(rsvps_jsonld_rsvp_write)
+        api_response = api_instance.api_rsvps_post(rsvps_rsvp_write)
         print("The response of RsvpsApi->api_rsvps_post:\n")
         pprint(api_response)
     except Exception as e:
@@ -384,7 +384,7 @@ with gec_api_sdk.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **rsvps_jsonld_rsvp_write** | [**RsvpsJsonldRsvpWrite**](RsvpsJsonldRsvpWrite.md)| The new rsvps resource | 
+ **rsvps_rsvp_write** | [**RsvpsRsvpWrite**](RsvpsRsvpWrite.md)| The new rsvps resource | 
 
 ### Return type
 

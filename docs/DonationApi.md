@@ -245,7 +245,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **api_donations_id_put**
-> DonationJsonldDonationRead api_donations_id_put(id, donation_jsonld_donation_write)
+> DonationJsonldDonationRead api_donations_id_put(id, donation_donation_write)
 
 Replaces the Donation resource.
 
@@ -257,8 +257,8 @@ Replaces the Donation resource.
 
 ```python
 import gec_api_sdk
+from gec_api_sdk.models.donation_donation_write import DonationDonationWrite
 from gec_api_sdk.models.donation_jsonld_donation_read import DonationJsonldDonationRead
-from gec_api_sdk.models.donation_jsonld_donation_write import DonationJsonldDonationWrite
 from gec_api_sdk.rest import ApiException
 from pprint import pprint
 
@@ -283,11 +283,11 @@ with gec_api_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = gec_api_sdk.DonationApi(api_client)
     id = 'id_example' # str | Donation identifier
-    donation_jsonld_donation_write = gec_api_sdk.DonationJsonldDonationWrite() # DonationJsonldDonationWrite | The updated Donation resource
+    donation_donation_write = gec_api_sdk.DonationDonationWrite() # DonationDonationWrite | The updated Donation resource
 
     try:
         # Replaces the Donation resource.
-        api_response = api_instance.api_donations_id_put(id, donation_jsonld_donation_write)
+        api_response = api_instance.api_donations_id_put(id, donation_donation_write)
         print("The response of DonationApi->api_donations_id_put:\n")
         pprint(api_response)
     except Exception as e:
@@ -302,7 +302,7 @@ with gec_api_sdk.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| Donation identifier | 
- **donation_jsonld_donation_write** | [**DonationJsonldDonationWrite**](DonationJsonldDonationWrite.md)| The updated Donation resource | 
+ **donation_donation_write** | [**DonationDonationWrite**](DonationDonationWrite.md)| The updated Donation resource | 
 
 ### Return type
 
@@ -329,7 +329,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **api_donations_post**
-> DonationJsonldDonationRead api_donations_post(donation_jsonld_donation_write)
+> DonationJsonldDonationRead api_donations_post(donation_donation_write)
 
 Creates a Donation resource.
 
@@ -341,8 +341,8 @@ Creates a Donation resource.
 
 ```python
 import gec_api_sdk
+from gec_api_sdk.models.donation_donation_write import DonationDonationWrite
 from gec_api_sdk.models.donation_jsonld_donation_read import DonationJsonldDonationRead
-from gec_api_sdk.models.donation_jsonld_donation_write import DonationJsonldDonationWrite
 from gec_api_sdk.rest import ApiException
 from pprint import pprint
 
@@ -366,11 +366,11 @@ configuration = gec_api_sdk.Configuration(
 with gec_api_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = gec_api_sdk.DonationApi(api_client)
-    donation_jsonld_donation_write = gec_api_sdk.DonationJsonldDonationWrite() # DonationJsonldDonationWrite | The new Donation resource
+    donation_donation_write = gec_api_sdk.DonationDonationWrite() # DonationDonationWrite | The new Donation resource
 
     try:
         # Creates a Donation resource.
-        api_response = api_instance.api_donations_post(donation_jsonld_donation_write)
+        api_response = api_instance.api_donations_post(donation_donation_write)
         print("The response of DonationApi->api_donations_post:\n")
         pprint(api_response)
     except Exception as e:
@@ -384,7 +384,7 @@ with gec_api_sdk.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **donation_jsonld_donation_write** | [**DonationJsonldDonationWrite**](DonationJsonldDonationWrite.md)| The new Donation resource | 
+ **donation_donation_write** | [**DonationDonationWrite**](DonationDonationWrite.md)| The new Donation resource | 
 
 ### Return type
 

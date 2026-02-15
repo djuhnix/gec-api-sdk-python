@@ -1,0 +1,61 @@
+# MemberYamlMemberRead
+
+
+## Properties
+
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**id** | **str** |  | [optional] [readonly] 
+**first_name** | **str** |  | 
+**last_name** | **str** |  | 
+**email** | **str** |  | [optional] 
+**birth_date** | **datetime** |  | [optional] 
+**gender** | **str** |  | [optional] 
+**phone_number_fr** | **str** |  | [optional] 
+**phone_number_cg** | **str** |  | [optional] 
+**postal_address** | **str** |  | [optional] 
+**postal_code** | **str** |  | [optional] 
+**city** | **str** |  | [optional] 
+**is_first_year_study** | **bool** |  | [optional] 
+**first_year** | **datetime** |  | [optional] 
+**formation** | **str** |  | [optional] 
+**establishment** | **str** |  | [optional] 
+**study_level** | **str** |  | [optional] 
+**training_cycle** | **str** |  | [optional] 
+**other_associations** | **bool** |  | [optional] 
+**association_names** | **str** |  | [optional] 
+**has_passport_cg** | **bool** |  | [optional] 
+**has_visa** | **bool** |  | [optional] 
+**has_school_certificate** | **bool** |  | [optional] 
+**photo_url** | **str** |  | [optional] 
+**status** | **str** |  | 
+**membership_type** | **str** |  | 
+**membership_start_date** | **datetime** |  | [optional] 
+**contribution** | **float** |  | [optional] 
+**contribution_status** | **str** |  | [optional] 
+**created_at** | **datetime** |  | [optional] [readonly] 
+**updated_at** | **datetime** |  | [optional] 
+**documents** | **List[str]** |  | [optional] 
+**rsvps** | **List[str]** |  | [optional] 
+**donations** | **List[str]** |  | [optional] 
+
+## Example
+
+```python
+from gec_api_sdk.models.member_yaml_member_read import MemberYamlMemberRead
+
+# TODO update the JSON string below
+json = "{}"
+# create an instance of MemberYamlMemberRead from a JSON string
+member_yaml_member_read_instance = MemberYamlMemberRead.from_json(json)
+# print the JSON string representation of the object
+print(MemberYamlMemberRead.to_json())
+
+# convert the object into a dict
+member_yaml_member_read_dict = member_yaml_member_read_instance.to_dict()
+# create an instance of MemberYamlMemberRead from a dict
+member_yaml_member_read_from_dict = MemberYamlMemberRead.from_dict(member_yaml_member_read_dict)
+```
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+

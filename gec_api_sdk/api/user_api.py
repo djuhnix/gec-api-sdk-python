@@ -21,8 +21,8 @@ from typing import Optional
 from typing_extensions import Annotated
 from gec_api_sdk.models.api_users_get_collection200_response import ApiUsersGetCollection200Response
 from gec_api_sdk.models.user_jsonld_user_read import UserJsonldUserRead
-from gec_api_sdk.models.user_jsonld_user_write import UserJsonldUserWrite
 from gec_api_sdk.models.user_user_write import UserUserWrite
+from gec_api_sdk.models.user_user_write_json_merge_patch import UserUserWriteJsonMergePatch
 
 from gec_api_sdk.api_client import ApiClient, RequestSerialized
 from gec_api_sdk.api_response import ApiResponse
@@ -846,7 +846,7 @@ class UserApi:
     def api_users_id_patch(
         self,
         id: Annotated[StrictStr, Field(description="User identifier")],
-        user_user_write: Annotated[UserUserWrite, Field(description="The updated User resource")],
+        user_user_write_json_merge_patch: Annotated[UserUserWriteJsonMergePatch, Field(description="The updated User resource")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -866,8 +866,8 @@ class UserApi:
 
         :param id: User identifier (required)
         :type id: str
-        :param user_user_write: The updated User resource (required)
-        :type user_user_write: UserUserWrite
+        :param user_user_write_json_merge_patch: The updated User resource (required)
+        :type user_user_write_json_merge_patch: UserUserWriteJsonMergePatch
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -892,7 +892,7 @@ class UserApi:
 
         _param = self._api_users_id_patch_serialize(
             id=id,
-            user_user_write=user_user_write,
+            user_user_write_json_merge_patch=user_user_write_json_merge_patch,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -902,7 +902,7 @@ class UserApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "UserJsonldUserRead",
             '400': "ErrorJsonld",
-            '422': "ConstraintViolationJsonldJsonld",
+            '422': "ConstraintViolationJsonld",
             '404': "ErrorJsonld",
         }
         response_data = self.api_client.call_api(
@@ -920,7 +920,7 @@ class UserApi:
     def api_users_id_patch_with_http_info(
         self,
         id: Annotated[StrictStr, Field(description="User identifier")],
-        user_user_write: Annotated[UserUserWrite, Field(description="The updated User resource")],
+        user_user_write_json_merge_patch: Annotated[UserUserWriteJsonMergePatch, Field(description="The updated User resource")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -940,8 +940,8 @@ class UserApi:
 
         :param id: User identifier (required)
         :type id: str
-        :param user_user_write: The updated User resource (required)
-        :type user_user_write: UserUserWrite
+        :param user_user_write_json_merge_patch: The updated User resource (required)
+        :type user_user_write_json_merge_patch: UserUserWriteJsonMergePatch
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -966,7 +966,7 @@ class UserApi:
 
         _param = self._api_users_id_patch_serialize(
             id=id,
-            user_user_write=user_user_write,
+            user_user_write_json_merge_patch=user_user_write_json_merge_patch,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -976,7 +976,7 @@ class UserApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "UserJsonldUserRead",
             '400': "ErrorJsonld",
-            '422': "ConstraintViolationJsonldJsonld",
+            '422': "ConstraintViolationJsonld",
             '404': "ErrorJsonld",
         }
         response_data = self.api_client.call_api(
@@ -994,7 +994,7 @@ class UserApi:
     def api_users_id_patch_without_preload_content(
         self,
         id: Annotated[StrictStr, Field(description="User identifier")],
-        user_user_write: Annotated[UserUserWrite, Field(description="The updated User resource")],
+        user_user_write_json_merge_patch: Annotated[UserUserWriteJsonMergePatch, Field(description="The updated User resource")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1014,8 +1014,8 @@ class UserApi:
 
         :param id: User identifier (required)
         :type id: str
-        :param user_user_write: The updated User resource (required)
-        :type user_user_write: UserUserWrite
+        :param user_user_write_json_merge_patch: The updated User resource (required)
+        :type user_user_write_json_merge_patch: UserUserWriteJsonMergePatch
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1040,7 +1040,7 @@ class UserApi:
 
         _param = self._api_users_id_patch_serialize(
             id=id,
-            user_user_write=user_user_write,
+            user_user_write_json_merge_patch=user_user_write_json_merge_patch,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1050,7 +1050,7 @@ class UserApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "UserJsonldUserRead",
             '400': "ErrorJsonld",
-            '422': "ConstraintViolationJsonldJsonld",
+            '422': "ConstraintViolationJsonld",
             '404': "ErrorJsonld",
         }
         response_data = self.api_client.call_api(
@@ -1063,7 +1063,7 @@ class UserApi:
     def _api_users_id_patch_serialize(
         self,
         id,
-        user_user_write,
+        user_user_write_json_merge_patch,
         _request_auth,
         _content_type,
         _headers,
@@ -1091,8 +1091,8 @@ class UserApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
-        if user_user_write is not None:
-            _body_params = user_user_write
+        if user_user_write_json_merge_patch is not None:
+            _body_params = user_user_write_json_merge_patch
 
 
         # set the HTTP header `Accept`
@@ -1148,7 +1148,7 @@ class UserApi:
     def api_users_id_put(
         self,
         id: Annotated[StrictStr, Field(description="User identifier")],
-        user_jsonld_user_write: Annotated[UserJsonldUserWrite, Field(description="The updated User resource")],
+        user_user_write: Annotated[UserUserWrite, Field(description="The updated User resource")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1168,8 +1168,8 @@ class UserApi:
 
         :param id: User identifier (required)
         :type id: str
-        :param user_jsonld_user_write: The updated User resource (required)
-        :type user_jsonld_user_write: UserJsonldUserWrite
+        :param user_user_write: The updated User resource (required)
+        :type user_user_write: UserUserWrite
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1194,7 +1194,7 @@ class UserApi:
 
         _param = self._api_users_id_put_serialize(
             id=id,
-            user_jsonld_user_write=user_jsonld_user_write,
+            user_user_write=user_user_write,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1204,7 +1204,7 @@ class UserApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "UserJsonldUserRead",
             '400': "ErrorJsonld",
-            '422': "ConstraintViolationJsonldJsonld",
+            '422': "ConstraintViolationJsonld",
             '404': "ErrorJsonld",
         }
         response_data = self.api_client.call_api(
@@ -1222,7 +1222,7 @@ class UserApi:
     def api_users_id_put_with_http_info(
         self,
         id: Annotated[StrictStr, Field(description="User identifier")],
-        user_jsonld_user_write: Annotated[UserJsonldUserWrite, Field(description="The updated User resource")],
+        user_user_write: Annotated[UserUserWrite, Field(description="The updated User resource")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1242,8 +1242,8 @@ class UserApi:
 
         :param id: User identifier (required)
         :type id: str
-        :param user_jsonld_user_write: The updated User resource (required)
-        :type user_jsonld_user_write: UserJsonldUserWrite
+        :param user_user_write: The updated User resource (required)
+        :type user_user_write: UserUserWrite
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1268,7 +1268,7 @@ class UserApi:
 
         _param = self._api_users_id_put_serialize(
             id=id,
-            user_jsonld_user_write=user_jsonld_user_write,
+            user_user_write=user_user_write,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1278,7 +1278,7 @@ class UserApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "UserJsonldUserRead",
             '400': "ErrorJsonld",
-            '422': "ConstraintViolationJsonldJsonld",
+            '422': "ConstraintViolationJsonld",
             '404': "ErrorJsonld",
         }
         response_data = self.api_client.call_api(
@@ -1296,7 +1296,7 @@ class UserApi:
     def api_users_id_put_without_preload_content(
         self,
         id: Annotated[StrictStr, Field(description="User identifier")],
-        user_jsonld_user_write: Annotated[UserJsonldUserWrite, Field(description="The updated User resource")],
+        user_user_write: Annotated[UserUserWrite, Field(description="The updated User resource")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1316,8 +1316,8 @@ class UserApi:
 
         :param id: User identifier (required)
         :type id: str
-        :param user_jsonld_user_write: The updated User resource (required)
-        :type user_jsonld_user_write: UserJsonldUserWrite
+        :param user_user_write: The updated User resource (required)
+        :type user_user_write: UserUserWrite
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1342,7 +1342,7 @@ class UserApi:
 
         _param = self._api_users_id_put_serialize(
             id=id,
-            user_jsonld_user_write=user_jsonld_user_write,
+            user_user_write=user_user_write,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1352,7 +1352,7 @@ class UserApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "UserJsonldUserRead",
             '400': "ErrorJsonld",
-            '422': "ConstraintViolationJsonldJsonld",
+            '422': "ConstraintViolationJsonld",
             '404': "ErrorJsonld",
         }
         response_data = self.api_client.call_api(
@@ -1365,7 +1365,7 @@ class UserApi:
     def _api_users_id_put_serialize(
         self,
         id,
-        user_jsonld_user_write,
+        user_user_write,
         _request_auth,
         _content_type,
         _headers,
@@ -1393,8 +1393,8 @@ class UserApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
-        if user_jsonld_user_write is not None:
-            _body_params = user_jsonld_user_write
+        if user_user_write is not None:
+            _body_params = user_user_write
 
 
         # set the HTTP header `Accept`
@@ -1452,7 +1452,7 @@ class UserApi:
     @validate_call
     def api_users_post(
         self,
-        user_jsonld_user_write: Annotated[UserJsonldUserWrite, Field(description="The new User resource")],
+        user_user_write: Annotated[UserUserWrite, Field(description="The new User resource")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1470,8 +1470,8 @@ class UserApi:
 
         Creates a User resource.
 
-        :param user_jsonld_user_write: The new User resource (required)
-        :type user_jsonld_user_write: UserJsonldUserWrite
+        :param user_user_write: The new User resource (required)
+        :type user_user_write: UserUserWrite
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1495,7 +1495,7 @@ class UserApi:
         """ # noqa: E501
 
         _param = self._api_users_post_serialize(
-            user_jsonld_user_write=user_jsonld_user_write,
+            user_user_write=user_user_write,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1505,7 +1505,7 @@ class UserApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "UserJsonldUserRead",
             '400': "ErrorJsonld",
-            '422': "ConstraintViolationJsonldJsonld",
+            '422': "ConstraintViolationJsonld",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1521,7 +1521,7 @@ class UserApi:
     @validate_call
     def api_users_post_with_http_info(
         self,
-        user_jsonld_user_write: Annotated[UserJsonldUserWrite, Field(description="The new User resource")],
+        user_user_write: Annotated[UserUserWrite, Field(description="The new User resource")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1539,8 +1539,8 @@ class UserApi:
 
         Creates a User resource.
 
-        :param user_jsonld_user_write: The new User resource (required)
-        :type user_jsonld_user_write: UserJsonldUserWrite
+        :param user_user_write: The new User resource (required)
+        :type user_user_write: UserUserWrite
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1564,7 +1564,7 @@ class UserApi:
         """ # noqa: E501
 
         _param = self._api_users_post_serialize(
-            user_jsonld_user_write=user_jsonld_user_write,
+            user_user_write=user_user_write,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1574,7 +1574,7 @@ class UserApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "UserJsonldUserRead",
             '400': "ErrorJsonld",
-            '422': "ConstraintViolationJsonldJsonld",
+            '422': "ConstraintViolationJsonld",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1590,7 +1590,7 @@ class UserApi:
     @validate_call
     def api_users_post_without_preload_content(
         self,
-        user_jsonld_user_write: Annotated[UserJsonldUserWrite, Field(description="The new User resource")],
+        user_user_write: Annotated[UserUserWrite, Field(description="The new User resource")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1608,8 +1608,8 @@ class UserApi:
 
         Creates a User resource.
 
-        :param user_jsonld_user_write: The new User resource (required)
-        :type user_jsonld_user_write: UserJsonldUserWrite
+        :param user_user_write: The new User resource (required)
+        :type user_user_write: UserUserWrite
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1633,7 +1633,7 @@ class UserApi:
         """ # noqa: E501
 
         _param = self._api_users_post_serialize(
-            user_jsonld_user_write=user_jsonld_user_write,
+            user_user_write=user_user_write,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1643,7 +1643,7 @@ class UserApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "UserJsonldUserRead",
             '400': "ErrorJsonld",
-            '422': "ConstraintViolationJsonldJsonld",
+            '422': "ConstraintViolationJsonld",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1654,7 +1654,7 @@ class UserApi:
 
     def _api_users_post_serialize(
         self,
-        user_jsonld_user_write,
+        user_user_write,
         _request_auth,
         _content_type,
         _headers,
@@ -1680,8 +1680,8 @@ class UserApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
-        if user_jsonld_user_write is not None:
-            _body_params = user_jsonld_user_write
+        if user_user_write is not None:
+            _body_params = user_user_write
 
 
         # set the HTTP header `Accept`

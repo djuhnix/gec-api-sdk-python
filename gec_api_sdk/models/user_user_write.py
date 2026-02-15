@@ -24,13 +24,13 @@ from typing_extensions import Self
 
 class UserUserWrite(BaseModel):
     """
-    
+    UserUserWrite
     """ # noqa: E501
     email: StrictStr
     plain_password: Optional[StrictStr] = Field(alias="plainPassword")
     roles: Optional[List[StrictStr]] = None
     google_service_account: Optional[StrictStr] = Field(default=None, alias="googleServiceAccount")
-    google_service_account_scopes: Optional[List[StrictStr]] = Field(default=None, alias="googleServiceAccountScopes")
+    google_service_account_scopes: Optional[List[Optional[StrictStr]]] = Field(default=None, alias="googleServiceAccountScopes")
     google_impersonated_user: Optional[StrictStr] = Field(default=None, alias="googleImpersonatedUser")
     __properties: ClassVar[List[str]] = ["email", "plainPassword", "roles", "googleServiceAccount", "googleServiceAccountScopes", "googleImpersonatedUser"]
 

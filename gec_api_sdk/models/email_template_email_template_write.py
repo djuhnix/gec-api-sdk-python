@@ -24,12 +24,12 @@ from typing_extensions import Self
 
 class EmailTemplateEmailTemplateWrite(BaseModel):
     """
-    
+    EmailTemplateEmailTemplateWrite
     """ # noqa: E501
     name: StrictStr
     subject: StrictStr
     content: StrictStr
-    variables: Optional[List[StrictStr]] = None
+    variables: Optional[List[Optional[StrictStr]]] = None
     __properties: ClassVar[List[str]] = ["name", "subject", "content", "variables"]
 
     model_config = ConfigDict(

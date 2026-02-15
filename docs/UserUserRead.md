@@ -1,7 +1,6 @@
 # UserUserRead
 
 
-
 ## Properties
 
 Name | Type | Description | Notes
@@ -12,7 +11,7 @@ Name | Type | Description | Notes
 **created_at** | **datetime** |  | [optional] [readonly] 
 **updated_at** | **datetime** |  | [optional] 
 **google_service_account** | **str** |  | [optional] 
-**google_service_account_scopes** | **List[str]** |  | [optional] 
+**google_service_account_scopes** | **List[Optional[str]]** |  | [optional] 
 **google_impersonated_user** | **str** |  | [optional] 
 
 ## Example

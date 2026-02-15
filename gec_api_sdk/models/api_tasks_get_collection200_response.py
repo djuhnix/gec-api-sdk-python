@@ -20,21 +20,21 @@ import json
 from pydantic import BaseModel, ConfigDict, Field
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
-from gec_api_sdk.models.api_documents_get_collection200_response_search import ApiDocumentsGetCollection200ResponseSearch
-from gec_api_sdk.models.api_documents_get_collection200_response_view import ApiDocumentsGetCollection200ResponseView
+from gec_api_sdk.models.hydra_collection_base_schema_all_of_view import HydraCollectionBaseSchemaAllOfView
+from gec_api_sdk.models.hydra_collection_base_schema_no_pagination_search import HydraCollectionBaseSchemaNoPaginationSearch
 from gec_api_sdk.models.task_jsonld_task_read import TaskJsonldTaskRead
 from typing import Optional, Set
 from typing_extensions import Self
 
 class ApiTasksGetCollection200Response(BaseModel):
     """
-    ApiTasksGetCollection200Response
+    Task.jsonld-task.read collection.
     """ # noqa: E501
-    member: List[TaskJsonldTaskRead]
     total_items: Optional[Annotated[int, Field(strict=True, ge=0)]] = Field(default=None, alias="totalItems")
-    view: Optional[ApiDocumentsGetCollection200ResponseView] = None
-    search: Optional[ApiDocumentsGetCollection200ResponseSearch] = None
-    __properties: ClassVar[List[str]] = ["member", "totalItems", "view", "search"]
+    search: Optional[HydraCollectionBaseSchemaNoPaginationSearch] = None
+    view: Optional[HydraCollectionBaseSchemaAllOfView] = None
+    member: List[TaskJsonldTaskRead]
+    __properties: ClassVar[List[str]] = ["totalItems", "search", "view", "member"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -75,6 +75,12 @@ class ApiTasksGetCollection200Response(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of search
+        if self.search:
+            _dict['search'] = self.search.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of view
+        if self.view:
+            _dict['view'] = self.view.to_dict()
         # override the default output from pydantic by calling `to_dict()` of each item in member (list)
         _items = []
         if self.member:
@@ -82,12 +88,6 @@ class ApiTasksGetCollection200Response(BaseModel):
                 if _item_member:
                     _items.append(_item_member.to_dict())
             _dict['member'] = _items
-        # override the default output from pydantic by calling `to_dict()` of view
-        if self.view:
-            _dict['view'] = self.view.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of search
-        if self.search:
-            _dict['search'] = self.search.to_dict()
         return _dict
 
     @classmethod
@@ -105,10 +105,10 @@ class ApiTasksGetCollection200Response(BaseModel):
                 raise ValueError("Error due to additional fields (not defined in ApiTasksGetCollection200Response) in the input: " + _key)
 
         _obj = cls.model_validate({
-            "member": [TaskJsonldTaskRead.from_dict(_item) for _item in obj["member"]] if obj.get("member") is not None else None,
             "totalItems": obj.get("totalItems"),
-            "view": ApiDocumentsGetCollection200ResponseView.from_dict(obj["view"]) if obj.get("view") is not None else None,
-            "search": ApiDocumentsGetCollection200ResponseSearch.from_dict(obj["search"]) if obj.get("search") is not None else None
+            "search": HydraCollectionBaseSchemaNoPaginationSearch.from_dict(obj["search"]) if obj.get("search") is not None else None,
+            "view": HydraCollectionBaseSchemaAllOfView.from_dict(obj["view"]) if obj.get("view") is not None else None,
+            "member": [TaskJsonldTaskRead.from_dict(_item) for _item in obj["member"]] if obj.get("member") is not None else None
         })
         return _obj
 

@@ -1,14 +1,13 @@
 # DocumentJsonldDocumentRead
 
 
-
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**context** | [**ConstraintViolationJsonldJsonldContext**](ConstraintViolationJsonldJsonldContext.md) |  | [optional] 
-**id** | **str** |  | [optional] [readonly] 
-**type** | **str** |  | [optional] [readonly] 
+**context** | [**HydraItemBaseSchemaContext**](HydraItemBaseSchemaContext.md) |  | [optional] 
+**id** | **str** |  | 
+**type** | **str** |  | 
 **id** | **str** |  | [optional] [readonly] 
 **member** | **str** |  | [optional] 
 **url** | **str** |  | 

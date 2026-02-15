@@ -21,7 +21,7 @@ from typing import Optional
 from typing_extensions import Annotated
 from gec_api_sdk.models.api_members_get_collection200_response import ApiMembersGetCollection200Response
 from gec_api_sdk.models.member_jsonld_member_read import MemberJsonldMemberRead
-from gec_api_sdk.models.member_jsonld_member_write import MemberJsonldMemberWrite
+from gec_api_sdk.models.member_member_write import MemberMemberWrite
 
 from gec_api_sdk.api_client import ApiClient, RequestSerialized
 from gec_api_sdk.api_response import ApiResponse
@@ -845,7 +845,7 @@ class MemberApi:
     def api_members_id_put(
         self,
         id: Annotated[StrictStr, Field(description="Member identifier")],
-        member_jsonld_member_write: Annotated[MemberJsonldMemberWrite, Field(description="The updated Member resource")],
+        member_member_write: Annotated[MemberMemberWrite, Field(description="The updated Member resource")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -865,8 +865,8 @@ class MemberApi:
 
         :param id: Member identifier (required)
         :type id: str
-        :param member_jsonld_member_write: The updated Member resource (required)
-        :type member_jsonld_member_write: MemberJsonldMemberWrite
+        :param member_member_write: The updated Member resource (required)
+        :type member_member_write: MemberMemberWrite
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -891,7 +891,7 @@ class MemberApi:
 
         _param = self._api_members_id_put_serialize(
             id=id,
-            member_jsonld_member_write=member_jsonld_member_write,
+            member_member_write=member_member_write,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -901,7 +901,7 @@ class MemberApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "MemberJsonldMemberRead",
             '400': "ErrorJsonld",
-            '422': "ConstraintViolationJsonldJsonld",
+            '422': "ConstraintViolationJsonld",
             '404': "ErrorJsonld",
         }
         response_data = self.api_client.call_api(
@@ -919,7 +919,7 @@ class MemberApi:
     def api_members_id_put_with_http_info(
         self,
         id: Annotated[StrictStr, Field(description="Member identifier")],
-        member_jsonld_member_write: Annotated[MemberJsonldMemberWrite, Field(description="The updated Member resource")],
+        member_member_write: Annotated[MemberMemberWrite, Field(description="The updated Member resource")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -939,8 +939,8 @@ class MemberApi:
 
         :param id: Member identifier (required)
         :type id: str
-        :param member_jsonld_member_write: The updated Member resource (required)
-        :type member_jsonld_member_write: MemberJsonldMemberWrite
+        :param member_member_write: The updated Member resource (required)
+        :type member_member_write: MemberMemberWrite
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -965,7 +965,7 @@ class MemberApi:
 
         _param = self._api_members_id_put_serialize(
             id=id,
-            member_jsonld_member_write=member_jsonld_member_write,
+            member_member_write=member_member_write,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -975,7 +975,7 @@ class MemberApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "MemberJsonldMemberRead",
             '400': "ErrorJsonld",
-            '422': "ConstraintViolationJsonldJsonld",
+            '422': "ConstraintViolationJsonld",
             '404': "ErrorJsonld",
         }
         response_data = self.api_client.call_api(
@@ -993,7 +993,7 @@ class MemberApi:
     def api_members_id_put_without_preload_content(
         self,
         id: Annotated[StrictStr, Field(description="Member identifier")],
-        member_jsonld_member_write: Annotated[MemberJsonldMemberWrite, Field(description="The updated Member resource")],
+        member_member_write: Annotated[MemberMemberWrite, Field(description="The updated Member resource")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1013,8 +1013,8 @@ class MemberApi:
 
         :param id: Member identifier (required)
         :type id: str
-        :param member_jsonld_member_write: The updated Member resource (required)
-        :type member_jsonld_member_write: MemberJsonldMemberWrite
+        :param member_member_write: The updated Member resource (required)
+        :type member_member_write: MemberMemberWrite
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1039,7 +1039,7 @@ class MemberApi:
 
         _param = self._api_members_id_put_serialize(
             id=id,
-            member_jsonld_member_write=member_jsonld_member_write,
+            member_member_write=member_member_write,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1049,7 +1049,7 @@ class MemberApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "MemberJsonldMemberRead",
             '400': "ErrorJsonld",
-            '422': "ConstraintViolationJsonldJsonld",
+            '422': "ConstraintViolationJsonld",
             '404': "ErrorJsonld",
         }
         response_data = self.api_client.call_api(
@@ -1062,7 +1062,7 @@ class MemberApi:
     def _api_members_id_put_serialize(
         self,
         id,
-        member_jsonld_member_write,
+        member_member_write,
         _request_auth,
         _content_type,
         _headers,
@@ -1090,8 +1090,8 @@ class MemberApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
-        if member_jsonld_member_write is not None:
-            _body_params = member_jsonld_member_write
+        if member_member_write is not None:
+            _body_params = member_member_write
 
 
         # set the HTTP header `Accept`
@@ -1149,7 +1149,7 @@ class MemberApi:
     @validate_call
     def api_members_post(
         self,
-        member_jsonld_member_write: Annotated[MemberJsonldMemberWrite, Field(description="The new Member resource")],
+        member_member_write: Annotated[MemberMemberWrite, Field(description="The new Member resource")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1167,8 +1167,8 @@ class MemberApi:
 
         Creates a Member resource.
 
-        :param member_jsonld_member_write: The new Member resource (required)
-        :type member_jsonld_member_write: MemberJsonldMemberWrite
+        :param member_member_write: The new Member resource (required)
+        :type member_member_write: MemberMemberWrite
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1192,7 +1192,7 @@ class MemberApi:
         """ # noqa: E501
 
         _param = self._api_members_post_serialize(
-            member_jsonld_member_write=member_jsonld_member_write,
+            member_member_write=member_member_write,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1202,7 +1202,7 @@ class MemberApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "MemberJsonldMemberRead",
             '400': "ErrorJsonld",
-            '422': "ConstraintViolationJsonldJsonld",
+            '422': "ConstraintViolationJsonld",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1218,7 +1218,7 @@ class MemberApi:
     @validate_call
     def api_members_post_with_http_info(
         self,
-        member_jsonld_member_write: Annotated[MemberJsonldMemberWrite, Field(description="The new Member resource")],
+        member_member_write: Annotated[MemberMemberWrite, Field(description="The new Member resource")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1236,8 +1236,8 @@ class MemberApi:
 
         Creates a Member resource.
 
-        :param member_jsonld_member_write: The new Member resource (required)
-        :type member_jsonld_member_write: MemberJsonldMemberWrite
+        :param member_member_write: The new Member resource (required)
+        :type member_member_write: MemberMemberWrite
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1261,7 +1261,7 @@ class MemberApi:
         """ # noqa: E501
 
         _param = self._api_members_post_serialize(
-            member_jsonld_member_write=member_jsonld_member_write,
+            member_member_write=member_member_write,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1271,7 +1271,7 @@ class MemberApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "MemberJsonldMemberRead",
             '400': "ErrorJsonld",
-            '422': "ConstraintViolationJsonldJsonld",
+            '422': "ConstraintViolationJsonld",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1287,7 +1287,7 @@ class MemberApi:
     @validate_call
     def api_members_post_without_preload_content(
         self,
-        member_jsonld_member_write: Annotated[MemberJsonldMemberWrite, Field(description="The new Member resource")],
+        member_member_write: Annotated[MemberMemberWrite, Field(description="The new Member resource")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1305,8 +1305,8 @@ class MemberApi:
 
         Creates a Member resource.
 
-        :param member_jsonld_member_write: The new Member resource (required)
-        :type member_jsonld_member_write: MemberJsonldMemberWrite
+        :param member_member_write: The new Member resource (required)
+        :type member_member_write: MemberMemberWrite
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1330,7 +1330,7 @@ class MemberApi:
         """ # noqa: E501
 
         _param = self._api_members_post_serialize(
-            member_jsonld_member_write=member_jsonld_member_write,
+            member_member_write=member_member_write,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1340,7 +1340,7 @@ class MemberApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "MemberJsonldMemberRead",
             '400': "ErrorJsonld",
-            '422': "ConstraintViolationJsonldJsonld",
+            '422': "ConstraintViolationJsonld",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1351,7 +1351,7 @@ class MemberApi:
 
     def _api_members_post_serialize(
         self,
-        member_jsonld_member_write,
+        member_member_write,
         _request_auth,
         _content_type,
         _headers,
@@ -1377,8 +1377,8 @@ class MemberApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
-        if member_jsonld_member_write is not None:
-            _body_params = member_jsonld_member_write
+        if member_member_write is not None:
+            _body_params = member_member_write
 
 
         # set the HTTP header `Accept`

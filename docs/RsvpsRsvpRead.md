@@ -1,7 +1,6 @@
 # RsvpsRsvpRead
 
 
-
 ## Properties
 
 Name | Type | Description | Notes

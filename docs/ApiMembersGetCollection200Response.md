@@ -1,14 +1,15 @@
 # ApiMembersGetCollection200Response
 
+Member.jsonld-member.read collection.
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**member** | [**List[MemberJsonldMemberRead]**](MemberJsonldMemberRead.md) |  | 
 **total_items** | **int** |  | [optional] 
-**view** | [**ApiDocumentsGetCollection200ResponseView**](ApiDocumentsGetCollection200ResponseView.md) |  | [optional] 
-**search** | [**ApiDocumentsGetCollection200ResponseSearch**](ApiDocumentsGetCollection200ResponseSearch.md) |  | [optional] 
+**search** | [**HydraCollectionBaseSchemaNoPaginationSearch**](HydraCollectionBaseSchemaNoPaginationSearch.md) |  | [optional] 
+**view** | [**HydraCollectionBaseSchemaAllOfView**](HydraCollectionBaseSchemaAllOfView.md) |  | [optional] 
+**member** | [**List[MemberJsonldMemberRead]**](MemberJsonldMemberRead.md) |  | 
 
 ## Example
 

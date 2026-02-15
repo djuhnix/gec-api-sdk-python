@@ -21,7 +21,7 @@ from typing import Optional
 from typing_extensions import Annotated
 from gec_api_sdk.models.api_rsvps_get_collection200_response import ApiRsvpsGetCollection200Response
 from gec_api_sdk.models.rsvps_jsonld_rsvp_read import RsvpsJsonldRsvpRead
-from gec_api_sdk.models.rsvps_jsonld_rsvp_write import RsvpsJsonldRsvpWrite
+from gec_api_sdk.models.rsvps_rsvp_write import RsvpsRsvpWrite
 
 from gec_api_sdk.api_client import ApiClient, RequestSerialized
 from gec_api_sdk.api_response import ApiResponse
@@ -845,7 +845,7 @@ class RsvpsApi:
     def api_rsvps_id_put(
         self,
         id: Annotated[StrictStr, Field(description="rsvps identifier")],
-        rsvps_jsonld_rsvp_write: Annotated[RsvpsJsonldRsvpWrite, Field(description="The updated rsvps resource")],
+        rsvps_rsvp_write: Annotated[RsvpsRsvpWrite, Field(description="The updated rsvps resource")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -865,8 +865,8 @@ class RsvpsApi:
 
         :param id: rsvps identifier (required)
         :type id: str
-        :param rsvps_jsonld_rsvp_write: The updated rsvps resource (required)
-        :type rsvps_jsonld_rsvp_write: RsvpsJsonldRsvpWrite
+        :param rsvps_rsvp_write: The updated rsvps resource (required)
+        :type rsvps_rsvp_write: RsvpsRsvpWrite
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -891,7 +891,7 @@ class RsvpsApi:
 
         _param = self._api_rsvps_id_put_serialize(
             id=id,
-            rsvps_jsonld_rsvp_write=rsvps_jsonld_rsvp_write,
+            rsvps_rsvp_write=rsvps_rsvp_write,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -901,7 +901,7 @@ class RsvpsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "RsvpsJsonldRsvpRead",
             '400': "ErrorJsonld",
-            '422': "ConstraintViolationJsonldJsonld",
+            '422': "ConstraintViolationJsonld",
             '404': "ErrorJsonld",
         }
         response_data = self.api_client.call_api(
@@ -919,7 +919,7 @@ class RsvpsApi:
     def api_rsvps_id_put_with_http_info(
         self,
         id: Annotated[StrictStr, Field(description="rsvps identifier")],
-        rsvps_jsonld_rsvp_write: Annotated[RsvpsJsonldRsvpWrite, Field(description="The updated rsvps resource")],
+        rsvps_rsvp_write: Annotated[RsvpsRsvpWrite, Field(description="The updated rsvps resource")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -939,8 +939,8 @@ class RsvpsApi:
 
         :param id: rsvps identifier (required)
         :type id: str
-        :param rsvps_jsonld_rsvp_write: The updated rsvps resource (required)
-        :type rsvps_jsonld_rsvp_write: RsvpsJsonldRsvpWrite
+        :param rsvps_rsvp_write: The updated rsvps resource (required)
+        :type rsvps_rsvp_write: RsvpsRsvpWrite
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -965,7 +965,7 @@ class RsvpsApi:
 
         _param = self._api_rsvps_id_put_serialize(
             id=id,
-            rsvps_jsonld_rsvp_write=rsvps_jsonld_rsvp_write,
+            rsvps_rsvp_write=rsvps_rsvp_write,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -975,7 +975,7 @@ class RsvpsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "RsvpsJsonldRsvpRead",
             '400': "ErrorJsonld",
-            '422': "ConstraintViolationJsonldJsonld",
+            '422': "ConstraintViolationJsonld",
             '404': "ErrorJsonld",
         }
         response_data = self.api_client.call_api(
@@ -993,7 +993,7 @@ class RsvpsApi:
     def api_rsvps_id_put_without_preload_content(
         self,
         id: Annotated[StrictStr, Field(description="rsvps identifier")],
-        rsvps_jsonld_rsvp_write: Annotated[RsvpsJsonldRsvpWrite, Field(description="The updated rsvps resource")],
+        rsvps_rsvp_write: Annotated[RsvpsRsvpWrite, Field(description="The updated rsvps resource")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1013,8 +1013,8 @@ class RsvpsApi:
 
         :param id: rsvps identifier (required)
         :type id: str
-        :param rsvps_jsonld_rsvp_write: The updated rsvps resource (required)
-        :type rsvps_jsonld_rsvp_write: RsvpsJsonldRsvpWrite
+        :param rsvps_rsvp_write: The updated rsvps resource (required)
+        :type rsvps_rsvp_write: RsvpsRsvpWrite
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1039,7 +1039,7 @@ class RsvpsApi:
 
         _param = self._api_rsvps_id_put_serialize(
             id=id,
-            rsvps_jsonld_rsvp_write=rsvps_jsonld_rsvp_write,
+            rsvps_rsvp_write=rsvps_rsvp_write,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1049,7 +1049,7 @@ class RsvpsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "RsvpsJsonldRsvpRead",
             '400': "ErrorJsonld",
-            '422': "ConstraintViolationJsonldJsonld",
+            '422': "ConstraintViolationJsonld",
             '404': "ErrorJsonld",
         }
         response_data = self.api_client.call_api(
@@ -1062,7 +1062,7 @@ class RsvpsApi:
     def _api_rsvps_id_put_serialize(
         self,
         id,
-        rsvps_jsonld_rsvp_write,
+        rsvps_rsvp_write,
         _request_auth,
         _content_type,
         _headers,
@@ -1090,8 +1090,8 @@ class RsvpsApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
-        if rsvps_jsonld_rsvp_write is not None:
-            _body_params = rsvps_jsonld_rsvp_write
+        if rsvps_rsvp_write is not None:
+            _body_params = rsvps_rsvp_write
 
 
         # set the HTTP header `Accept`
@@ -1149,7 +1149,7 @@ class RsvpsApi:
     @validate_call
     def api_rsvps_post(
         self,
-        rsvps_jsonld_rsvp_write: Annotated[RsvpsJsonldRsvpWrite, Field(description="The new rsvps resource")],
+        rsvps_rsvp_write: Annotated[RsvpsRsvpWrite, Field(description="The new rsvps resource")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1167,8 +1167,8 @@ class RsvpsApi:
 
         Creates a rsvps resource.
 
-        :param rsvps_jsonld_rsvp_write: The new rsvps resource (required)
-        :type rsvps_jsonld_rsvp_write: RsvpsJsonldRsvpWrite
+        :param rsvps_rsvp_write: The new rsvps resource (required)
+        :type rsvps_rsvp_write: RsvpsRsvpWrite
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1192,7 +1192,7 @@ class RsvpsApi:
         """ # noqa: E501
 
         _param = self._api_rsvps_post_serialize(
-            rsvps_jsonld_rsvp_write=rsvps_jsonld_rsvp_write,
+            rsvps_rsvp_write=rsvps_rsvp_write,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1202,7 +1202,7 @@ class RsvpsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "RsvpsJsonldRsvpRead",
             '400': "ErrorJsonld",
-            '422': "ConstraintViolationJsonldJsonld",
+            '422': "ConstraintViolationJsonld",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1218,7 +1218,7 @@ class RsvpsApi:
     @validate_call
     def api_rsvps_post_with_http_info(
         self,
-        rsvps_jsonld_rsvp_write: Annotated[RsvpsJsonldRsvpWrite, Field(description="The new rsvps resource")],
+        rsvps_rsvp_write: Annotated[RsvpsRsvpWrite, Field(description="The new rsvps resource")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1236,8 +1236,8 @@ class RsvpsApi:
 
         Creates a rsvps resource.
 
-        :param rsvps_jsonld_rsvp_write: The new rsvps resource (required)
-        :type rsvps_jsonld_rsvp_write: RsvpsJsonldRsvpWrite
+        :param rsvps_rsvp_write: The new rsvps resource (required)
+        :type rsvps_rsvp_write: RsvpsRsvpWrite
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1261,7 +1261,7 @@ class RsvpsApi:
         """ # noqa: E501
 
         _param = self._api_rsvps_post_serialize(
-            rsvps_jsonld_rsvp_write=rsvps_jsonld_rsvp_write,
+            rsvps_rsvp_write=rsvps_rsvp_write,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1271,7 +1271,7 @@ class RsvpsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "RsvpsJsonldRsvpRead",
             '400': "ErrorJsonld",
-            '422': "ConstraintViolationJsonldJsonld",
+            '422': "ConstraintViolationJsonld",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1287,7 +1287,7 @@ class RsvpsApi:
     @validate_call
     def api_rsvps_post_without_preload_content(
         self,
-        rsvps_jsonld_rsvp_write: Annotated[RsvpsJsonldRsvpWrite, Field(description="The new rsvps resource")],
+        rsvps_rsvp_write: Annotated[RsvpsRsvpWrite, Field(description="The new rsvps resource")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1305,8 +1305,8 @@ class RsvpsApi:
 
         Creates a rsvps resource.
 
-        :param rsvps_jsonld_rsvp_write: The new rsvps resource (required)
-        :type rsvps_jsonld_rsvp_write: RsvpsJsonldRsvpWrite
+        :param rsvps_rsvp_write: The new rsvps resource (required)
+        :type rsvps_rsvp_write: RsvpsRsvpWrite
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1330,7 +1330,7 @@ class RsvpsApi:
         """ # noqa: E501
 
         _param = self._api_rsvps_post_serialize(
-            rsvps_jsonld_rsvp_write=rsvps_jsonld_rsvp_write,
+            rsvps_rsvp_write=rsvps_rsvp_write,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1340,7 +1340,7 @@ class RsvpsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "RsvpsJsonldRsvpRead",
             '400': "ErrorJsonld",
-            '422': "ConstraintViolationJsonldJsonld",
+            '422': "ConstraintViolationJsonld",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1351,7 +1351,7 @@ class RsvpsApi:
 
     def _api_rsvps_post_serialize(
         self,
-        rsvps_jsonld_rsvp_write,
+        rsvps_rsvp_write,
         _request_auth,
         _content_type,
         _headers,
@@ -1377,8 +1377,8 @@ class RsvpsApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
-        if rsvps_jsonld_rsvp_write is not None:
-            _body_params = rsvps_jsonld_rsvp_write
+        if rsvps_rsvp_write is not None:
+            _body_params = rsvps_rsvp_write
 
 
         # set the HTTP header `Accept`

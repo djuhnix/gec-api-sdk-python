@@ -20,17 +20,17 @@ import json
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
-from gec_api_sdk.models.constraint_violation_jsonld_jsonld_context import ConstraintViolationJsonldJsonldContext
+from gec_api_sdk.models.hydra_item_base_schema_context import HydraItemBaseSchemaContext
 from typing import Optional, Set
 from typing_extensions import Self
 
 class RsvpsJsonldRsvpRead(BaseModel):
     """
-    
+    RsvpsJsonldRsvpRead
     """ # noqa: E501
-    context: Optional[ConstraintViolationJsonldJsonldContext] = Field(default=None, alias="@context")
-    id: Optional[StrictStr] = Field(default=None, alias="@id")
-    type: Optional[StrictStr] = Field(default=None, alias="@type")
+    context: Optional[HydraItemBaseSchemaContext] = Field(default=None, alias="@context")
+    id: StrictStr = Field(alias="@id")
+    type: StrictStr = Field(alias="@type")
     id: Optional[StrictStr] = None
     event: StrictStr
     member: StrictStr
@@ -79,12 +79,8 @@ class RsvpsJsonldRsvpRead(BaseModel):
           are ignored.
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
-        * OpenAPI `readOnly` fields are excluded.
-        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
-            "id",
-            "type",
             "id",
             "created_at",
         ])
@@ -124,7 +120,7 @@ class RsvpsJsonldRsvpRead(BaseModel):
                 raise ValueError("Error due to additional fields (not defined in RsvpsJsonldRsvpRead) in the input: " + _key)
 
         _obj = cls.model_validate({
-            "@context": ConstraintViolationJsonldJsonldContext.from_dict(obj["@context"]) if obj.get("@context") is not None else None,
+            "@context": HydraItemBaseSchemaContext.from_dict(obj["@context"]) if obj.get("@context") is not None else None,
             "@id": obj.get("@id"),
             "@type": obj.get("@type"),
             "id": obj.get("id"),

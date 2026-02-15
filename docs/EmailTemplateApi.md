@@ -245,7 +245,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **api_email_templates_id_put**
-> EmailTemplateJsonldEmailTemplateRead api_email_templates_id_put(id, email_template_jsonld_email_template_write)
+> EmailTemplateJsonldEmailTemplateRead api_email_templates_id_put(id, email_template_email_template_write)
 
 Replaces the EmailTemplate resource.
 
@@ -257,8 +257,8 @@ Replaces the EmailTemplate resource.
 
 ```python
 import gec_api_sdk
+from gec_api_sdk.models.email_template_email_template_write import EmailTemplateEmailTemplateWrite
 from gec_api_sdk.models.email_template_jsonld_email_template_read import EmailTemplateJsonldEmailTemplateRead
-from gec_api_sdk.models.email_template_jsonld_email_template_write import EmailTemplateJsonldEmailTemplateWrite
 from gec_api_sdk.rest import ApiException
 from pprint import pprint
 
@@ -283,11 +283,11 @@ with gec_api_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = gec_api_sdk.EmailTemplateApi(api_client)
     id = 'id_example' # str | EmailTemplate identifier
-    email_template_jsonld_email_template_write = gec_api_sdk.EmailTemplateJsonldEmailTemplateWrite() # EmailTemplateJsonldEmailTemplateWrite | The updated EmailTemplate resource
+    email_template_email_template_write = gec_api_sdk.EmailTemplateEmailTemplateWrite() # EmailTemplateEmailTemplateWrite | The updated EmailTemplate resource
 
     try:
         # Replaces the EmailTemplate resource.
-        api_response = api_instance.api_email_templates_id_put(id, email_template_jsonld_email_template_write)
+        api_response = api_instance.api_email_templates_id_put(id, email_template_email_template_write)
         print("The response of EmailTemplateApi->api_email_templates_id_put:\n")
         pprint(api_response)
     except Exception as e:
@@ -302,7 +302,7 @@ with gec_api_sdk.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| EmailTemplate identifier | 
- **email_template_jsonld_email_template_write** | [**EmailTemplateJsonldEmailTemplateWrite**](EmailTemplateJsonldEmailTemplateWrite.md)| The updated EmailTemplate resource | 
+ **email_template_email_template_write** | [**EmailTemplateEmailTemplateWrite**](EmailTemplateEmailTemplateWrite.md)| The updated EmailTemplate resource | 
 
 ### Return type
 
@@ -329,7 +329,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **api_email_templates_post**
-> EmailTemplateJsonldEmailTemplateRead api_email_templates_post(email_template_jsonld_email_template_write)
+> EmailTemplateJsonldEmailTemplateRead api_email_templates_post(email_template_email_template_write)
 
 Creates a EmailTemplate resource.
 
@@ -341,8 +341,8 @@ Creates a EmailTemplate resource.
 
 ```python
 import gec_api_sdk
+from gec_api_sdk.models.email_template_email_template_write import EmailTemplateEmailTemplateWrite
 from gec_api_sdk.models.email_template_jsonld_email_template_read import EmailTemplateJsonldEmailTemplateRead
-from gec_api_sdk.models.email_template_jsonld_email_template_write import EmailTemplateJsonldEmailTemplateWrite
 from gec_api_sdk.rest import ApiException
 from pprint import pprint
 
@@ -366,11 +366,11 @@ configuration = gec_api_sdk.Configuration(
 with gec_api_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = gec_api_sdk.EmailTemplateApi(api_client)
-    email_template_jsonld_email_template_write = gec_api_sdk.EmailTemplateJsonldEmailTemplateWrite() # EmailTemplateJsonldEmailTemplateWrite | The new EmailTemplate resource
+    email_template_email_template_write = gec_api_sdk.EmailTemplateEmailTemplateWrite() # EmailTemplateEmailTemplateWrite | The new EmailTemplate resource
 
     try:
         # Creates a EmailTemplate resource.
-        api_response = api_instance.api_email_templates_post(email_template_jsonld_email_template_write)
+        api_response = api_instance.api_email_templates_post(email_template_email_template_write)
         print("The response of EmailTemplateApi->api_email_templates_post:\n")
         pprint(api_response)
     except Exception as e:
@@ -384,7 +384,7 @@ with gec_api_sdk.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **email_template_jsonld_email_template_write** | [**EmailTemplateJsonldEmailTemplateWrite**](EmailTemplateJsonldEmailTemplateWrite.md)| The new EmailTemplate resource | 
+ **email_template_email_template_write** | [**EmailTemplateEmailTemplateWrite**](EmailTemplateEmailTemplateWrite.md)| The new EmailTemplate resource | 
 
 ### Return type
 

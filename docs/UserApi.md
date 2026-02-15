@@ -246,11 +246,95 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **api_users_id_patch**
-> UserJsonldUserRead api_users_id_patch(id, user_user_write)
+> UserJsonldUserRead api_users_id_patch(id, user_user_write_json_merge_patch)
 
 Updates the User resource.
 
 Updates the User resource.
+
+### Example
+
+* Bearer (JWT) Authentication (JWT):
+
+```python
+import gec_api_sdk
+from gec_api_sdk.models.user_jsonld_user_read import UserJsonldUserRead
+from gec_api_sdk.models.user_user_write_json_merge_patch import UserUserWriteJsonMergePatch
+from gec_api_sdk.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost
+# See configuration.py for a list of all supported configuration parameters.
+configuration = gec_api_sdk.Configuration(
+    host = "http://localhost"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization (JWT): JWT
+configuration = gec_api_sdk.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+with gec_api_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = gec_api_sdk.UserApi(api_client)
+    id = 'id_example' # str | User identifier
+    user_user_write_json_merge_patch = gec_api_sdk.UserUserWriteJsonMergePatch() # UserUserWriteJsonMergePatch | The updated User resource
+
+    try:
+        # Updates the User resource.
+        api_response = api_instance.api_users_id_patch(id, user_user_write_json_merge_patch)
+        print("The response of UserApi->api_users_id_patch:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling UserApi->api_users_id_patch: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **str**| User identifier | 
+ **user_user_write_json_merge_patch** | [**UserUserWriteJsonMergePatch**](UserUserWriteJsonMergePatch.md)| The updated User resource | 
+
+### Return type
+
+[**UserJsonldUserRead**](UserJsonldUserRead.md)
+
+### Authorization
+
+[JWT](../README.md#JWT)
+
+### HTTP request headers
+
+ - **Content-Type**: application/merge-patch+json
+ - **Accept**: application/ld+json, application/json, application/x-yaml, text/csv, application/problem+json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | User resource updated |  -  |
+**400** | Invalid input |  -  |
+**422** | An error occurred |  -  |
+**404** | Not found |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **api_users_id_put**
+> UserJsonldUserRead api_users_id_put(id, user_user_write)
+
+Replaces the User resource.
+
+Replaces the User resource.
 
 ### Example
 
@@ -287,92 +371,8 @@ with gec_api_sdk.ApiClient(configuration) as api_client:
     user_user_write = gec_api_sdk.UserUserWrite() # UserUserWrite | The updated User resource
 
     try:
-        # Updates the User resource.
-        api_response = api_instance.api_users_id_patch(id, user_user_write)
-        print("The response of UserApi->api_users_id_patch:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling UserApi->api_users_id_patch: %s\n" % e)
-```
-
-
-
-### Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **id** | **str**| User identifier | 
- **user_user_write** | [**UserUserWrite**](UserUserWrite.md)| The updated User resource | 
-
-### Return type
-
-[**UserJsonldUserRead**](UserJsonldUserRead.md)
-
-### Authorization
-
-[JWT](../README.md#JWT)
-
-### HTTP request headers
-
- - **Content-Type**: application/merge-patch+json
- - **Accept**: application/ld+json, application/json, application/x-yaml, text/csv, application/problem+json
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | User resource updated |  -  |
-**400** | Invalid input |  -  |
-**422** | An error occurred |  -  |
-**404** | Not found |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **api_users_id_put**
-> UserJsonldUserRead api_users_id_put(id, user_jsonld_user_write)
-
-Replaces the User resource.
-
-Replaces the User resource.
-
-### Example
-
-* Bearer (JWT) Authentication (JWT):
-
-```python
-import gec_api_sdk
-from gec_api_sdk.models.user_jsonld_user_read import UserJsonldUserRead
-from gec_api_sdk.models.user_jsonld_user_write import UserJsonldUserWrite
-from gec_api_sdk.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to http://localhost
-# See configuration.py for a list of all supported configuration parameters.
-configuration = gec_api_sdk.Configuration(
-    host = "http://localhost"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure Bearer authorization (JWT): JWT
-configuration = gec_api_sdk.Configuration(
-    access_token = os.environ["BEARER_TOKEN"]
-)
-
-# Enter a context with an instance of the API client
-with gec_api_sdk.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = gec_api_sdk.UserApi(api_client)
-    id = 'id_example' # str | User identifier
-    user_jsonld_user_write = gec_api_sdk.UserJsonldUserWrite() # UserJsonldUserWrite | The updated User resource
-
-    try:
         # Replaces the User resource.
-        api_response = api_instance.api_users_id_put(id, user_jsonld_user_write)
+        api_response = api_instance.api_users_id_put(id, user_user_write)
         print("The response of UserApi->api_users_id_put:\n")
         pprint(api_response)
     except Exception as e:
@@ -387,7 +387,7 @@ with gec_api_sdk.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| User identifier | 
- **user_jsonld_user_write** | [**UserJsonldUserWrite**](UserJsonldUserWrite.md)| The updated User resource | 
+ **user_user_write** | [**UserUserWrite**](UserUserWrite.md)| The updated User resource | 
 
 ### Return type
 
@@ -414,7 +414,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **api_users_post**
-> UserJsonldUserRead api_users_post(user_jsonld_user_write)
+> UserJsonldUserRead api_users_post(user_user_write)
 
 Creates a User resource.
 
@@ -427,7 +427,7 @@ Creates a User resource.
 ```python
 import gec_api_sdk
 from gec_api_sdk.models.user_jsonld_user_read import UserJsonldUserRead
-from gec_api_sdk.models.user_jsonld_user_write import UserJsonldUserWrite
+from gec_api_sdk.models.user_user_write import UserUserWrite
 from gec_api_sdk.rest import ApiException
 from pprint import pprint
 
@@ -451,11 +451,11 @@ configuration = gec_api_sdk.Configuration(
 with gec_api_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = gec_api_sdk.UserApi(api_client)
-    user_jsonld_user_write = gec_api_sdk.UserJsonldUserWrite() # UserJsonldUserWrite | The new User resource
+    user_user_write = gec_api_sdk.UserUserWrite() # UserUserWrite | The new User resource
 
     try:
         # Creates a User resource.
-        api_response = api_instance.api_users_post(user_jsonld_user_write)
+        api_response = api_instance.api_users_post(user_user_write)
         print("The response of UserApi->api_users_post:\n")
         pprint(api_response)
     except Exception as e:
@@ -469,7 +469,7 @@ with gec_api_sdk.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **user_jsonld_user_write** | [**UserJsonldUserWrite**](UserJsonldUserWrite.md)| The new User resource | 
+ **user_user_write** | [**UserUserWrite**](UserUserWrite.md)| The new User resource | 
 
 ### Return type
 

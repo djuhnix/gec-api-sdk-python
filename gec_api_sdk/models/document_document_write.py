@@ -25,7 +25,7 @@ from typing_extensions import Self
 
 class DocumentDocumentWrite(BaseModel):
     """
-    
+    DocumentDocumentWrite
     """ # noqa: E501
     member: Optional[StrictStr] = None
     url: StrictStr

@@ -26,7 +26,7 @@ from typing_extensions import Self
 
 class EventEventRead(BaseModel):
     """
-    
+    EventEventRead
     """ # noqa: E501
     id: Optional[StrictStr] = None
     title: StrictStr

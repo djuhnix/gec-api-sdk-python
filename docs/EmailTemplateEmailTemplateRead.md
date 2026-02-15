@@ -1,7 +1,6 @@
 # EmailTemplateEmailTemplateRead
 
 
-
 ## Properties
 
 Name | Type | Description | Notes
@@ -10,7 +9,7 @@ Name | Type | Description | Notes
 **name** | **str** |  | 
 **subject** | **str** |  | 
 **content** | **str** |  | 
-**variables** | **List[str]** |  | [optional] 
+**variables** | **List[Optional[str]]** |  | [optional] 
 **created_at** | **datetime** |  | [optional] [readonly] 
 **updated_at** | **datetime** |  | [optional] 
 

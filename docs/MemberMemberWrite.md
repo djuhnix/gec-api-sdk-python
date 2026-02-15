@@ -1,14 +1,13 @@
 # MemberMemberWrite
 
 
-
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **first_name** | **str** |  | 
 **last_name** | **str** |  | 
-**email** | **str** |  | 
+**email** | **str** |  | [optional] 
 **birth_date** | **datetime** |  | [optional] 
 **gender** | **str** |  | [optional] 
 **phone_number_fr** | **str** |  | [optional] 
@@ -16,7 +15,8 @@ Name | Type | Description | Notes
 **postal_address** | **str** |  | [optional] 
 **postal_code** | **str** |  | [optional] 
 **city** | **str** |  | [optional] 
-**first_year** | **bool** |  | [optional] 
+**is_first_year_study** | **bool** |  | [optional] 
+**first_year** | **datetime** |  | [optional] 
 **formation** | **str** |  | [optional] 
 **establishment** | **str** |  | [optional] 
 **study_level** | **str** |  | [optional] 
@@ -29,7 +29,9 @@ Name | Type | Description | Notes
 **photo_url** | **str** |  | [optional] 
 **status** | **str** |  | 
 **membership_type** | **str** |  | 
-**contribution** | **str** |  | [optional] 
+**membership_start_date** | **datetime** |  | [optional] 
+**contribution** | **float** |  | [optional] 
+**contribution_status** | **str** |  | [optional] 
 
 ## Example
 

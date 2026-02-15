@@ -22,7 +22,6 @@ __all__ = [
     "DonationApi",
     "EmailTemplateApi",
     "EventApi",
-    "HelloAssoWebhookDTOApi",
     "LoginCheckApi",
     "MemberApi",
     "TaskApi",
@@ -39,9 +38,6 @@ __all__ = [
     "ApiAttributeError",
     "ApiException",
     "ApiDocumentsGetCollection200Response",
-    "ApiDocumentsGetCollection200ResponseSearch",
-    "ApiDocumentsGetCollection200ResponseSearchMappingInner",
-    "ApiDocumentsGetCollection200ResponseView",
     "ApiDonationsGetCollection200Response",
     "ApiEmailTemplatesGetCollection200Response",
     "ApiEventsGetCollection200Response",
@@ -49,53 +45,62 @@ __all__ = [
     "ApiRsvpsGetCollection200Response",
     "ApiTasksGetCollection200Response",
     "ApiUsersGetCollection200Response",
-    "ConstraintViolationJson",
-    "ConstraintViolationJsonViolationsInner",
-    "ConstraintViolationJsonldJsonld",
-    "ConstraintViolationJsonldJsonldContext",
-    "ConstraintViolationJsonldJsonldContextOneOf",
+    "ConstraintViolation",
+    "ConstraintViolationJsonld",
+    "ConstraintViolationViolationsInner",
+    "DocumentCsvDocumentRead",
     "DocumentDocumentRead",
     "DocumentDocumentWrite",
     "DocumentJsonldDocumentRead",
-    "DocumentJsonldDocumentWrite",
+    "DocumentYamlDocumentRead",
+    "DonationCsvDonationRead",
     "DonationDonationRead",
     "DonationDonationWrite",
     "DonationJsonldDonationRead",
-    "DonationJsonldDonationWrite",
+    "DonationYamlDonationRead",
+    "EmailTemplateCsvEmailTemplateRead",
     "EmailTemplateEmailTemplateRead",
     "EmailTemplateEmailTemplateWrite",
     "EmailTemplateJsonldEmailTemplateRead",
-    "EmailTemplateJsonldEmailTemplateWrite",
+    "EmailTemplateYamlEmailTemplateRead",
     "Error",
     "ErrorJsonld",
+    "EventCsvEventRead",
     "EventEventRead",
     "EventEventWrite",
     "EventJsonldEventRead",
-    "EventJsonldEventWrite",
-    "HelloAssoAmountDTO",
-    "HelloAssoDataDTO",
-    "HelloAssoMetaDTO",
-    "HelloAssoPayerDTO",
-    "HelloAssoWebhookDTO",
-    "HelloAssoWebhookDTOMember",
+    "EventYamlEventRead",
+    "HydraCollectionBaseSchema",
+    "HydraCollectionBaseSchemaAllOfView",
+    "HydraCollectionBaseSchemaNoPagination",
+    "HydraCollectionBaseSchemaNoPaginationSearch",
+    "HydraCollectionBaseSchemaNoPaginationSearchMappingInner",
+    "HydraItemBaseSchema",
+    "HydraItemBaseSchemaContext",
+    "HydraItemBaseSchemaContextOneOf",
     "LoginCheckPost200Response",
     "LoginCheckPostRequest",
+    "MemberCsvMemberRead",
     "MemberJsonldMemberRead",
-    "MemberJsonldMemberWrite",
     "MemberMemberRead",
     "MemberMemberWrite",
+    "MemberYamlMemberRead",
+    "RsvpsCsvRsvpRead",
     "RsvpsJsonldRsvpRead",
-    "RsvpsJsonldRsvpWrite",
     "RsvpsRsvpRead",
     "RsvpsRsvpWrite",
+    "RsvpsYamlRsvpRead",
+    "TaskCsvTaskRead",
     "TaskJsonldTaskRead",
-    "TaskJsonldTaskWrite",
     "TaskTaskRead",
     "TaskTaskWrite",
+    "TaskYamlTaskRead",
+    "UserCsvUserRead",
     "UserJsonldUserRead",
-    "UserJsonldUserWrite",
     "UserUserRead",
     "UserUserWrite",
+    "UserUserWriteJsonMergePatch",
+    "UserYamlUserRead",
     "WifCredentialTokenResponseDTO",
     "WifCredentialTokenResponseDTOWifCredentialTokenRequestDTO",
 ]
@@ -105,7 +110,6 @@ from gec_api_sdk.api.document_api import DocumentApi as DocumentApi
 from gec_api_sdk.api.donation_api import DonationApi as DonationApi
 from gec_api_sdk.api.email_template_api import EmailTemplateApi as EmailTemplateApi
 from gec_api_sdk.api.event_api import EventApi as EventApi
-from gec_api_sdk.api.hello_asso_webhook_dto_api import HelloAssoWebhookDTOApi as HelloAssoWebhookDTOApi
 from gec_api_sdk.api.login_check_api import LoginCheckApi as LoginCheckApi
 from gec_api_sdk.api.member_api import MemberApi as MemberApi
 from gec_api_sdk.api.task_api import TaskApi as TaskApi
@@ -126,9 +130,6 @@ from gec_api_sdk.exceptions import ApiException as ApiException
 
 # import models into sdk package
 from gec_api_sdk.models.api_documents_get_collection200_response import ApiDocumentsGetCollection200Response as ApiDocumentsGetCollection200Response
-from gec_api_sdk.models.api_documents_get_collection200_response_search import ApiDocumentsGetCollection200ResponseSearch as ApiDocumentsGetCollection200ResponseSearch
-from gec_api_sdk.models.api_documents_get_collection200_response_search_mapping_inner import ApiDocumentsGetCollection200ResponseSearchMappingInner as ApiDocumentsGetCollection200ResponseSearchMappingInner
-from gec_api_sdk.models.api_documents_get_collection200_response_view import ApiDocumentsGetCollection200ResponseView as ApiDocumentsGetCollection200ResponseView
 from gec_api_sdk.models.api_donations_get_collection200_response import ApiDonationsGetCollection200Response as ApiDonationsGetCollection200Response
 from gec_api_sdk.models.api_email_templates_get_collection200_response import ApiEmailTemplatesGetCollection200Response as ApiEmailTemplatesGetCollection200Response
 from gec_api_sdk.models.api_events_get_collection200_response import ApiEventsGetCollection200Response as ApiEventsGetCollection200Response
@@ -136,53 +137,62 @@ from gec_api_sdk.models.api_members_get_collection200_response import ApiMembers
 from gec_api_sdk.models.api_rsvps_get_collection200_response import ApiRsvpsGetCollection200Response as ApiRsvpsGetCollection200Response
 from gec_api_sdk.models.api_tasks_get_collection200_response import ApiTasksGetCollection200Response as ApiTasksGetCollection200Response
 from gec_api_sdk.models.api_users_get_collection200_response import ApiUsersGetCollection200Response as ApiUsersGetCollection200Response
-from gec_api_sdk.models.constraint_violation_json import ConstraintViolationJson as ConstraintViolationJson
-from gec_api_sdk.models.constraint_violation_json_violations_inner import ConstraintViolationJsonViolationsInner as ConstraintViolationJsonViolationsInner
-from gec_api_sdk.models.constraint_violation_jsonld_jsonld import ConstraintViolationJsonldJsonld as ConstraintViolationJsonldJsonld
-from gec_api_sdk.models.constraint_violation_jsonld_jsonld_context import ConstraintViolationJsonldJsonldContext as ConstraintViolationJsonldJsonldContext
-from gec_api_sdk.models.constraint_violation_jsonld_jsonld_context_one_of import ConstraintViolationJsonldJsonldContextOneOf as ConstraintViolationJsonldJsonldContextOneOf
+from gec_api_sdk.models.constraint_violation import ConstraintViolation as ConstraintViolation
+from gec_api_sdk.models.constraint_violation_jsonld import ConstraintViolationJsonld as ConstraintViolationJsonld
+from gec_api_sdk.models.constraint_violation_violations_inner import ConstraintViolationViolationsInner as ConstraintViolationViolationsInner
+from gec_api_sdk.models.document_csv_document_read import DocumentCsvDocumentRead as DocumentCsvDocumentRead
 from gec_api_sdk.models.document_document_read import DocumentDocumentRead as DocumentDocumentRead
 from gec_api_sdk.models.document_document_write import DocumentDocumentWrite as DocumentDocumentWrite
 from gec_api_sdk.models.document_jsonld_document_read import DocumentJsonldDocumentRead as DocumentJsonldDocumentRead
-from gec_api_sdk.models.document_jsonld_document_write import DocumentJsonldDocumentWrite as DocumentJsonldDocumentWrite
+from gec_api_sdk.models.document_yaml_document_read import DocumentYamlDocumentRead as DocumentYamlDocumentRead
+from gec_api_sdk.models.donation_csv_donation_read import DonationCsvDonationRead as DonationCsvDonationRead
 from gec_api_sdk.models.donation_donation_read import DonationDonationRead as DonationDonationRead
 from gec_api_sdk.models.donation_donation_write import DonationDonationWrite as DonationDonationWrite
 from gec_api_sdk.models.donation_jsonld_donation_read import DonationJsonldDonationRead as DonationJsonldDonationRead
-from gec_api_sdk.models.donation_jsonld_donation_write import DonationJsonldDonationWrite as DonationJsonldDonationWrite
+from gec_api_sdk.models.donation_yaml_donation_read import DonationYamlDonationRead as DonationYamlDonationRead
+from gec_api_sdk.models.email_template_csv_email_template_read import EmailTemplateCsvEmailTemplateRead as EmailTemplateCsvEmailTemplateRead
 from gec_api_sdk.models.email_template_email_template_read import EmailTemplateEmailTemplateRead as EmailTemplateEmailTemplateRead
 from gec_api_sdk.models.email_template_email_template_write import EmailTemplateEmailTemplateWrite as EmailTemplateEmailTemplateWrite
 from gec_api_sdk.models.email_template_jsonld_email_template_read import EmailTemplateJsonldEmailTemplateRead as EmailTemplateJsonldEmailTemplateRead
-from gec_api_sdk.models.email_template_jsonld_email_template_write import EmailTemplateJsonldEmailTemplateWrite as EmailTemplateJsonldEmailTemplateWrite
+from gec_api_sdk.models.email_template_yaml_email_template_read import EmailTemplateYamlEmailTemplateRead as EmailTemplateYamlEmailTemplateRead
 from gec_api_sdk.models.error import Error as Error
 from gec_api_sdk.models.error_jsonld import ErrorJsonld as ErrorJsonld
+from gec_api_sdk.models.event_csv_event_read import EventCsvEventRead as EventCsvEventRead
 from gec_api_sdk.models.event_event_read import EventEventRead as EventEventRead
 from gec_api_sdk.models.event_event_write import EventEventWrite as EventEventWrite
 from gec_api_sdk.models.event_jsonld_event_read import EventJsonldEventRead as EventJsonldEventRead
-from gec_api_sdk.models.event_jsonld_event_write import EventJsonldEventWrite as EventJsonldEventWrite
-from gec_api_sdk.models.hello_asso_amount_dto import HelloAssoAmountDTO as HelloAssoAmountDTO
-from gec_api_sdk.models.hello_asso_data_dto import HelloAssoDataDTO as HelloAssoDataDTO
-from gec_api_sdk.models.hello_asso_meta_dto import HelloAssoMetaDTO as HelloAssoMetaDTO
-from gec_api_sdk.models.hello_asso_payer_dto import HelloAssoPayerDTO as HelloAssoPayerDTO
-from gec_api_sdk.models.hello_asso_webhook_dto import HelloAssoWebhookDTO as HelloAssoWebhookDTO
-from gec_api_sdk.models.hello_asso_webhook_dto_member import HelloAssoWebhookDTOMember as HelloAssoWebhookDTOMember
+from gec_api_sdk.models.event_yaml_event_read import EventYamlEventRead as EventYamlEventRead
+from gec_api_sdk.models.hydra_collection_base_schema import HydraCollectionBaseSchema as HydraCollectionBaseSchema
+from gec_api_sdk.models.hydra_collection_base_schema_all_of_view import HydraCollectionBaseSchemaAllOfView as HydraCollectionBaseSchemaAllOfView
+from gec_api_sdk.models.hydra_collection_base_schema_no_pagination import HydraCollectionBaseSchemaNoPagination as HydraCollectionBaseSchemaNoPagination
+from gec_api_sdk.models.hydra_collection_base_schema_no_pagination_search import HydraCollectionBaseSchemaNoPaginationSearch as HydraCollectionBaseSchemaNoPaginationSearch
+from gec_api_sdk.models.hydra_collection_base_schema_no_pagination_search_mapping_inner import HydraCollectionBaseSchemaNoPaginationSearchMappingInner as HydraCollectionBaseSchemaNoPaginationSearchMappingInner
+from gec_api_sdk.models.hydra_item_base_schema import HydraItemBaseSchema as HydraItemBaseSchema
+from gec_api_sdk.models.hydra_item_base_schema_context import HydraItemBaseSchemaContext as HydraItemBaseSchemaContext
+from gec_api_sdk.models.hydra_item_base_schema_context_one_of import HydraItemBaseSchemaContextOneOf as HydraItemBaseSchemaContextOneOf
 from gec_api_sdk.models.login_check_post200_response import LoginCheckPost200Response as LoginCheckPost200Response
 from gec_api_sdk.models.login_check_post_request import LoginCheckPostRequest as LoginCheckPostRequest
+from gec_api_sdk.models.member_csv_member_read import MemberCsvMemberRead as MemberCsvMemberRead
 from gec_api_sdk.models.member_jsonld_member_read import MemberJsonldMemberRead as MemberJsonldMemberRead
-from gec_api_sdk.models.member_jsonld_member_write import MemberJsonldMemberWrite as MemberJsonldMemberWrite
 from gec_api_sdk.models.member_member_read import MemberMemberRead as MemberMemberRead
 from gec_api_sdk.models.member_member_write import MemberMemberWrite as MemberMemberWrite
+from gec_api_sdk.models.member_yaml_member_read import MemberYamlMemberRead as MemberYamlMemberRead
+from gec_api_sdk.models.rsvps_csv_rsvp_read import RsvpsCsvRsvpRead as RsvpsCsvRsvpRead
 from gec_api_sdk.models.rsvps_jsonld_rsvp_read import RsvpsJsonldRsvpRead as RsvpsJsonldRsvpRead
-from gec_api_sdk.models.rsvps_jsonld_rsvp_write import RsvpsJsonldRsvpWrite as RsvpsJsonldRsvpWrite
 from gec_api_sdk.models.rsvps_rsvp_read import RsvpsRsvpRead as RsvpsRsvpRead
 from gec_api_sdk.models.rsvps_rsvp_write import RsvpsRsvpWrite as RsvpsRsvpWrite
+from gec_api_sdk.models.rsvps_yaml_rsvp_read import RsvpsYamlRsvpRead as RsvpsYamlRsvpRead
+from gec_api_sdk.models.task_csv_task_read import TaskCsvTaskRead as TaskCsvTaskRead
 from gec_api_sdk.models.task_jsonld_task_read import TaskJsonldTaskRead as TaskJsonldTaskRead
-from gec_api_sdk.models.task_jsonld_task_write import TaskJsonldTaskWrite as TaskJsonldTaskWrite
 from gec_api_sdk.models.task_task_read import TaskTaskRead as TaskTaskRead
 from gec_api_sdk.models.task_task_write import TaskTaskWrite as TaskTaskWrite
+from gec_api_sdk.models.task_yaml_task_read import TaskYamlTaskRead as TaskYamlTaskRead
+from gec_api_sdk.models.user_csv_user_read import UserCsvUserRead as UserCsvUserRead
 from gec_api_sdk.models.user_jsonld_user_read import UserJsonldUserRead as UserJsonldUserRead
-from gec_api_sdk.models.user_jsonld_user_write import UserJsonldUserWrite as UserJsonldUserWrite
 from gec_api_sdk.models.user_user_read import UserUserRead as UserUserRead
 from gec_api_sdk.models.user_user_write import UserUserWrite as UserUserWrite
+from gec_api_sdk.models.user_user_write_json_merge_patch import UserUserWriteJsonMergePatch as UserUserWriteJsonMergePatch
+from gec_api_sdk.models.user_yaml_user_read import UserYamlUserRead as UserYamlUserRead
 from gec_api_sdk.models.wif_credential_token_response_dto import WifCredentialTokenResponseDTO as WifCredentialTokenResponseDTO
 from gec_api_sdk.models.wif_credential_token_response_dto_wif_credential_token_request_dto import WifCredentialTokenResponseDTOWifCredentialTokenRequestDTO as WifCredentialTokenResponseDTOWifCredentialTokenRequestDTO
 

@@ -245,7 +245,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **api_members_id_put**
-> MemberJsonldMemberRead api_members_id_put(id, member_jsonld_member_write)
+> MemberJsonldMemberRead api_members_id_put(id, member_member_write)
 
 Replaces the Member resource.
 
@@ -258,7 +258,7 @@ Replaces the Member resource.
 ```python
 import gec_api_sdk
 from gec_api_sdk.models.member_jsonld_member_read import MemberJsonldMemberRead
-from gec_api_sdk.models.member_jsonld_member_write import MemberJsonldMemberWrite
+from gec_api_sdk.models.member_member_write import MemberMemberWrite
 from gec_api_sdk.rest import ApiException
 from pprint import pprint
 
@@ -283,11 +283,11 @@ with gec_api_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = gec_api_sdk.MemberApi(api_client)
     id = 'id_example' # str | Member identifier
-    member_jsonld_member_write = gec_api_sdk.MemberJsonldMemberWrite() # MemberJsonldMemberWrite | The updated Member resource
+    member_member_write = gec_api_sdk.MemberMemberWrite() # MemberMemberWrite | The updated Member resource
 
     try:
         # Replaces the Member resource.
-        api_response = api_instance.api_members_id_put(id, member_jsonld_member_write)
+        api_response = api_instance.api_members_id_put(id, member_member_write)
         print("The response of MemberApi->api_members_id_put:\n")
         pprint(api_response)
     except Exception as e:
@@ -302,7 +302,7 @@ with gec_api_sdk.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| Member identifier | 
- **member_jsonld_member_write** | [**MemberJsonldMemberWrite**](MemberJsonldMemberWrite.md)| The updated Member resource | 
+ **member_member_write** | [**MemberMemberWrite**](MemberMemberWrite.md)| The updated Member resource | 
 
 ### Return type
 
@@ -329,7 +329,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **api_members_post**
-> MemberJsonldMemberRead api_members_post(member_jsonld_member_write)
+> MemberJsonldMemberRead api_members_post(member_member_write)
 
 Creates a Member resource.
 
@@ -342,7 +342,7 @@ Creates a Member resource.
 ```python
 import gec_api_sdk
 from gec_api_sdk.models.member_jsonld_member_read import MemberJsonldMemberRead
-from gec_api_sdk.models.member_jsonld_member_write import MemberJsonldMemberWrite
+from gec_api_sdk.models.member_member_write import MemberMemberWrite
 from gec_api_sdk.rest import ApiException
 from pprint import pprint
 
@@ -366,11 +366,11 @@ configuration = gec_api_sdk.Configuration(
 with gec_api_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = gec_api_sdk.MemberApi(api_client)
-    member_jsonld_member_write = gec_api_sdk.MemberJsonldMemberWrite() # MemberJsonldMemberWrite | The new Member resource
+    member_member_write = gec_api_sdk.MemberMemberWrite() # MemberMemberWrite | The new Member resource
 
     try:
         # Creates a Member resource.
-        api_response = api_instance.api_members_post(member_jsonld_member_write)
+        api_response = api_instance.api_members_post(member_member_write)
         print("The response of MemberApi->api_members_post:\n")
         pprint(api_response)
     except Exception as e:
@@ -384,7 +384,7 @@ with gec_api_sdk.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **member_jsonld_member_write** | [**MemberJsonldMemberWrite**](MemberJsonldMemberWrite.md)| The new Member resource | 
+ **member_member_write** | [**MemberMemberWrite**](MemberMemberWrite.md)| The new Member resource | 
 
 ### Return type
 

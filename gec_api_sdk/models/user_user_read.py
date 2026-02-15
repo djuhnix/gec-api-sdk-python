@@ -25,7 +25,7 @@ from typing_extensions import Self
 
 class UserUserRead(BaseModel):
     """
-    
+    UserUserRead
     """ # noqa: E501
     id: Optional[StrictStr] = None
     email: StrictStr
@@ -33,7 +33,7 @@ class UserUserRead(BaseModel):
     created_at: Optional[datetime] = Field(default=None, alias="createdAt")
     updated_at: Optional[datetime] = Field(default=None, alias="updatedAt")
     google_service_account: Optional[StrictStr] = Field(default=None, alias="googleServiceAccount")
-    google_service_account_scopes: Optional[List[StrictStr]] = Field(default=None, alias="googleServiceAccountScopes")
+    google_service_account_scopes: Optional[List[Optional[StrictStr]]] = Field(default=None, alias="googleServiceAccountScopes")
     google_impersonated_user: Optional[StrictStr] = Field(default=None, alias="googleImpersonatedUser")
     __properties: ClassVar[List[str]] = ["id", "email", "roles", "createdAt", "updatedAt", "googleServiceAccount", "googleServiceAccountScopes", "googleImpersonatedUser"]
 

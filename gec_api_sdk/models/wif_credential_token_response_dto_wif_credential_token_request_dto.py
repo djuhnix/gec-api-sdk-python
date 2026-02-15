@@ -29,7 +29,7 @@ class WifCredentialTokenResponseDTOWifCredentialTokenRequestDTO(BaseModel):
     """ # noqa: E501
     user_email: Optional[Annotated[str, Field(strict=True, max_length=255)]] = None
     service_account: Optional[Annotated[str, Field(strict=True, max_length=512)]] = None
-    ttl: Optional[Annotated[int, Field(le=86400, strict=True)]] = None
+    ttl: Optional[Annotated[int, Field(le=86400, strict=True, ge=0)]] = None
     __properties: ClassVar[List[str]] = ["user_email", "service_account", "ttl"]
 
     model_config = ConfigDict(

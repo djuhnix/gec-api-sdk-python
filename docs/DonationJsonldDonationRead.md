@@ -1,17 +1,16 @@
 # DonationJsonldDonationRead
 
 
-
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**context** | [**ConstraintViolationJsonldJsonldContext**](ConstraintViolationJsonldJsonldContext.md) |  | [optional] 
-**id** | **str** |  | [optional] [readonly] 
-**type** | **str** |  | [optional] [readonly] 
+**context** | [**HydraItemBaseSchemaContext**](HydraItemBaseSchemaContext.md) |  | [optional] 
+**id** | **str** |  | 
+**type** | **str** |  | 
 **id** | **str** |  | [optional] [readonly] 
 **member** | **str** |  | [optional] 
-**amount** | **str** |  | 
+**amount** | **float** |  | 
 **currency** | **str** |  | [optional] [default to 'EUR']
 **status** | **str** |  | [optional] [default to 'pending']
 **payment_method** | **str** |  | [optional] 

@@ -245,7 +245,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **api_tasks_id_put**
-> TaskJsonldTaskRead api_tasks_id_put(id, task_jsonld_task_write)
+> TaskJsonldTaskRead api_tasks_id_put(id, task_task_write)
 
 Replaces the Task resource.
 
@@ -258,7 +258,7 @@ Replaces the Task resource.
 ```python
 import gec_api_sdk
 from gec_api_sdk.models.task_jsonld_task_read import TaskJsonldTaskRead
-from gec_api_sdk.models.task_jsonld_task_write import TaskJsonldTaskWrite
+from gec_api_sdk.models.task_task_write import TaskTaskWrite
 from gec_api_sdk.rest import ApiException
 from pprint import pprint
 
@@ -283,11 +283,11 @@ with gec_api_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = gec_api_sdk.TaskApi(api_client)
     id = 'id_example' # str | Task identifier
-    task_jsonld_task_write = gec_api_sdk.TaskJsonldTaskWrite() # TaskJsonldTaskWrite | The updated Task resource
+    task_task_write = gec_api_sdk.TaskTaskWrite() # TaskTaskWrite | The updated Task resource
 
     try:
         # Replaces the Task resource.
-        api_response = api_instance.api_tasks_id_put(id, task_jsonld_task_write)
+        api_response = api_instance.api_tasks_id_put(id, task_task_write)
         print("The response of TaskApi->api_tasks_id_put:\n")
         pprint(api_response)
     except Exception as e:
@@ -302,7 +302,7 @@ with gec_api_sdk.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| Task identifier | 
- **task_jsonld_task_write** | [**TaskJsonldTaskWrite**](TaskJsonldTaskWrite.md)| The updated Task resource | 
+ **task_task_write** | [**TaskTaskWrite**](TaskTaskWrite.md)| The updated Task resource | 
 
 ### Return type
 
@@ -329,7 +329,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **api_tasks_post**
-> TaskJsonldTaskRead api_tasks_post(task_jsonld_task_write)
+> TaskJsonldTaskRead api_tasks_post(task_task_write)
 
 Creates a Task resource.
 
@@ -342,7 +342,7 @@ Creates a Task resource.
 ```python
 import gec_api_sdk
 from gec_api_sdk.models.task_jsonld_task_read import TaskJsonldTaskRead
-from gec_api_sdk.models.task_jsonld_task_write import TaskJsonldTaskWrite
+from gec_api_sdk.models.task_task_write import TaskTaskWrite
 from gec_api_sdk.rest import ApiException
 from pprint import pprint
 
@@ -366,11 +366,11 @@ configuration = gec_api_sdk.Configuration(
 with gec_api_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = gec_api_sdk.TaskApi(api_client)
-    task_jsonld_task_write = gec_api_sdk.TaskJsonldTaskWrite() # TaskJsonldTaskWrite | The new Task resource
+    task_task_write = gec_api_sdk.TaskTaskWrite() # TaskTaskWrite | The new Task resource
 
     try:
         # Creates a Task resource.
-        api_response = api_instance.api_tasks_post(task_jsonld_task_write)
+        api_response = api_instance.api_tasks_post(task_task_write)
         print("The response of TaskApi->api_tasks_post:\n")
         pprint(api_response)
     except Exception as e:
@@ -384,7 +384,7 @@ with gec_api_sdk.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **task_jsonld_task_write** | [**TaskJsonldTaskWrite**](TaskJsonldTaskWrite.md)| The new Task resource | 
+ **task_task_write** | [**TaskTaskWrite**](TaskTaskWrite.md)| The new Task resource | 
 
 ### Return type
 

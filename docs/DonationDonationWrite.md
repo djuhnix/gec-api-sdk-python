@@ -1,13 +1,12 @@
 # DonationDonationWrite
 
 
-
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **member** | **str** |  | [optional] 
-**amount** | **str** |  | 
+**amount** | **float** |  | 
 **currency** | **str** |  | [optional] [default to 'EUR']
 **status** | **str** |  | [optional] [default to 'pending']
 **payment_method** | **str** |  | [optional] 

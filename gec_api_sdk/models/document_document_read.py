@@ -25,7 +25,7 @@ from typing_extensions import Self
 
 class DocumentDocumentRead(BaseModel):
     """
-    
+    DocumentDocumentRead
     """ # noqa: E501
     id: Optional[StrictStr] = None
     member: Optional[StrictStr] = None

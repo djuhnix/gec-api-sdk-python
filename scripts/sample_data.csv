@@ -1,0 +1,4 @@
+last_name,first_name,birth_date,gender,postal_address,city,postal_code,phone_number_fr,membership_type,training_cycle,study_level,formation,establishment,email,is_first_year_study,other_associations,associations_names,has_visa,has_school_certificate,photo_url,Status,contribution,first_year
+Dupont,Jean,15/03/1998,M,123 Rue de Paris,Paris,75001,0612345678,student,Alumuni,BAC+3,Informatique,Université Paris,jean.dupont@example.com,oui,non,,oui,oui,https://example.com/photo1.jpg,pending,50,2018
+Martin,Marie,22/07/1999,Female,456 Avenue Victor Hugo,Lyon,69001,0698765432,student,Apprenticeship,Bac+3,Commerce,EM Lyon,marie.martin@example.com,non,oui,Association A,oui,oui,https://example.com/photo2.jpg,pending,75,2021
+Moreau,Pierre,10/11/2000,M,789 Boulevard Saint-Michel,Marseille,13001,+33623456789,student,Initial,Licence,Droit,Aix-Marseille Université,pierre.moreau@example.com,oui,non,,non,oui,,pending,50,2021

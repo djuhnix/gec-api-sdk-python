@@ -20,8 +20,8 @@ from pydantic import Field, StrictInt, StrictStr
 from typing import Optional
 from typing_extensions import Annotated
 from gec_api_sdk.models.api_donations_get_collection200_response import ApiDonationsGetCollection200Response
+from gec_api_sdk.models.donation_donation_write import DonationDonationWrite
 from gec_api_sdk.models.donation_jsonld_donation_read import DonationJsonldDonationRead
-from gec_api_sdk.models.donation_jsonld_donation_write import DonationJsonldDonationWrite
 
 from gec_api_sdk.api_client import ApiClient, RequestSerialized
 from gec_api_sdk.api_response import ApiResponse
@@ -845,7 +845,7 @@ class DonationApi:
     def api_donations_id_put(
         self,
         id: Annotated[StrictStr, Field(description="Donation identifier")],
-        donation_jsonld_donation_write: Annotated[DonationJsonldDonationWrite, Field(description="The updated Donation resource")],
+        donation_donation_write: Annotated[DonationDonationWrite, Field(description="The updated Donation resource")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -865,8 +865,8 @@ class DonationApi:
 
         :param id: Donation identifier (required)
         :type id: str
-        :param donation_jsonld_donation_write: The updated Donation resource (required)
-        :type donation_jsonld_donation_write: DonationJsonldDonationWrite
+        :param donation_donation_write: The updated Donation resource (required)
+        :type donation_donation_write: DonationDonationWrite
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -891,7 +891,7 @@ class DonationApi:
 
         _param = self._api_donations_id_put_serialize(
             id=id,
-            donation_jsonld_donation_write=donation_jsonld_donation_write,
+            donation_donation_write=donation_donation_write,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -901,7 +901,7 @@ class DonationApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "DonationJsonldDonationRead",
             '400': "ErrorJsonld",
-            '422': "ConstraintViolationJsonldJsonld",
+            '422': "ConstraintViolationJsonld",
             '404': "ErrorJsonld",
         }
         response_data = self.api_client.call_api(
@@ -919,7 +919,7 @@ class DonationApi:
     def api_donations_id_put_with_http_info(
         self,
         id: Annotated[StrictStr, Field(description="Donation identifier")],
-        donation_jsonld_donation_write: Annotated[DonationJsonldDonationWrite, Field(description="The updated Donation resource")],
+        donation_donation_write: Annotated[DonationDonationWrite, Field(description="The updated Donation resource")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -939,8 +939,8 @@ class DonationApi:
 
         :param id: Donation identifier (required)
         :type id: str
-        :param donation_jsonld_donation_write: The updated Donation resource (required)
-        :type donation_jsonld_donation_write: DonationJsonldDonationWrite
+        :param donation_donation_write: The updated Donation resource (required)
+        :type donation_donation_write: DonationDonationWrite
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -965,7 +965,7 @@ class DonationApi:
 
         _param = self._api_donations_id_put_serialize(
             id=id,
-            donation_jsonld_donation_write=donation_jsonld_donation_write,
+            donation_donation_write=donation_donation_write,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -975,7 +975,7 @@ class DonationApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "DonationJsonldDonationRead",
             '400': "ErrorJsonld",
-            '422': "ConstraintViolationJsonldJsonld",
+            '422': "ConstraintViolationJsonld",
             '404': "ErrorJsonld",
         }
         response_data = self.api_client.call_api(
@@ -993,7 +993,7 @@ class DonationApi:
     def api_donations_id_put_without_preload_content(
         self,
         id: Annotated[StrictStr, Field(description="Donation identifier")],
-        donation_jsonld_donation_write: Annotated[DonationJsonldDonationWrite, Field(description="The updated Donation resource")],
+        donation_donation_write: Annotated[DonationDonationWrite, Field(description="The updated Donation resource")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1013,8 +1013,8 @@ class DonationApi:
 
         :param id: Donation identifier (required)
         :type id: str
-        :param donation_jsonld_donation_write: The updated Donation resource (required)
-        :type donation_jsonld_donation_write: DonationJsonldDonationWrite
+        :param donation_donation_write: The updated Donation resource (required)
+        :type donation_donation_write: DonationDonationWrite
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1039,7 +1039,7 @@ class DonationApi:
 
         _param = self._api_donations_id_put_serialize(
             id=id,
-            donation_jsonld_donation_write=donation_jsonld_donation_write,
+            donation_donation_write=donation_donation_write,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1049,7 +1049,7 @@ class DonationApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "DonationJsonldDonationRead",
             '400': "ErrorJsonld",
-            '422': "ConstraintViolationJsonldJsonld",
+            '422': "ConstraintViolationJsonld",
             '404': "ErrorJsonld",
         }
         response_data = self.api_client.call_api(
@@ -1062,7 +1062,7 @@ class DonationApi:
     def _api_donations_id_put_serialize(
         self,
         id,
-        donation_jsonld_donation_write,
+        donation_donation_write,
         _request_auth,
         _content_type,
         _headers,
@@ -1090,8 +1090,8 @@ class DonationApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
-        if donation_jsonld_donation_write is not None:
-            _body_params = donation_jsonld_donation_write
+        if donation_donation_write is not None:
+            _body_params = donation_donation_write
 
 
         # set the HTTP header `Accept`
@@ -1149,7 +1149,7 @@ class DonationApi:
     @validate_call
     def api_donations_post(
         self,
-        donation_jsonld_donation_write: Annotated[DonationJsonldDonationWrite, Field(description="The new Donation resource")],
+        donation_donation_write: Annotated[DonationDonationWrite, Field(description="The new Donation resource")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1167,8 +1167,8 @@ class DonationApi:
 
         Creates a Donation resource.
 
-        :param donation_jsonld_donation_write: The new Donation resource (required)
-        :type donation_jsonld_donation_write: DonationJsonldDonationWrite
+        :param donation_donation_write: The new Donation resource (required)
+        :type donation_donation_write: DonationDonationWrite
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1192,7 +1192,7 @@ class DonationApi:
         """ # noqa: E501
 
         _param = self._api_donations_post_serialize(
-            donation_jsonld_donation_write=donation_jsonld_donation_write,
+            donation_donation_write=donation_donation_write,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1202,7 +1202,7 @@ class DonationApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "DonationJsonldDonationRead",
             '400': "ErrorJsonld",
-            '422': "ConstraintViolationJsonldJsonld",
+            '422': "ConstraintViolationJsonld",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1218,7 +1218,7 @@ class DonationApi:
     @validate_call
     def api_donations_post_with_http_info(
         self,
-        donation_jsonld_donation_write: Annotated[DonationJsonldDonationWrite, Field(description="The new Donation resource")],
+        donation_donation_write: Annotated[DonationDonationWrite, Field(description="The new Donation resource")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1236,8 +1236,8 @@ class DonationApi:
 
         Creates a Donation resource.
 
-        :param donation_jsonld_donation_write: The new Donation resource (required)
-        :type donation_jsonld_donation_write: DonationJsonldDonationWrite
+        :param donation_donation_write: The new Donation resource (required)
+        :type donation_donation_write: DonationDonationWrite
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1261,7 +1261,7 @@ class DonationApi:
         """ # noqa: E501
 
         _param = self._api_donations_post_serialize(
-            donation_jsonld_donation_write=donation_jsonld_donation_write,
+            donation_donation_write=donation_donation_write,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1271,7 +1271,7 @@ class DonationApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "DonationJsonldDonationRead",
             '400': "ErrorJsonld",
-            '422': "ConstraintViolationJsonldJsonld",
+            '422': "ConstraintViolationJsonld",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1287,7 +1287,7 @@ class DonationApi:
     @validate_call
     def api_donations_post_without_preload_content(
         self,
-        donation_jsonld_donation_write: Annotated[DonationJsonldDonationWrite, Field(description="The new Donation resource")],
+        donation_donation_write: Annotated[DonationDonationWrite, Field(description="The new Donation resource")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1305,8 +1305,8 @@ class DonationApi:
 
         Creates a Donation resource.
 
-        :param donation_jsonld_donation_write: The new Donation resource (required)
-        :type donation_jsonld_donation_write: DonationJsonldDonationWrite
+        :param donation_donation_write: The new Donation resource (required)
+        :type donation_donation_write: DonationDonationWrite
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1330,7 +1330,7 @@ class DonationApi:
         """ # noqa: E501
 
         _param = self._api_donations_post_serialize(
-            donation_jsonld_donation_write=donation_jsonld_donation_write,
+            donation_donation_write=donation_donation_write,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1340,7 +1340,7 @@ class DonationApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "DonationJsonldDonationRead",
             '400': "ErrorJsonld",
-            '422': "ConstraintViolationJsonldJsonld",
+            '422': "ConstraintViolationJsonld",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1351,7 +1351,7 @@ class DonationApi:
 
     def _api_donations_post_serialize(
         self,
-        donation_jsonld_donation_write,
+        donation_donation_write,
         _request_auth,
         _content_type,
         _headers,
@@ -1377,8 +1377,8 @@ class DonationApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
-        if donation_jsonld_donation_write is not None:
-            _body_params = donation_jsonld_donation_write
+        if donation_donation_write is not None:
+            _body_params = donation_donation_write
 
 
         # set the HTTP header `Accept`

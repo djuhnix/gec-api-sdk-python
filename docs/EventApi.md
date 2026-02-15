@@ -245,7 +245,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **api_events_id_put**
-> EventJsonldEventRead api_events_id_put(id, event_jsonld_event_write)
+> EventJsonldEventRead api_events_id_put(id, event_event_write)
 
 Replaces the Event resource.
 
@@ -257,8 +257,8 @@ Replaces the Event resource.
 
 ```python
 import gec_api_sdk
+from gec_api_sdk.models.event_event_write import EventEventWrite
 from gec_api_sdk.models.event_jsonld_event_read import EventJsonldEventRead
-from gec_api_sdk.models.event_jsonld_event_write import EventJsonldEventWrite
 from gec_api_sdk.rest import ApiException
 from pprint import pprint
 
@@ -283,11 +283,11 @@ with gec_api_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = gec_api_sdk.EventApi(api_client)
     id = 'id_example' # str | Event identifier
-    event_jsonld_event_write = gec_api_sdk.EventJsonldEventWrite() # EventJsonldEventWrite | The updated Event resource
+    event_event_write = gec_api_sdk.EventEventWrite() # EventEventWrite | The updated Event resource
 
     try:
         # Replaces the Event resource.
-        api_response = api_instance.api_events_id_put(id, event_jsonld_event_write)
+        api_response = api_instance.api_events_id_put(id, event_event_write)
         print("The response of EventApi->api_events_id_put:\n")
         pprint(api_response)
     except Exception as e:
@@ -302,7 +302,7 @@ with gec_api_sdk.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| Event identifier | 
- **event_jsonld_event_write** | [**EventJsonldEventWrite**](EventJsonldEventWrite.md)| The updated Event resource | 
+ **event_event_write** | [**EventEventWrite**](EventEventWrite.md)| The updated Event resource | 
 
 ### Return type
 
@@ -329,7 +329,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **api_events_post**
-> EventJsonldEventRead api_events_post(event_jsonld_event_write)
+> EventJsonldEventRead api_events_post(event_event_write)
 
 Creates a Event resource.
 
@@ -341,8 +341,8 @@ Creates a Event resource.
 
 ```python
 import gec_api_sdk
+from gec_api_sdk.models.event_event_write import EventEventWrite
 from gec_api_sdk.models.event_jsonld_event_read import EventJsonldEventRead
-from gec_api_sdk.models.event_jsonld_event_write import EventJsonldEventWrite
 from gec_api_sdk.rest import ApiException
 from pprint import pprint
 
@@ -366,11 +366,11 @@ configuration = gec_api_sdk.Configuration(
 with gec_api_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = gec_api_sdk.EventApi(api_client)
-    event_jsonld_event_write = gec_api_sdk.EventJsonldEventWrite() # EventJsonldEventWrite | The new Event resource
+    event_event_write = gec_api_sdk.EventEventWrite() # EventEventWrite | The new Event resource
 
     try:
         # Creates a Event resource.
-        api_response = api_instance.api_events_post(event_jsonld_event_write)
+        api_response = api_instance.api_events_post(event_event_write)
         print("The response of EventApi->api_events_post:\n")
         pprint(api_response)
     except Exception as e:
@@ -384,7 +384,7 @@ with gec_api_sdk.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **event_jsonld_event_write** | [**EventJsonldEventWrite**](EventJsonldEventWrite.md)| The new Event resource | 
+ **event_event_write** | [**EventEventWrite**](EventEventWrite.md)| The new Event resource | 
 
 ### Return type
 

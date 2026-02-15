@@ -21,7 +21,7 @@ from typing import Optional
 from typing_extensions import Annotated
 from gec_api_sdk.models.api_tasks_get_collection200_response import ApiTasksGetCollection200Response
 from gec_api_sdk.models.task_jsonld_task_read import TaskJsonldTaskRead
-from gec_api_sdk.models.task_jsonld_task_write import TaskJsonldTaskWrite
+from gec_api_sdk.models.task_task_write import TaskTaskWrite
 
 from gec_api_sdk.api_client import ApiClient, RequestSerialized
 from gec_api_sdk.api_response import ApiResponse
@@ -845,7 +845,7 @@ class TaskApi:
     def api_tasks_id_put(
         self,
         id: Annotated[StrictStr, Field(description="Task identifier")],
-        task_jsonld_task_write: Annotated[TaskJsonldTaskWrite, Field(description="The updated Task resource")],
+        task_task_write: Annotated[TaskTaskWrite, Field(description="The updated Task resource")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -865,8 +865,8 @@ class TaskApi:
 
         :param id: Task identifier (required)
         :type id: str
-        :param task_jsonld_task_write: The updated Task resource (required)
-        :type task_jsonld_task_write: TaskJsonldTaskWrite
+        :param task_task_write: The updated Task resource (required)
+        :type task_task_write: TaskTaskWrite
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -891,7 +891,7 @@ class TaskApi:
 
         _param = self._api_tasks_id_put_serialize(
             id=id,
-            task_jsonld_task_write=task_jsonld_task_write,
+            task_task_write=task_task_write,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -901,7 +901,7 @@ class TaskApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "TaskJsonldTaskRead",
             '400': "ErrorJsonld",
-            '422': "ConstraintViolationJsonldJsonld",
+            '422': "ConstraintViolationJsonld",
             '404': "ErrorJsonld",
         }
         response_data = self.api_client.call_api(
@@ -919,7 +919,7 @@ class TaskApi:
     def api_tasks_id_put_with_http_info(
         self,
         id: Annotated[StrictStr, Field(description="Task identifier")],
-        task_jsonld_task_write: Annotated[TaskJsonldTaskWrite, Field(description="The updated Task resource")],
+        task_task_write: Annotated[TaskTaskWrite, Field(description="The updated Task resource")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -939,8 +939,8 @@ class TaskApi:
 
         :param id: Task identifier (required)
         :type id: str
-        :param task_jsonld_task_write: The updated Task resource (required)
-        :type task_jsonld_task_write: TaskJsonldTaskWrite
+        :param task_task_write: The updated Task resource (required)
+        :type task_task_write: TaskTaskWrite
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -965,7 +965,7 @@ class TaskApi:
 
         _param = self._api_tasks_id_put_serialize(
             id=id,
-            task_jsonld_task_write=task_jsonld_task_write,
+            task_task_write=task_task_write,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -975,7 +975,7 @@ class TaskApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "TaskJsonldTaskRead",
             '400': "ErrorJsonld",
-            '422': "ConstraintViolationJsonldJsonld",
+            '422': "ConstraintViolationJsonld",
             '404': "ErrorJsonld",
         }
         response_data = self.api_client.call_api(
@@ -993,7 +993,7 @@ class TaskApi:
     def api_tasks_id_put_without_preload_content(
         self,
         id: Annotated[StrictStr, Field(description="Task identifier")],
-        task_jsonld_task_write: Annotated[TaskJsonldTaskWrite, Field(description="The updated Task resource")],
+        task_task_write: Annotated[TaskTaskWrite, Field(description="The updated Task resource")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1013,8 +1013,8 @@ class TaskApi:
 
         :param id: Task identifier (required)
         :type id: str
-        :param task_jsonld_task_write: The updated Task resource (required)
-        :type task_jsonld_task_write: TaskJsonldTaskWrite
+        :param task_task_write: The updated Task resource (required)
+        :type task_task_write: TaskTaskWrite
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1039,7 +1039,7 @@ class TaskApi:
 
         _param = self._api_tasks_id_put_serialize(
             id=id,
-            task_jsonld_task_write=task_jsonld_task_write,
+            task_task_write=task_task_write,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1049,7 +1049,7 @@ class TaskApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "TaskJsonldTaskRead",
             '400': "ErrorJsonld",
-            '422': "ConstraintViolationJsonldJsonld",
+            '422': "ConstraintViolationJsonld",
             '404': "ErrorJsonld",
         }
         response_data = self.api_client.call_api(
@@ -1062,7 +1062,7 @@ class TaskApi:
     def _api_tasks_id_put_serialize(
         self,
         id,
-        task_jsonld_task_write,
+        task_task_write,
         _request_auth,
         _content_type,
         _headers,
@@ -1090,8 +1090,8 @@ class TaskApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
-        if task_jsonld_task_write is not None:
-            _body_params = task_jsonld_task_write
+        if task_task_write is not None:
+            _body_params = task_task_write
 
 
         # set the HTTP header `Accept`
@@ -1149,7 +1149,7 @@ class TaskApi:
     @validate_call
     def api_tasks_post(
         self,
-        task_jsonld_task_write: Annotated[TaskJsonldTaskWrite, Field(description="The new Task resource")],
+        task_task_write: Annotated[TaskTaskWrite, Field(description="The new Task resource")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1167,8 +1167,8 @@ class TaskApi:
 
         Creates a Task resource.
 
-        :param task_jsonld_task_write: The new Task resource (required)
-        :type task_jsonld_task_write: TaskJsonldTaskWrite
+        :param task_task_write: The new Task resource (required)
+        :type task_task_write: TaskTaskWrite
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1192,7 +1192,7 @@ class TaskApi:
         """ # noqa: E501
 
         _param = self._api_tasks_post_serialize(
-            task_jsonld_task_write=task_jsonld_task_write,
+            task_task_write=task_task_write,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1202,7 +1202,7 @@ class TaskApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "TaskJsonldTaskRead",
             '400': "ErrorJsonld",
-            '422': "ConstraintViolationJsonldJsonld",
+            '422': "ConstraintViolationJsonld",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1218,7 +1218,7 @@ class TaskApi:
     @validate_call
     def api_tasks_post_with_http_info(
         self,
-        task_jsonld_task_write: Annotated[TaskJsonldTaskWrite, Field(description="The new Task resource")],
+        task_task_write: Annotated[TaskTaskWrite, Field(description="The new Task resource")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1236,8 +1236,8 @@ class TaskApi:
 
         Creates a Task resource.
 
-        :param task_jsonld_task_write: The new Task resource (required)
-        :type task_jsonld_task_write: TaskJsonldTaskWrite
+        :param task_task_write: The new Task resource (required)
+        :type task_task_write: TaskTaskWrite
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1261,7 +1261,7 @@ class TaskApi:
         """ # noqa: E501
 
         _param = self._api_tasks_post_serialize(
-            task_jsonld_task_write=task_jsonld_task_write,
+            task_task_write=task_task_write,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1271,7 +1271,7 @@ class TaskApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "TaskJsonldTaskRead",
             '400': "ErrorJsonld",
-            '422': "ConstraintViolationJsonldJsonld",
+            '422': "ConstraintViolationJsonld",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1287,7 +1287,7 @@ class TaskApi:
     @validate_call
     def api_tasks_post_without_preload_content(
         self,
-        task_jsonld_task_write: Annotated[TaskJsonldTaskWrite, Field(description="The new Task resource")],
+        task_task_write: Annotated[TaskTaskWrite, Field(description="The new Task resource")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1305,8 +1305,8 @@ class TaskApi:
 
         Creates a Task resource.
 
-        :param task_jsonld_task_write: The new Task resource (required)
-        :type task_jsonld_task_write: TaskJsonldTaskWrite
+        :param task_task_write: The new Task resource (required)
+        :type task_task_write: TaskTaskWrite
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1330,7 +1330,7 @@ class TaskApi:
         """ # noqa: E501
 
         _param = self._api_tasks_post_serialize(
-            task_jsonld_task_write=task_jsonld_task_write,
+            task_task_write=task_task_write,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1340,7 +1340,7 @@ class TaskApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "TaskJsonldTaskRead",
             '400': "ErrorJsonld",
-            '422': "ConstraintViolationJsonldJsonld",
+            '422': "ConstraintViolationJsonld",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1351,7 +1351,7 @@ class TaskApi:
 
     def _api_tasks_post_serialize(
         self,
-        task_jsonld_task_write,
+        task_task_write,
         _request_auth,
         _content_type,
         _headers,
@@ -1377,8 +1377,8 @@ class TaskApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
-        if task_jsonld_task_write is not None:
-            _body_params = task_jsonld_task_write
+        if task_task_write is not None:
+            _body_params = task_task_write
 
 
         # set the HTTP header `Accept`

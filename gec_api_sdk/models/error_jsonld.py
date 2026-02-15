@@ -19,7 +19,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional, Union
-from gec_api_sdk.models.constraint_violation_jsonld_jsonld_context import ConstraintViolationJsonldJsonldContext
+from gec_api_sdk.models.hydra_item_base_schema_context import HydraItemBaseSchemaContext
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -27,9 +27,9 @@ class ErrorJsonld(BaseModel):
     """
     A representation of common errors.
     """ # noqa: E501
-    context: Optional[ConstraintViolationJsonldJsonldContext] = Field(default=None, alias="@context")
-    id: Optional[StrictStr] = Field(default=None, alias="@id")
-    type: Optional[StrictStr] = Field(default=None, alias="@type")
+    context: Optional[HydraItemBaseSchemaContext] = Field(default=None, alias="@context")
+    id: StrictStr = Field(alias="@id")
+    type: StrictStr = Field(alias="@type")
     title: Optional[StrictStr] = Field(default=None, description="A short, human-readable summary of the problem.")
     detail: Optional[StrictStr] = Field(default=None, description="A human-readable explanation specific to this occurrence of the problem.")
     status: Optional[Union[StrictFloat, StrictInt]] = 400
@@ -73,12 +73,8 @@ class ErrorJsonld(BaseModel):
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
-        * OpenAPI `readOnly` fields are excluded.
-        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
-            "id",
-            "type",
             "title",
             "detail",
             "instance",
@@ -103,6 +99,11 @@ class ErrorJsonld(BaseModel):
         # and model_fields_set contains the field
         if self.detail is None and "detail" in self.model_fields_set:
             _dict['detail'] = None
+
+        # set to None if status (nullable) is None
+        # and model_fields_set contains the field
+        if self.status is None and "status" in self.model_fields_set:
+            _dict['status'] = None
 
         # set to None if instance (nullable) is None
         # and model_fields_set contains the field
@@ -131,7 +132,7 @@ class ErrorJsonld(BaseModel):
                 raise ValueError("Error due to additional fields (not defined in ErrorJsonld) in the input: " + _key)
 
         _obj = cls.model_validate({
-            "@context": ConstraintViolationJsonldJsonldContext.from_dict(obj["@context"]) if obj.get("@context") is not None else None,
+            "@context": HydraItemBaseSchemaContext.from_dict(obj["@context"]) if obj.get("@context") is not None else None,
             "@id": obj.get("@id"),
             "@type": obj.get("@type"),
             "title": obj.get("title"),

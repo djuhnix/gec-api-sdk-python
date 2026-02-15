@@ -19,17 +19,18 @@ import json
 
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
-from typing import Any, ClassVar, Dict, List, Optional
+from typing import Any, ClassVar, Dict, List, Optional, Union
+from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
 
 class DonationDonationRead(BaseModel):
     """
-    
+    DonationDonationRead
     """ # noqa: E501
     id: Optional[StrictStr] = None
     member: Optional[StrictStr] = None
-    amount: StrictStr
+    amount: Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]]
     currency: Optional[StrictStr] = 'EUR'
     status: Optional[StrictStr] = 'pending'
     payment_method: Optional[StrictStr] = Field(default=None, alias="paymentMethod")

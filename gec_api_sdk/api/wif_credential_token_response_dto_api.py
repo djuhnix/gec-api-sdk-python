@@ -346,7 +346,7 @@ class WifCredentialTokenResponseDTOApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "WifCredentialTokenResponseDTO",
             '400': "ErrorJsonld",
-            '422': "ConstraintViolationJsonldJsonld",
+            '422': "ConstraintViolationJsonld",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -415,7 +415,7 @@ class WifCredentialTokenResponseDTOApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "WifCredentialTokenResponseDTO",
             '400': "ErrorJsonld",
-            '422': "ConstraintViolationJsonldJsonld",
+            '422': "ConstraintViolationJsonld",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -484,7 +484,7 @@ class WifCredentialTokenResponseDTOApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "WifCredentialTokenResponseDTO",
             '400': "ErrorJsonld",
-            '422': "ConstraintViolationJsonldJsonld",
+            '422': "ConstraintViolationJsonld",
         }
         response_data = self.api_client.call_api(
             *_param,

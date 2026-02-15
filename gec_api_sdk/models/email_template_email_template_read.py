@@ -25,13 +25,13 @@ from typing_extensions import Self
 
 class EmailTemplateEmailTemplateRead(BaseModel):
     """
-    
+    EmailTemplateEmailTemplateRead
     """ # noqa: E501
     id: Optional[StrictStr] = None
     name: StrictStr
     subject: StrictStr
     content: StrictStr
-    variables: Optional[List[StrictStr]] = None
+    variables: Optional[List[Optional[StrictStr]]] = None
     created_at: Optional[datetime] = Field(default=None, alias="createdAt")
     updated_at: Optional[datetime] = Field(default=None, alias="updatedAt")
     __properties: ClassVar[List[str]] = ["id", "name", "subject", "content", "variables", "createdAt", "updatedAt"]

@@ -90,6 +90,11 @@ class Error(BaseModel):
         if self.detail is None and "detail" in self.model_fields_set:
             _dict['detail'] = None
 
+        # set to None if status (nullable) is None
+        # and model_fields_set contains the field
+        if self.status is None and "status" in self.model_fields_set:
+            _dict['status'] = None
+
         # set to None if instance (nullable) is None
         # and model_fields_set contains the field
         if self.instance is None and "instance" in self.model_fields_set:

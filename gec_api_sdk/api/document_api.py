@@ -20,8 +20,8 @@ from pydantic import Field, StrictInt, StrictStr
 from typing import Optional
 from typing_extensions import Annotated
 from gec_api_sdk.models.api_documents_get_collection200_response import ApiDocumentsGetCollection200Response
+from gec_api_sdk.models.document_document_write import DocumentDocumentWrite
 from gec_api_sdk.models.document_jsonld_document_read import DocumentJsonldDocumentRead
-from gec_api_sdk.models.document_jsonld_document_write import DocumentJsonldDocumentWrite
 
 from gec_api_sdk.api_client import ApiClient, RequestSerialized
 from gec_api_sdk.api_response import ApiResponse
@@ -845,7 +845,7 @@ class DocumentApi:
     def api_documents_id_put(
         self,
         id: Annotated[StrictStr, Field(description="Document identifier")],
-        document_jsonld_document_write: Annotated[DocumentJsonldDocumentWrite, Field(description="The updated Document resource")],
+        document_document_write: Annotated[DocumentDocumentWrite, Field(description="The updated Document resource")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -865,8 +865,8 @@ class DocumentApi:
 
         :param id: Document identifier (required)
         :type id: str
-        :param document_jsonld_document_write: The updated Document resource (required)
-        :type document_jsonld_document_write: DocumentJsonldDocumentWrite
+        :param document_document_write: The updated Document resource (required)
+        :type document_document_write: DocumentDocumentWrite
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -891,7 +891,7 @@ class DocumentApi:
 
         _param = self._api_documents_id_put_serialize(
             id=id,
-            document_jsonld_document_write=document_jsonld_document_write,
+            document_document_write=document_document_write,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -901,7 +901,7 @@ class DocumentApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "DocumentJsonldDocumentRead",
             '400': "ErrorJsonld",
-            '422': "ConstraintViolationJsonldJsonld",
+            '422': "ConstraintViolationJsonld",
             '404': "ErrorJsonld",
         }
         response_data = self.api_client.call_api(
@@ -919,7 +919,7 @@ class DocumentApi:
     def api_documents_id_put_with_http_info(
         self,
         id: Annotated[StrictStr, Field(description="Document identifier")],
-        document_jsonld_document_write: Annotated[DocumentJsonldDocumentWrite, Field(description="The updated Document resource")],
+        document_document_write: Annotated[DocumentDocumentWrite, Field(description="The updated Document resource")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -939,8 +939,8 @@ class DocumentApi:
 
         :param id: Document identifier (required)
         :type id: str
-        :param document_jsonld_document_write: The updated Document resource (required)
-        :type document_jsonld_document_write: DocumentJsonldDocumentWrite
+        :param document_document_write: The updated Document resource (required)
+        :type document_document_write: DocumentDocumentWrite
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -965,7 +965,7 @@ class DocumentApi:
 
         _param = self._api_documents_id_put_serialize(
             id=id,
-            document_jsonld_document_write=document_jsonld_document_write,
+            document_document_write=document_document_write,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -975,7 +975,7 @@ class DocumentApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "DocumentJsonldDocumentRead",
             '400': "ErrorJsonld",
-            '422': "ConstraintViolationJsonldJsonld",
+            '422': "ConstraintViolationJsonld",
             '404': "ErrorJsonld",
         }
         response_data = self.api_client.call_api(
@@ -993,7 +993,7 @@ class DocumentApi:
     def api_documents_id_put_without_preload_content(
         self,
         id: Annotated[StrictStr, Field(description="Document identifier")],
-        document_jsonld_document_write: Annotated[DocumentJsonldDocumentWrite, Field(description="The updated Document resource")],
+        document_document_write: Annotated[DocumentDocumentWrite, Field(description="The updated Document resource")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1013,8 +1013,8 @@ class DocumentApi:
 
         :param id: Document identifier (required)
         :type id: str
-        :param document_jsonld_document_write: The updated Document resource (required)
-        :type document_jsonld_document_write: DocumentJsonldDocumentWrite
+        :param document_document_write: The updated Document resource (required)
+        :type document_document_write: DocumentDocumentWrite
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1039,7 +1039,7 @@ class DocumentApi:
 
         _param = self._api_documents_id_put_serialize(
             id=id,
-            document_jsonld_document_write=document_jsonld_document_write,
+            document_document_write=document_document_write,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1049,7 +1049,7 @@ class DocumentApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "DocumentJsonldDocumentRead",
             '400': "ErrorJsonld",
-            '422': "ConstraintViolationJsonldJsonld",
+            '422': "ConstraintViolationJsonld",
             '404': "ErrorJsonld",
         }
         response_data = self.api_client.call_api(
@@ -1062,7 +1062,7 @@ class DocumentApi:
     def _api_documents_id_put_serialize(
         self,
         id,
-        document_jsonld_document_write,
+        document_document_write,
         _request_auth,
         _content_type,
         _headers,
@@ -1090,8 +1090,8 @@ class DocumentApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
-        if document_jsonld_document_write is not None:
-            _body_params = document_jsonld_document_write
+        if document_document_write is not None:
+            _body_params = document_document_write
 
 
         # set the HTTP header `Accept`
@@ -1149,7 +1149,7 @@ class DocumentApi:
     @validate_call
     def api_documents_post(
         self,
-        document_jsonld_document_write: Annotated[DocumentJsonldDocumentWrite, Field(description="The new Document resource")],
+        document_document_write: Annotated[DocumentDocumentWrite, Field(description="The new Document resource")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1167,8 +1167,8 @@ class DocumentApi:
 
         Creates a Document resource.
 
-        :param document_jsonld_document_write: The new Document resource (required)
-        :type document_jsonld_document_write: DocumentJsonldDocumentWrite
+        :param document_document_write: The new Document resource (required)
+        :type document_document_write: DocumentDocumentWrite
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1192,7 +1192,7 @@ class DocumentApi:
         """ # noqa: E501
 
         _param = self._api_documents_post_serialize(
-            document_jsonld_document_write=document_jsonld_document_write,
+            document_document_write=document_document_write,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1202,7 +1202,7 @@ class DocumentApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "DocumentJsonldDocumentRead",
             '400': "ErrorJsonld",
-            '422': "ConstraintViolationJsonldJsonld",
+            '422': "ConstraintViolationJsonld",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1218,7 +1218,7 @@ class DocumentApi:
     @validate_call
     def api_documents_post_with_http_info(
         self,
-        document_jsonld_document_write: Annotated[DocumentJsonldDocumentWrite, Field(description="The new Document resource")],
+        document_document_write: Annotated[DocumentDocumentWrite, Field(description="The new Document resource")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1236,8 +1236,8 @@ class DocumentApi:
 
         Creates a Document resource.
 
-        :param document_jsonld_document_write: The new Document resource (required)
-        :type document_jsonld_document_write: DocumentJsonldDocumentWrite
+        :param document_document_write: The new Document resource (required)
+        :type document_document_write: DocumentDocumentWrite
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1261,7 +1261,7 @@ class DocumentApi:
         """ # noqa: E501
 
         _param = self._api_documents_post_serialize(
-            document_jsonld_document_write=document_jsonld_document_write,
+            document_document_write=document_document_write,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1271,7 +1271,7 @@ class DocumentApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "DocumentJsonldDocumentRead",
             '400': "ErrorJsonld",
-            '422': "ConstraintViolationJsonldJsonld",
+            '422': "ConstraintViolationJsonld",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1287,7 +1287,7 @@ class DocumentApi:
     @validate_call
     def api_documents_post_without_preload_content(
         self,
-        document_jsonld_document_write: Annotated[DocumentJsonldDocumentWrite, Field(description="The new Document resource")],
+        document_document_write: Annotated[DocumentDocumentWrite, Field(description="The new Document resource")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1305,8 +1305,8 @@ class DocumentApi:
 
         Creates a Document resource.
 
-        :param document_jsonld_document_write: The new Document resource (required)
-        :type document_jsonld_document_write: DocumentJsonldDocumentWrite
+        :param document_document_write: The new Document resource (required)
+        :type document_document_write: DocumentDocumentWrite
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1330,7 +1330,7 @@ class DocumentApi:
         """ # noqa: E501
 
         _param = self._api_documents_post_serialize(
-            document_jsonld_document_write=document_jsonld_document_write,
+            document_document_write=document_document_write,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1340,7 +1340,7 @@ class DocumentApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "DocumentJsonldDocumentRead",
             '400': "ErrorJsonld",
-            '422': "ConstraintViolationJsonldJsonld",
+            '422': "ConstraintViolationJsonld",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1351,7 +1351,7 @@ class DocumentApi:
 
     def _api_documents_post_serialize(
         self,
-        document_jsonld_document_write,
+        document_document_write,
         _request_auth,
         _content_type,
         _headers,
@@ -1377,8 +1377,8 @@ class DocumentApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
-        if document_jsonld_document_write is not None:
-            _body_params = document_jsonld_document_write
+        if document_document_write is not None:
+            _body_params = document_document_write
 
 
         # set the HTTP header `Accept`

@@ -25,7 +25,7 @@ from typing_extensions import Self
 
 class RsvpsRsvpRead(BaseModel):
     """
-    
+    RsvpsRsvpRead
     """ # noqa: E501
     id: Optional[StrictStr] = None
     event: StrictStr

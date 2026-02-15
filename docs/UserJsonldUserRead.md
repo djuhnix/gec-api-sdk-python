@@ -1,21 +1,20 @@
 # UserJsonldUserRead
 
 
-
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**context** | [**ConstraintViolationJsonldJsonldContext**](ConstraintViolationJsonldJsonldContext.md) |  | [optional] 
-**id** | **str** |  | [optional] [readonly] 
-**type** | **str** |  | [optional] [readonly] 
+**context** | [**HydraItemBaseSchemaContext**](HydraItemBaseSchemaContext.md) |  | [optional] 
+**id** | **str** |  | 
+**type** | **str** |  | 
 **id** | **str** |  | [optional] [readonly] 
 **email** | **str** |  | 
 **roles** | **List[str]** |  | [optional] 
 **created_at** | **datetime** |  | [optional] [readonly] 
 **updated_at** | **datetime** |  | [optional] 
 **google_service_account** | **str** |  | [optional] 
-**google_service_account_scopes** | **List[str]** |  | [optional] 
+**google_service_account_scopes** | **List[Optional[str]]** |  | [optional] 
 **google_impersonated_user** | **str** |  | [optional] 
 
 ## Example

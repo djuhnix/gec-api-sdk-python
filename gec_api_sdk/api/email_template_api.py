@@ -20,8 +20,8 @@ from pydantic import Field, StrictInt, StrictStr
 from typing import Optional
 from typing_extensions import Annotated
 from gec_api_sdk.models.api_email_templates_get_collection200_response import ApiEmailTemplatesGetCollection200Response
+from gec_api_sdk.models.email_template_email_template_write import EmailTemplateEmailTemplateWrite
 from gec_api_sdk.models.email_template_jsonld_email_template_read import EmailTemplateJsonldEmailTemplateRead
-from gec_api_sdk.models.email_template_jsonld_email_template_write import EmailTemplateJsonldEmailTemplateWrite
 
 from gec_api_sdk.api_client import ApiClient, RequestSerialized
 from gec_api_sdk.api_response import ApiResponse
@@ -845,7 +845,7 @@ class EmailTemplateApi:
     def api_email_templates_id_put(
         self,
         id: Annotated[StrictStr, Field(description="EmailTemplate identifier")],
-        email_template_jsonld_email_template_write: Annotated[EmailTemplateJsonldEmailTemplateWrite, Field(description="The updated EmailTemplate resource")],
+        email_template_email_template_write: Annotated[EmailTemplateEmailTemplateWrite, Field(description="The updated EmailTemplate resource")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -865,8 +865,8 @@ class EmailTemplateApi:
 
         :param id: EmailTemplate identifier (required)
         :type id: str
-        :param email_template_jsonld_email_template_write: The updated EmailTemplate resource (required)
-        :type email_template_jsonld_email_template_write: EmailTemplateJsonldEmailTemplateWrite
+        :param email_template_email_template_write: The updated EmailTemplate resource (required)
+        :type email_template_email_template_write: EmailTemplateEmailTemplateWrite
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -891,7 +891,7 @@ class EmailTemplateApi:
 
         _param = self._api_email_templates_id_put_serialize(
             id=id,
-            email_template_jsonld_email_template_write=email_template_jsonld_email_template_write,
+            email_template_email_template_write=email_template_email_template_write,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -901,7 +901,7 @@ class EmailTemplateApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "EmailTemplateJsonldEmailTemplateRead",
             '400': "ErrorJsonld",
-            '422': "ConstraintViolationJsonldJsonld",
+            '422': "ConstraintViolationJsonld",
             '404': "ErrorJsonld",
         }
         response_data = self.api_client.call_api(
@@ -919,7 +919,7 @@ class EmailTemplateApi:
     def api_email_templates_id_put_with_http_info(
         self,
         id: Annotated[StrictStr, Field(description="EmailTemplate identifier")],
-        email_template_jsonld_email_template_write: Annotated[EmailTemplateJsonldEmailTemplateWrite, Field(description="The updated EmailTemplate resource")],
+        email_template_email_template_write: Annotated[EmailTemplateEmailTemplateWrite, Field(description="The updated EmailTemplate resource")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -939,8 +939,8 @@ class EmailTemplateApi:
 
         :param id: EmailTemplate identifier (required)
         :type id: str
-        :param email_template_jsonld_email_template_write: The updated EmailTemplate resource (required)
-        :type email_template_jsonld_email_template_write: EmailTemplateJsonldEmailTemplateWrite
+        :param email_template_email_template_write: The updated EmailTemplate resource (required)
+        :type email_template_email_template_write: EmailTemplateEmailTemplateWrite
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -965,7 +965,7 @@ class EmailTemplateApi:
 
         _param = self._api_email_templates_id_put_serialize(
             id=id,
-            email_template_jsonld_email_template_write=email_template_jsonld_email_template_write,
+            email_template_email_template_write=email_template_email_template_write,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -975,7 +975,7 @@ class EmailTemplateApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "EmailTemplateJsonldEmailTemplateRead",
             '400': "ErrorJsonld",
-            '422': "ConstraintViolationJsonldJsonld",
+            '422': "ConstraintViolationJsonld",
             '404': "ErrorJsonld",
         }
         response_data = self.api_client.call_api(
@@ -993,7 +993,7 @@ class EmailTemplateApi:
     def api_email_templates_id_put_without_preload_content(
         self,
         id: Annotated[StrictStr, Field(description="EmailTemplate identifier")],
-        email_template_jsonld_email_template_write: Annotated[EmailTemplateJsonldEmailTemplateWrite, Field(description="The updated EmailTemplate resource")],
+        email_template_email_template_write: Annotated[EmailTemplateEmailTemplateWrite, Field(description="The updated EmailTemplate resource")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1013,8 +1013,8 @@ class EmailTemplateApi:
 
         :param id: EmailTemplate identifier (required)
         :type id: str
-        :param email_template_jsonld_email_template_write: The updated EmailTemplate resource (required)
-        :type email_template_jsonld_email_template_write: EmailTemplateJsonldEmailTemplateWrite
+        :param email_template_email_template_write: The updated EmailTemplate resource (required)
+        :type email_template_email_template_write: EmailTemplateEmailTemplateWrite
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1039,7 +1039,7 @@ class EmailTemplateApi:
 
         _param = self._api_email_templates_id_put_serialize(
             id=id,
-            email_template_jsonld_email_template_write=email_template_jsonld_email_template_write,
+            email_template_email_template_write=email_template_email_template_write,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1049,7 +1049,7 @@ class EmailTemplateApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "EmailTemplateJsonldEmailTemplateRead",
             '400': "ErrorJsonld",
-            '422': "ConstraintViolationJsonldJsonld",
+            '422': "ConstraintViolationJsonld",
             '404': "ErrorJsonld",
         }
         response_data = self.api_client.call_api(
@@ -1062,7 +1062,7 @@ class EmailTemplateApi:
     def _api_email_templates_id_put_serialize(
         self,
         id,
-        email_template_jsonld_email_template_write,
+        email_template_email_template_write,
         _request_auth,
         _content_type,
         _headers,
@@ -1090,8 +1090,8 @@ class EmailTemplateApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
-        if email_template_jsonld_email_template_write is not None:
-            _body_params = email_template_jsonld_email_template_write
+        if email_template_email_template_write is not None:
+            _body_params = email_template_email_template_write
 
 
         # set the HTTP header `Accept`
@@ -1149,7 +1149,7 @@ class EmailTemplateApi:
     @validate_call
     def api_email_templates_post(
         self,
-        email_template_jsonld_email_template_write: Annotated[EmailTemplateJsonldEmailTemplateWrite, Field(description="The new EmailTemplate resource")],
+        email_template_email_template_write: Annotated[EmailTemplateEmailTemplateWrite, Field(description="The new EmailTemplate resource")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1167,8 +1167,8 @@ class EmailTemplateApi:
 
         Creates a EmailTemplate resource.
 
-        :param email_template_jsonld_email_template_write: The new EmailTemplate resource (required)
-        :type email_template_jsonld_email_template_write: EmailTemplateJsonldEmailTemplateWrite
+        :param email_template_email_template_write: The new EmailTemplate resource (required)
+        :type email_template_email_template_write: EmailTemplateEmailTemplateWrite
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1192,7 +1192,7 @@ class EmailTemplateApi:
         """ # noqa: E501
 
         _param = self._api_email_templates_post_serialize(
-            email_template_jsonld_email_template_write=email_template_jsonld_email_template_write,
+            email_template_email_template_write=email_template_email_template_write,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1202,7 +1202,7 @@ class EmailTemplateApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "EmailTemplateJsonldEmailTemplateRead",
             '400': "ErrorJsonld",
-            '422': "ConstraintViolationJsonldJsonld",
+            '422': "ConstraintViolationJsonld",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1218,7 +1218,7 @@ class EmailTemplateApi:
     @validate_call
     def api_email_templates_post_with_http_info(
         self,
-        email_template_jsonld_email_template_write: Annotated[EmailTemplateJsonldEmailTemplateWrite, Field(description="The new EmailTemplate resource")],
+        email_template_email_template_write: Annotated[EmailTemplateEmailTemplateWrite, Field(description="The new EmailTemplate resource")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1236,8 +1236,8 @@ class EmailTemplateApi:
 
         Creates a EmailTemplate resource.
 
-        :param email_template_jsonld_email_template_write: The new EmailTemplate resource (required)
-        :type email_template_jsonld_email_template_write: EmailTemplateJsonldEmailTemplateWrite
+        :param email_template_email_template_write: The new EmailTemplate resource (required)
+        :type email_template_email_template_write: EmailTemplateEmailTemplateWrite
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1261,7 +1261,7 @@ class EmailTemplateApi:
         """ # noqa: E501
 
         _param = self._api_email_templates_post_serialize(
-            email_template_jsonld_email_template_write=email_template_jsonld_email_template_write,
+            email_template_email_template_write=email_template_email_template_write,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1271,7 +1271,7 @@ class EmailTemplateApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "EmailTemplateJsonldEmailTemplateRead",
             '400': "ErrorJsonld",
-            '422': "ConstraintViolationJsonldJsonld",
+            '422': "ConstraintViolationJsonld",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1287,7 +1287,7 @@ class EmailTemplateApi:
     @validate_call
     def api_email_templates_post_without_preload_content(
         self,
-        email_template_jsonld_email_template_write: Annotated[EmailTemplateJsonldEmailTemplateWrite, Field(description="The new EmailTemplate resource")],
+        email_template_email_template_write: Annotated[EmailTemplateEmailTemplateWrite, Field(description="The new EmailTemplate resource")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1305,8 +1305,8 @@ class EmailTemplateApi:
 
         Creates a EmailTemplate resource.
 
-        :param email_template_jsonld_email_template_write: The new EmailTemplate resource (required)
-        :type email_template_jsonld_email_template_write: EmailTemplateJsonldEmailTemplateWrite
+        :param email_template_email_template_write: The new EmailTemplate resource (required)
+        :type email_template_email_template_write: EmailTemplateEmailTemplateWrite
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1330,7 +1330,7 @@ class EmailTemplateApi:
         """ # noqa: E501
 
         _param = self._api_email_templates_post_serialize(
-            email_template_jsonld_email_template_write=email_template_jsonld_email_template_write,
+            email_template_email_template_write=email_template_email_template_write,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1340,7 +1340,7 @@ class EmailTemplateApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "EmailTemplateJsonldEmailTemplateRead",
             '400': "ErrorJsonld",
-            '422': "ConstraintViolationJsonldJsonld",
+            '422': "ConstraintViolationJsonld",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1351,7 +1351,7 @@ class EmailTemplateApi:
 
     def _api_email_templates_post_serialize(
         self,
-        email_template_jsonld_email_template_write,
+        email_template_email_template_write,
         _request_auth,
         _content_type,
         _headers,
@@ -1377,8 +1377,8 @@ class EmailTemplateApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
-        if email_template_jsonld_email_template_write is not None:
-            _body_params = email_template_jsonld_email_template_write
+        if email_template_email_template_write is not None:
+            _body_params = email_template_email_template_write
 
 
         # set the HTTP header `Accept`

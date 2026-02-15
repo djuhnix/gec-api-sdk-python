@@ -1,7 +1,6 @@
 # EmailTemplateEmailTemplateWrite
 
 
-
 ## Properties
 
 Name | Type | Description | Notes
@@ -9,7 +8,7 @@ Name | Type | Description | Notes
 **name** | **str** |  | 
 **subject** | **str** |  | 
 **content** | **str** |  | 
-**variables** | **List[str]** |  | [optional] 
+**variables** | **List[Optional[str]]** |  | [optional] 
 
 ## Example
 

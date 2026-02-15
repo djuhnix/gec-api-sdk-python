@@ -18,23 +18,23 @@ import re  # noqa: F401
 import json
 
 from datetime import datetime
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr, field_validator
-from typing import Any, ClassVar, Dict, List, Optional
-from gec_api_sdk.models.constraint_violation_jsonld_jsonld_context import ConstraintViolationJsonldJsonldContext
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictFloat, StrictInt, StrictStr, field_validator
+from typing import Any, ClassVar, Dict, List, Optional, Union
+from gec_api_sdk.models.hydra_item_base_schema_context import HydraItemBaseSchemaContext
 from typing import Optional, Set
 from typing_extensions import Self
 
 class MemberJsonldMemberRead(BaseModel):
     """
-    
+    MemberJsonldMemberRead
     """ # noqa: E501
-    context: Optional[ConstraintViolationJsonldJsonldContext] = Field(default=None, alias="@context")
-    id: Optional[StrictStr] = Field(default=None, alias="@id")
-    type: Optional[StrictStr] = Field(default=None, alias="@type")
+    context: Optional[HydraItemBaseSchemaContext] = Field(default=None, alias="@context")
+    id: StrictStr = Field(alias="@id")
+    type: StrictStr = Field(alias="@type")
     id: Optional[StrictStr] = None
     first_name: StrictStr = Field(alias="firstName")
     last_name: StrictStr = Field(alias="lastName")
-    email: StrictStr
+    email: Optional[StrictStr] = None
     birth_date: Optional[datetime] = Field(default=None, alias="birthDate")
     gender: Optional[StrictStr] = None
     phone_number_fr: Optional[StrictStr] = Field(default=None, alias="phoneNumberFr")
@@ -42,7 +42,8 @@ class MemberJsonldMemberRead(BaseModel):
     postal_address: Optional[StrictStr] = Field(default=None, alias="postalAddress")
     postal_code: Optional[StrictStr] = Field(default=None, alias="postalCode")
     city: Optional[StrictStr] = None
-    first_year: Optional[StrictBool] = Field(default=None, alias="firstYear")
+    is_first_year_study: Optional[StrictBool] = Field(default=None, alias="isFirstYearStudy")
+    first_year: Optional[datetime] = Field(default=None, alias="firstYear")
     formation: Optional[StrictStr] = None
     establishment: Optional[StrictStr] = None
     study_level: Optional[StrictStr] = Field(default=None, alias="studyLevel")
@@ -53,15 +54,17 @@ class MemberJsonldMemberRead(BaseModel):
     has_visa: Optional[StrictBool] = Field(default=None, alias="hasVisa")
     has_school_certificate: Optional[StrictBool] = Field(default=None, alias="hasSchoolCertificate")
     photo_url: Optional[StrictStr] = Field(default=None, alias="photoUrl")
-    status: StrictStr
-    membership_type: StrictStr = Field(alias="membershipType")
-    contribution: Optional[StrictStr] = None
+    status: Optional[StrictStr]
+    membership_type: Optional[StrictStr] = Field(alias="membershipType")
+    membership_start_date: Optional[datetime] = Field(default=None, alias="membershipStartDate")
+    contribution: Optional[Union[StrictFloat, StrictInt]] = None
+    contribution_status: Optional[StrictStr] = Field(default=None, alias="contributionStatus")
     created_at: Optional[datetime] = Field(default=None, alias="createdAt")
     updated_at: Optional[datetime] = Field(default=None, alias="updatedAt")
     documents: Optional[List[StrictStr]] = None
     rsvps: Optional[List[StrictStr]] = None
     donations: Optional[List[StrictStr]] = None
-    __properties: ClassVar[List[str]] = ["@context", "@id", "@type", "id", "firstName", "lastName", "email", "birthDate", "gender", "phoneNumberFr", "phoneNumberCg", "postalAddress", "postalCode", "city", "firstYear", "formation", "establishment", "studyLevel", "trainingCycle", "otherAssociations", "associationNames", "hasPassportCg", "hasVisa", "hasSchoolCertificate", "photoUrl", "status", "membershipType", "contribution", "createdAt", "updatedAt", "documents", "rsvps", "donations"]
+    __properties: ClassVar[List[str]] = ["@context", "@id", "@type", "id", "firstName", "lastName", "email", "birthDate", "gender", "phoneNumberFr", "phoneNumberCg", "postalAddress", "postalCode", "city", "isFirstYearStudy", "firstYear", "formation", "establishment", "studyLevel", "trainingCycle", "otherAssociations", "associationNames", "hasPassportCg", "hasVisa", "hasSchoolCertificate", "photoUrl", "status", "membershipType", "membershipStartDate", "contribution", "contributionStatus", "createdAt", "updatedAt", "documents", "rsvps", "donations"]
 
     @field_validator('gender')
     def gender_validate_enum(cls, value):
@@ -73,9 +76,22 @@ class MemberJsonldMemberRead(BaseModel):
             raise ValueError("must be one of enum values ('male', 'female', 'other', 'unknown_default_open_api')")
         return value
 
+    @field_validator('training_cycle')
+    def training_cycle_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in set(['initial', 'apprenticeship', 'continuing_education', 'unknown_default_open_api']):
+            raise ValueError("must be one of enum values ('initial', 'apprenticeship', 'continuing_education', 'unknown_default_open_api')")
+        return value
+
     @field_validator('status')
     def status_validate_enum(cls, value):
         """Validates the enum"""
+        if value is None:
+            return value
+
         if value not in set(['active', 'pending', 'expired', 'suspended', 'unknown_default_open_api']):
             raise ValueError("must be one of enum values ('active', 'pending', 'expired', 'suspended', 'unknown_default_open_api')")
         return value
@@ -83,8 +99,21 @@ class MemberJsonldMemberRead(BaseModel):
     @field_validator('membership_type')
     def membership_type_validate_enum(cls, value):
         """Validates the enum"""
+        if value is None:
+            return value
+
         if value not in set(['student', 'active', 'sponsor', 'alumni', 'unknown_default_open_api']):
             raise ValueError("must be one of enum values ('student', 'active', 'sponsor', 'alumni', 'unknown_default_open_api')")
+        return value
+
+    @field_validator('contribution_status')
+    def contribution_status_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in set(['paid', 'pending', 'expired', 'unknown_default_open_api']):
+            raise ValueError("must be one of enum values ('paid', 'pending', 'expired', 'unknown_default_open_api')")
         return value
 
     model_config = ConfigDict(
@@ -119,12 +148,8 @@ class MemberJsonldMemberRead(BaseModel):
           are ignored.
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
-        * OpenAPI `readOnly` fields are excluded.
-        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
-            "id",
-            "type",
             "id",
             "created_at",
         ])
@@ -141,6 +166,11 @@ class MemberJsonldMemberRead(BaseModel):
         # and model_fields_set contains the field
         if self.id is None and "id" in self.model_fields_set:
             _dict['id'] = None
+
+        # set to None if email (nullable) is None
+        # and model_fields_set contains the field
+        if self.email is None and "email" in self.model_fields_set:
+            _dict['email'] = None
 
         # set to None if birth_date (nullable) is None
         # and model_fields_set contains the field
@@ -176,6 +206,11 @@ class MemberJsonldMemberRead(BaseModel):
         # and model_fields_set contains the field
         if self.city is None and "city" in self.model_fields_set:
             _dict['city'] = None
+
+        # set to None if is_first_year_study (nullable) is None
+        # and model_fields_set contains the field
+        if self.is_first_year_study is None and "is_first_year_study" in self.model_fields_set:
+            _dict['isFirstYearStudy'] = None
 
         # set to None if first_year (nullable) is None
         # and model_fields_set contains the field
@@ -232,10 +267,30 @@ class MemberJsonldMemberRead(BaseModel):
         if self.photo_url is None and "photo_url" in self.model_fields_set:
             _dict['photoUrl'] = None
 
+        # set to None if status (nullable) is None
+        # and model_fields_set contains the field
+        if self.status is None and "status" in self.model_fields_set:
+            _dict['status'] = None
+
+        # set to None if membership_type (nullable) is None
+        # and model_fields_set contains the field
+        if self.membership_type is None and "membership_type" in self.model_fields_set:
+            _dict['membershipType'] = None
+
+        # set to None if membership_start_date (nullable) is None
+        # and model_fields_set contains the field
+        if self.membership_start_date is None and "membership_start_date" in self.model_fields_set:
+            _dict['membershipStartDate'] = None
+
         # set to None if contribution (nullable) is None
         # and model_fields_set contains the field
         if self.contribution is None and "contribution" in self.model_fields_set:
             _dict['contribution'] = None
+
+        # set to None if contribution_status (nullable) is None
+        # and model_fields_set contains the field
+        if self.contribution_status is None and "contribution_status" in self.model_fields_set:
+            _dict['contributionStatus'] = None
 
         return _dict
 
@@ -254,7 +309,7 @@ class MemberJsonldMemberRead(BaseModel):
                 raise ValueError("Error due to additional fields (not defined in MemberJsonldMemberRead) in the input: " + _key)
 
         _obj = cls.model_validate({
-            "@context": ConstraintViolationJsonldJsonldContext.from_dict(obj["@context"]) if obj.get("@context") is not None else None,
+            "@context": HydraItemBaseSchemaContext.from_dict(obj["@context"]) if obj.get("@context") is not None else None,
             "@id": obj.get("@id"),
             "@type": obj.get("@type"),
             "id": obj.get("id"),
@@ -268,6 +323,7 @@ class MemberJsonldMemberRead(BaseModel):
             "postalAddress": obj.get("postalAddress"),
             "postalCode": obj.get("postalCode"),
             "city": obj.get("city"),
+            "isFirstYearStudy": obj.get("isFirstYearStudy"),
             "firstYear": obj.get("firstYear"),
             "formation": obj.get("formation"),
             "establishment": obj.get("establishment"),
@@ -281,7 +337,9 @@ class MemberJsonldMemberRead(BaseModel):
             "photoUrl": obj.get("photoUrl"),
             "status": obj.get("status"),
             "membershipType": obj.get("membershipType"),
+            "membershipStartDate": obj.get("membershipStartDate"),
             "contribution": obj.get("contribution"),
+            "contributionStatus": obj.get("contributionStatus"),
             "createdAt": obj.get("createdAt"),
             "updatedAt": obj.get("updatedAt"),
             "documents": obj.get("documents"),

@@ -1,14 +1,15 @@
 # ApiEmailTemplatesGetCollection200Response
 
+EmailTemplate.jsonld-email_template.read collection.
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**member** | [**List[EmailTemplateJsonldEmailTemplateRead]**](EmailTemplateJsonldEmailTemplateRead.md) |  | 
 **total_items** | **int** |  | [optional] 
-**view** | [**ApiDocumentsGetCollection200ResponseView**](ApiDocumentsGetCollection200ResponseView.md) |  | [optional] 
-**search** | [**ApiDocumentsGetCollection200ResponseSearch**](ApiDocumentsGetCollection200ResponseSearch.md) |  | [optional] 
+**search** | [**HydraCollectionBaseSchemaNoPaginationSearch**](HydraCollectionBaseSchemaNoPaginationSearch.md) |  | [optional] 
+**view** | [**HydraCollectionBaseSchemaAllOfView**](HydraCollectionBaseSchemaAllOfView.md) |  | [optional] 
+**member** | [**List[EmailTemplateJsonldEmailTemplateRead]**](EmailTemplateJsonldEmailTemplateRead.md) |  | 
 
 ## Example
 

@@ -20,8 +20,8 @@ from pydantic import Field, StrictInt, StrictStr
 from typing import Optional
 from typing_extensions import Annotated
 from gec_api_sdk.models.api_events_get_collection200_response import ApiEventsGetCollection200Response
+from gec_api_sdk.models.event_event_write import EventEventWrite
 from gec_api_sdk.models.event_jsonld_event_read import EventJsonldEventRead
-from gec_api_sdk.models.event_jsonld_event_write import EventJsonldEventWrite
 
 from gec_api_sdk.api_client import ApiClient, RequestSerialized
 from gec_api_sdk.api_response import ApiResponse
@@ -845,7 +845,7 @@ class EventApi:
     def api_events_id_put(
         self,
         id: Annotated[StrictStr, Field(description="Event identifier")],
-        event_jsonld_event_write: Annotated[EventJsonldEventWrite, Field(description="The updated Event resource")],
+        event_event_write: Annotated[EventEventWrite, Field(description="The updated Event resource")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -865,8 +865,8 @@ class EventApi:
 
         :param id: Event identifier (required)
         :type id: str
-        :param event_jsonld_event_write: The updated Event resource (required)
-        :type event_jsonld_event_write: EventJsonldEventWrite
+        :param event_event_write: The updated Event resource (required)
+        :type event_event_write: EventEventWrite
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -891,7 +891,7 @@ class EventApi:
 
         _param = self._api_events_id_put_serialize(
             id=id,
-            event_jsonld_event_write=event_jsonld_event_write,
+            event_event_write=event_event_write,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -901,7 +901,7 @@ class EventApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "EventJsonldEventRead",
             '400': "ErrorJsonld",
-            '422': "ConstraintViolationJsonldJsonld",
+            '422': "ConstraintViolationJsonld",
             '404': "ErrorJsonld",
         }
         response_data = self.api_client.call_api(
@@ -919,7 +919,7 @@ class EventApi:
     def api_events_id_put_with_http_info(
         self,
         id: Annotated[StrictStr, Field(description="Event identifier")],
-        event_jsonld_event_write: Annotated[EventJsonldEventWrite, Field(description="The updated Event resource")],
+        event_event_write: Annotated[EventEventWrite, Field(description="The updated Event resource")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -939,8 +939,8 @@ class EventApi:
 
         :param id: Event identifier (required)
         :type id: str
-        :param event_jsonld_event_write: The updated Event resource (required)
-        :type event_jsonld_event_write: EventJsonldEventWrite
+        :param event_event_write: The updated Event resource (required)
+        :type event_event_write: EventEventWrite
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -965,7 +965,7 @@ class EventApi:
 
         _param = self._api_events_id_put_serialize(
             id=id,
-            event_jsonld_event_write=event_jsonld_event_write,
+            event_event_write=event_event_write,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -975,7 +975,7 @@ class EventApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "EventJsonldEventRead",
             '400': "ErrorJsonld",
-            '422': "ConstraintViolationJsonldJsonld",
+            '422': "ConstraintViolationJsonld",
             '404': "ErrorJsonld",
         }
         response_data = self.api_client.call_api(
@@ -993,7 +993,7 @@ class EventApi:
     def api_events_id_put_without_preload_content(
         self,
         id: Annotated[StrictStr, Field(description="Event identifier")],
-        event_jsonld_event_write: Annotated[EventJsonldEventWrite, Field(description="The updated Event resource")],
+        event_event_write: Annotated[EventEventWrite, Field(description="The updated Event resource")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1013,8 +1013,8 @@ class EventApi:
 
         :param id: Event identifier (required)
         :type id: str
-        :param event_jsonld_event_write: The updated Event resource (required)
-        :type event_jsonld_event_write: EventJsonldEventWrite
+        :param event_event_write: The updated Event resource (required)
+        :type event_event_write: EventEventWrite
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1039,7 +1039,7 @@ class EventApi:
 
         _param = self._api_events_id_put_serialize(
             id=id,
-            event_jsonld_event_write=event_jsonld_event_write,
+            event_event_write=event_event_write,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1049,7 +1049,7 @@ class EventApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "EventJsonldEventRead",
             '400': "ErrorJsonld",
-            '422': "ConstraintViolationJsonldJsonld",
+            '422': "ConstraintViolationJsonld",
             '404': "ErrorJsonld",
         }
         response_data = self.api_client.call_api(
@@ -1062,7 +1062,7 @@ class EventApi:
     def _api_events_id_put_serialize(
         self,
         id,
-        event_jsonld_event_write,
+        event_event_write,
         _request_auth,
         _content_type,
         _headers,
@@ -1090,8 +1090,8 @@ class EventApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
-        if event_jsonld_event_write is not None:
-            _body_params = event_jsonld_event_write
+        if event_event_write is not None:
+            _body_params = event_event_write
 
 
         # set the HTTP header `Accept`
@@ -1149,7 +1149,7 @@ class EventApi:
     @validate_call
     def api_events_post(
         self,
-        event_jsonld_event_write: Annotated[EventJsonldEventWrite, Field(description="The new Event resource")],
+        event_event_write: Annotated[EventEventWrite, Field(description="The new Event resource")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1167,8 +1167,8 @@ class EventApi:
 
         Creates a Event resource.
 
-        :param event_jsonld_event_write: The new Event resource (required)
-        :type event_jsonld_event_write: EventJsonldEventWrite
+        :param event_event_write: The new Event resource (required)
+        :type event_event_write: EventEventWrite
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1192,7 +1192,7 @@ class EventApi:
         """ # noqa: E501
 
         _param = self._api_events_post_serialize(
-            event_jsonld_event_write=event_jsonld_event_write,
+            event_event_write=event_event_write,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1202,7 +1202,7 @@ class EventApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "EventJsonldEventRead",
             '400': "ErrorJsonld",
-            '422': "ConstraintViolationJsonldJsonld",
+            '422': "ConstraintViolationJsonld",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1218,7 +1218,7 @@ class EventApi:
     @validate_call
     def api_events_post_with_http_info(
         self,
-        event_jsonld_event_write: Annotated[EventJsonldEventWrite, Field(description="The new Event resource")],
+        event_event_write: Annotated[EventEventWrite, Field(description="The new Event resource")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1236,8 +1236,8 @@ class EventApi:
 
         Creates a Event resource.
 
-        :param event_jsonld_event_write: The new Event resource (required)
-        :type event_jsonld_event_write: EventJsonldEventWrite
+        :param event_event_write: The new Event resource (required)
+        :type event_event_write: EventEventWrite
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1261,7 +1261,7 @@ class EventApi:
         """ # noqa: E501
 
         _param = self._api_events_post_serialize(
-            event_jsonld_event_write=event_jsonld_event_write,
+            event_event_write=event_event_write,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1271,7 +1271,7 @@ class EventApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "EventJsonldEventRead",
             '400': "ErrorJsonld",
-            '422': "ConstraintViolationJsonldJsonld",
+            '422': "ConstraintViolationJsonld",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1287,7 +1287,7 @@ class EventApi:
     @validate_call
     def api_events_post_without_preload_content(
         self,
-        event_jsonld_event_write: Annotated[EventJsonldEventWrite, Field(description="The new Event resource")],
+        event_event_write: Annotated[EventEventWrite, Field(description="The new Event resource")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1305,8 +1305,8 @@ class EventApi:
 
         Creates a Event resource.
 
-        :param event_jsonld_event_write: The new Event resource (required)
-        :type event_jsonld_event_write: EventJsonldEventWrite
+        :param event_event_write: The new Event resource (required)
+        :type event_event_write: EventEventWrite
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1330,7 +1330,7 @@ class EventApi:
         """ # noqa: E501
 
         _param = self._api_events_post_serialize(
-            event_jsonld_event_write=event_jsonld_event_write,
+            event_event_write=event_event_write,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1340,7 +1340,7 @@ class EventApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "EventJsonldEventRead",
             '400': "ErrorJsonld",
-            '422': "ConstraintViolationJsonldJsonld",
+            '422': "ConstraintViolationJsonld",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1351,7 +1351,7 @@ class EventApi:
 
     def _api_events_post_serialize(
         self,
-        event_jsonld_event_write,
+        event_event_write,
         _request_auth,
         _content_type,
         _headers,
@@ -1377,8 +1377,8 @@ class EventApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
-        if event_jsonld_event_write is not None:
-            _body_params = event_jsonld_event_write
+        if event_event_write is not None:
+            _body_params = event_event_write
 
 
         # set the HTTP header `Accept`

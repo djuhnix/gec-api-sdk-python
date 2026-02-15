@@ -25,7 +25,7 @@ from typing_extensions import Self
 
 class TaskTaskWrite(BaseModel):
     """
-    
+    TaskTaskWrite
     """ # noqa: E501
     title: StrictStr
     description: Optional[StrictStr] = None

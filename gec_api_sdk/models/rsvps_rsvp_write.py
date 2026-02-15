@@ -24,7 +24,7 @@ from typing_extensions import Self
 
 class RsvpsRsvpWrite(BaseModel):
     """
-    
+    RsvpsRsvpWrite
     """ # noqa: E501
     event: StrictStr
     member: StrictStr

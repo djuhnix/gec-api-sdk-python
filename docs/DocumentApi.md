@@ -245,7 +245,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **api_documents_id_put**
-> DocumentJsonldDocumentRead api_documents_id_put(id, document_jsonld_document_write)
+> DocumentJsonldDocumentRead api_documents_id_put(id, document_document_write)
 
 Replaces the Document resource.
 
@@ -257,8 +257,8 @@ Replaces the Document resource.
 
 ```python
 import gec_api_sdk
+from gec_api_sdk.models.document_document_write import DocumentDocumentWrite
 from gec_api_sdk.models.document_jsonld_document_read import DocumentJsonldDocumentRead
-from gec_api_sdk.models.document_jsonld_document_write import DocumentJsonldDocumentWrite
 from gec_api_sdk.rest import ApiException
 from pprint import pprint
 
@@ -283,11 +283,11 @@ with gec_api_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = gec_api_sdk.DocumentApi(api_client)
     id = 'id_example' # str | Document identifier
-    document_jsonld_document_write = gec_api_sdk.DocumentJsonldDocumentWrite() # DocumentJsonldDocumentWrite | The updated Document resource
+    document_document_write = gec_api_sdk.DocumentDocumentWrite() # DocumentDocumentWrite | The updated Document resource
 
     try:
         # Replaces the Document resource.
-        api_response = api_instance.api_documents_id_put(id, document_jsonld_document_write)
+        api_response = api_instance.api_documents_id_put(id, document_document_write)
         print("The response of DocumentApi->api_documents_id_put:\n")
         pprint(api_response)
     except Exception as e:
@@ -302,7 +302,7 @@ with gec_api_sdk.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| Document identifier | 
- **document_jsonld_document_write** | [**DocumentJsonldDocumentWrite**](DocumentJsonldDocumentWrite.md)| The updated Document resource | 
+ **document_document_write** | [**DocumentDocumentWrite**](DocumentDocumentWrite.md)| The updated Document resource | 
 
 ### Return type
 
@@ -329,7 +329,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **api_documents_post**
-> DocumentJsonldDocumentRead api_documents_post(document_jsonld_document_write)
+> DocumentJsonldDocumentRead api_documents_post(document_document_write)
 
 Creates a Document resource.
 
@@ -341,8 +341,8 @@ Creates a Document resource.
 
 ```python
 import gec_api_sdk
+from gec_api_sdk.models.document_document_write import DocumentDocumentWrite
 from gec_api_sdk.models.document_jsonld_document_read import DocumentJsonldDocumentRead
-from gec_api_sdk.models.document_jsonld_document_write import DocumentJsonldDocumentWrite
 from gec_api_sdk.rest import ApiException
 from pprint import pprint
 
@@ -366,11 +366,11 @@ configuration = gec_api_sdk.Configuration(
 with gec_api_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = gec_api_sdk.DocumentApi(api_client)
-    document_jsonld_document_write = gec_api_sdk.DocumentJsonldDocumentWrite() # DocumentJsonldDocumentWrite | The new Document resource
+    document_document_write = gec_api_sdk.DocumentDocumentWrite() # DocumentDocumentWrite | The new Document resource
 
     try:
         # Creates a Document resource.
-        api_response = api_instance.api_documents_post(document_jsonld_document_write)
+        api_response = api_instance.api_documents_post(document_document_write)
         print("The response of DocumentApi->api_documents_post:\n")
         pprint(api_response)
     except Exception as e:
@@ -384,7 +384,7 @@ with gec_api_sdk.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **document_jsonld_document_write** | [**DocumentJsonldDocumentWrite**](DocumentJsonldDocumentWrite.md)| The new Document resource | 
+ **document_document_write** | [**DocumentDocumentWrite**](DocumentDocumentWrite.md)| The new Document resource | 
 
 ### Return type
 

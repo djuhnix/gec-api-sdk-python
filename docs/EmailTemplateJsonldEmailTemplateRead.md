@@ -1,19 +1,18 @@
 # EmailTemplateJsonldEmailTemplateRead
 
 
-
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**context** | [**ConstraintViolationJsonldJsonldContext**](ConstraintViolationJsonldJsonldContext.md) |  | [optional] 
-**id** | **str** |  | [optional] [readonly] 
-**type** | **str** |  | [optional] [readonly] 
+**context** | [**HydraItemBaseSchemaContext**](HydraItemBaseSchemaContext.md) |  | [optional] 
+**id** | **str** |  | 
+**type** | **str** |  | 
 **id** | **str** |  | [optional] [readonly] 
 **name** | **str** |  | 
 **subject** | **str** |  | 
 **content** | **str** |  | 
-**variables** | **List[str]** |  | [optional] 
+**variables** | **List[Optional[str]]** |  | [optional] 
 **created_at** | **datetime** |  | [optional] [readonly] 
 **updated_at** | **datetime** |  | [optional] 
 
