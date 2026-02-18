@@ -3,6 +3,7 @@ Main orchestrator for member import process.
 """
 
 import logging
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import Dict, List, Any, Optional, Tuple
 
 import gec_api_sdk
@@ -69,157 +70,301 @@ class MemberImporter:
         self.failed_count = 0
         self.duplicate_count = 0
         self.skipped_count = 0
+        self.not_processed_count = 0
 
     def import_members(
         self,
         records: List[Dict[str, Any]],
         dry_run: bool = False,
         batch_size: int = 50,
-        stop_on_error: bool = False
+        stop_on_error: bool = False,
+        concurrency: int = 10,
     ) -> Tuple[List[Dict], List[Dict], List[Dict]]:
         """
         Import member records.
 
+        Records are processed in two phases per batch:
+        1. Preparation (sequential): transform, validate, duplicate check.
+        2. Creation (parallel): API calls fired concurrently up to `concurrency` workers.
+
         Args:
             records: List of record dictionaries from source
             dry_run: If True, don't actually create members
-            batch_size: Number of records to process in each batch
-            stop_on_error: If True, stop immediately after first failed record
+            batch_size: Number of records to prepare per batch before firing API calls
+            stop_on_error: If True, stop immediately after the first failure
+            concurrency: Maximum number of parallel API creation calls
 
         Returns:
             Tuple of (success_records, failed_records, duplicate_records)
         """
-        logger.info(f"Starting import of {len(records)} records (dry_run={dry_run}, stop_on_error={stop_on_error})")
+        logger.info(
+            f"Starting import of {len(records)} records "
+            f"(dry_run={dry_run}, stop_on_error={stop_on_error}, concurrency={concurrency})"
+        )
 
         self.reset_counters()
         self.total_count = len(records)
 
-        # Load existing members for duplicate checking
         if not dry_run:
             self.duplicate_checker.load_existing_members()
 
-        success_records = []
-        failed_records = []
-        duplicate_records = []
+        success_records: List[Dict] = []
+        failed_records: List[Dict] = []
+        duplicate_records: List[Dict] = []
 
-        # Process records in batches
-        for i in range(0, len(records), batch_size):
-            batch = records[i:i + batch_size]
-            batch_num = i // batch_size + 1
+        for batch_start in range(0, len(records), batch_size):
+            batch = records[batch_start:batch_start + batch_size]
+            batch_num = batch_start // batch_size + 1
             total_batches = (len(records) + batch_size - 1) // batch_size
+            logger.info(
+                f"Processing batch {batch_num}/{total_batches} "
+                f"(records {batch_start + 1}-{min(batch_start + batch_size, len(records))})"
+            )
 
-            logger.info(f"Processing batch {batch_num}/{total_batches} (records {i+1}-{min(i+batch_size, len(records))})")
+            # ── Phase 1: sequential preparation ─────────────────────────────
+            # Transform, validate, and duplicate-check each record in order.
+            # Records that pass become "ready" payloads for Phase 2.
+            prepared: List[Dict] = []
+            should_stop = False
 
-            for idx, record in enumerate(batch, start=i):
-                result = self._process_record(record, idx + 1, dry_run)
+            for idx, record in enumerate(batch, start=batch_start):
+                result = self._prepare_record(record, idx + 1)
+                prepared.append(result)
+
+                if result['status'] in ('failed', 'duplicate'):
+                    if result['status'] == 'failed':
+                        failed_records.append(result)
+                        self.failed_count += 1
+                        logger.warning(f"Row {idx + 1}: Validation failed - {result['error_reason']}")
+                    else:
+                        duplicate_records.append(result)
+                        self.duplicate_count += 1
+                        logger.info(f"Row {idx + 1}: Skipping duplicate - {result.get('member_email')}")
+
+                    if stop_on_error and result['status'] == 'failed':
+                        logger.warning("=" * 70)
+                        logger.warning(f"⚠️  STOP ON ERROR TRIGGERED AT ROW {idx + 1}")
+                        logger.warning(f"Error reason: {result.get('error_reason', 'Unknown')}")
+                        logger.warning(
+                            f"Import stopped: {self.success_count} success, "
+                            f"{self.failed_count} failed, {self.duplicate_count} duplicates"
+                        )
+                        logger.warning("=" * 70)
+                        should_stop = True
+                        break
+
+            if should_stop:
+                # Option A: flush records already validated in this batch before stopping.
+                # This preserves work done so far and avoids silently losing records.
+                ready = [r for r in prepared if r['status'] == 'ready']
+                self._run_phase2(ready, dry_run, concurrency, success_records, failed_records)
+
+                # Add remaining unprocessed records to failed_records with a clear reason
+                current_batch_end = batch_start + len(prepared)
+                stop_row = prepared[-1]['row_index']
+                self._append_not_processed(
+                    records[current_batch_end:], current_batch_end, stop_row, failed_records
+                )
+
+                logger.warning("=" * 70)
+                logger.warning(f"⚠️  STOP ON ERROR TRIGGERED AT ROW {stop_row}")
+                logger.warning(f"Error reason: {prepared[-1].get('error_reason', 'Unknown')}")
+                logger.warning(
+                    f"Import stopped: {self.success_count} success, "
+                    f"{self.failed_count} failed, {self.duplicate_count} duplicates"
+                )
+                if self.not_processed_count > 0:
+                    logger.warning(
+                        f"Not processed (remaining rows): {self.not_processed_count} record(s) "
+                        f"(rows {current_batch_end + 1}–{len(records)}) — re-run from that offset to continue"
+                    )
+                logger.warning("=" * 70)
+                return success_records, failed_records, duplicate_records
+
+            # ── Phase 2: parallel API creation ──────────────────────────────
+            # Fire all "ready" creation calls concurrently; dry-run records are
+            # resolved immediately without touching the API.
+            ready = [r for r in prepared if r['status'] == 'ready']
+            stop_triggered = self._run_phase2(ready, dry_run, concurrency, success_records, failed_records)
+
+            if stop_triggered and stop_on_error:
+                # Add all records from subsequent batches to failed_records
+                next_batch_start = batch_start + batch_size
+                stop_row = next((r['row_index'] for r in failed_records[-1:]), '?')
+                self._append_not_processed(
+                    records[next_batch_start:], next_batch_start, stop_row, failed_records
+                )
+                if self.not_processed_count > 0:
+                    next_row = next_batch_start + 1
+                    logger.warning(
+                        f"Not processed (remaining rows): {self.not_processed_count} record(s) "
+                        f"(rows {next_row}–{len(records)}) — re-run from that offset to continue"
+                    )
+                return success_records, failed_records, duplicate_records
+
+        logger.info(
+            f"Import complete: {self.success_count} success, "
+            f"{self.failed_count} failed, {self.duplicate_count} duplicates"
+        )
+        return success_records, failed_records, duplicate_records
+
+    def _run_phase2(
+        self,
+        ready: List[Dict],
+        dry_run: bool,
+        concurrency: int,
+        success_records: List[Dict],
+        failed_records: List[Dict],
+    ) -> bool:
+        """
+        Execute API creation calls for a list of validated records.
+
+        Args:
+            ready: Records with status 'ready' from Phase 1
+            dry_run: If True, simulate without API calls
+            concurrency: Max parallel workers
+            success_records: Accumulator list for successes (mutated in place)
+            failed_records: Accumulator list for failures (mutated in place)
+
+        Returns:
+            True if a stop-on-error condition was hit (API failure), False otherwise
+        """
+        if not ready:
+            return False
+
+        if dry_run:
+            for result in ready:
+                email = result.get('member_email')
+                doc_msg = f" (would attach {len(result['_documents'])} document(s))" if result['_documents'] else ""
+                logger.info(f"Row {result['row_index']}: [DRY RUN] Would create member - {email}{doc_msg}")
+                result['status'] = 'success'
+                success_records.append(result)
+                self.success_count += 1
+            return False
+
+        with ThreadPoolExecutor(max_workers=concurrency) as executor:
+            futures = {
+                executor.submit(self._create_member, r['_member_data'], r['_documents']): r
+                for r in ready
+            }
+            for future in as_completed(futures):
+                result = futures[future]
+                try:
+                    created_member = future.result()
+                    result['status'] = 'success'
+                    result['member_id'] = getattr(created_member, 'id', None)
+                    result['member_email'] = getattr(created_member, 'email', None)
+                    result['error_reason'] = None
+                    self.success_count += 1
+                    doc_msg = f" with {len(result['_documents'])} document(s)" if result['_documents'] else ""
+                    logger.info(
+                        f"Row {result['row_index']}: Successfully created member"
+                        f" - {result.get('member_email')}{doc_msg}"
+                    )
+                except gec_api_sdk.ApiException as e:
+                    result['status'] = 'failed'
+                    result['error_reason'] = f"API error ({e.status}): {e.body if e.body else str(e)}"
+                    self.failed_count += 1
+                    logger.error(
+                        f"Row {result['row_index']}: API error ({e.status})"
+                        f" - {e.body if e.body else str(e)}"
+                    )
+                except Exception as e:
+                    result['status'] = 'failed'
+                    result['error_reason'] = f"Unexpected error: {str(e)}"
+                    self.failed_count += 1
+                    logger.error(f"Row {result['row_index']}: Unexpected error - {str(e)}", exc_info=True)
 
                 if result['status'] == 'success':
                     success_records.append(result)
-                elif result['status'] == 'duplicate':
-                    duplicate_records.append(result)
-                else:  # failed
+                else:
                     failed_records.append(result)
+                    # Signal caller to stop; cancel pending futures
+                    for f in futures:
+                        f.cancel()
+                    return True
 
-                    # Stop on first error if flag is set
-                    if stop_on_error:
-                        logger.warning("="*70)
-                        logger.warning(f"⚠️  STOP ON ERROR TRIGGERED AT ROW {idx + 1}")
-                        logger.warning(f"Error reason: {result.get('error_reason', 'Unknown')}")
-                        logger.warning(f"Import stopped: {self.success_count} success, {self.failed_count} failed, {self.duplicate_count} duplicates")
-                        logger.warning("="*70)
-                        return success_records, failed_records, duplicate_records
+        return False
 
-        logger.info(f"Import complete: {self.success_count} success, {self.failed_count} failed, {self.duplicate_count} duplicates")
+    def _append_not_processed(
+        self,
+        remaining_records: List[Dict],
+        start_index: int,
+        stop_row: int,
+        failed_records: List[Dict],
+    ) -> None:
+        """
+        Add records that were never reached (due to stop-on-error) to failed_records.
 
-        return success_records, failed_records, duplicate_records
+        Args:
+            remaining_records: Source records that were not processed
+            start_index: 0-based index of the first remaining record in the full list
+            stop_row: Row number that triggered the stop (for the error message)
+            failed_records: Accumulator list (mutated in place)
+        """
+        reason = f"Not processed: import stopped due to error at row {stop_row}"
+        for offset, record in enumerate(remaining_records):
+            row_index = start_index + offset + 1
+            failed_records.append({
+                'row_index': row_index,
+                'status': 'failed',
+                'original_data': record.copy(),
+                'error_reason': reason,
+                'error_timestamp': get_iso_timestamp(),
+                '_member_data': None,
+                '_documents': [],
+            })
+            self.failed_count += 1
+        self.not_processed_count = len(remaining_records)
 
-    def _process_record(
+    def _prepare_record(
         self,
         record: Dict[str, Any],
         row_index: int,
-        dry_run: bool
     ) -> Dict[str, Any]:
         """
-        Process a single record.
+        Transform, validate, and duplicate-check a single record (no API call).
 
-        Args:
-            record: Source record dictionary
-            row_index: Row number (1-based)
-            dry_run: If True, don't actually create member
-
-        Returns:
-            Result dictionary with status and details
+        Returns a result dict with status 'ready', 'failed', or 'duplicate'.
+        Ready results carry '_member_data' and '_documents' for Phase 2.
         """
-        result = {
+        result: Dict[str, Any] = {
             'row_index': row_index,
             'status': 'failed',
             'original_data': record.copy(),
             'error_reason': None,
             'error_timestamp': get_iso_timestamp(),
+            '_member_data': None,
+            '_documents': [],
         }
 
         try:
-            # Transform data
             transformed_data, field_errors, documents = self.data_processor.transform_row(record)
-
-            # Apply defaults
             transformed_data = self.data_processor.apply_defaults(transformed_data)
-
-            # Validate
             is_valid, validation_errors = self.data_processor.validate_member(transformed_data)
 
-            # Collect all errors
-            all_errors = []
-            if field_errors:
-                all_errors.extend([f"Field {k}: {v}" for k, v in field_errors.items()])
-            if validation_errors:
-                all_errors.extend(validation_errors)
-
+            all_errors = [f"Field {k}: {v}" for k, v in field_errors.items()] + validation_errors
             if all_errors:
                 result['error_reason'] = "; ".join(all_errors)
-                result['status'] = 'failed'
-                self.failed_count += 1
-                logger.warning(f"Row {row_index}: Validation failed - {result['error_reason']}")
                 return result
 
-            # Check for duplicates
+            # Duplicate check (in-memory, safe to run sequentially)
             email = transformed_data.get('email')
-            if email and self.duplicate_checker.is_duplicate(email, dry_run):
+            result['member_email'] = email
+            if email and self.duplicate_checker.is_duplicate(email, dry_run=False):
                 duplicate_info = self.duplicate_checker.get_duplicate_info(email)
                 result['status'] = 'duplicate'
-                result['error_reason'] = f"Duplicate email: {email} (existing member ID: {duplicate_info.get('id')})"
-                self.duplicate_count += 1
-                logger.info(f"Row {row_index}: Skipping duplicate - {email}")
+                result['error_reason'] = (
+                    f"Duplicate email: {email} (existing member ID: {duplicate_info.get('id')})"
+                )
                 return result
 
-            # Create member (if not dry run)
-            if not dry_run:
-                created_member = self._create_member(transformed_data, documents)
-                result['status'] = 'success'
-                result['member_id'] = getattr(created_member, 'id', None)
-                result['member_email'] = getattr(created_member, 'email', None)
-                result['error_reason'] = None
-                self.success_count += 1
-                doc_msg = f" with {len(documents)} document(s)" if documents else ""
-                logger.info(f"Row {row_index}: Successfully created member - {email}{doc_msg}")
-            else:
-                result['status'] = 'success'
-                result['member_email'] = email
-                result['error_reason'] = None
-                self.success_count += 1
-                doc_msg = f" (would attach {len(documents)} document(s))" if documents else ""
-                logger.info(f"Row {row_index}: [DRY RUN] Would create member - {email}{doc_msg}")
+            result['status'] = 'ready'
+            result['_member_data'] = transformed_data
+            result['_documents'] = documents
 
-        except gec_api_sdk.ApiException as e:
-            result['status'] = 'failed'
-            result['error_reason'] = f"API error ({e.status}): {e.body if e.body else str(e)}"
-            self.failed_count += 1
-            logger.error(f"Row {row_index}: API error ({e.status}) - {e.body if e.body else str(e)}")
-            logger.debug(f"API error details: status={e.status}, headers={e.headers}")
         except Exception as e:
-            result['status'] = 'failed'
-            result['error_reason'] = f"Unexpected error: {str(e)}"
-            self.failed_count += 1
+            result['error_reason'] = f"Unexpected error during preparation: {str(e)}"
             logger.error(f"Row {row_index}: Unexpected error - {str(e)}", exc_info=True)
 
         return result
@@ -319,6 +464,7 @@ class MemberImporter:
             'failed': self.failed_count,
             'duplicates': self.duplicate_count,
             'skipped': self.skipped_count,
+            'not_processed': self.not_processed_count,
             'failed_file': None,
         }
 

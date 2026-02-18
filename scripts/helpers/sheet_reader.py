@@ -3,11 +3,22 @@ Sheet reader implementations for Excel and Google Sheets.
 """
 
 import logging
+import os
+import pickle
 from abc import ABC, abstractmethod
 from typing import List, Dict, Any, Optional
 
 import gspread
 import pandas as pd
+
+try:
+    from google_auth_oauthlib.flow import InstalledAppFlow
+    from google.auth.transport.requests import Request
+    from google.oauth2.service_account import Credentials
+except ImportError:
+    InstalledAppFlow = None
+    Request = None
+    Credentials = None
 
 try:
     from scripts.helpers.config import normalize_column_name
@@ -112,12 +123,6 @@ class GoogleSheetsReader(BaseSheetReader):
         Returns:
             Authenticated gspread client
         """
-        import gspread
-        from google_auth_oauthlib.flow import InstalledAppFlow
-        from google.auth.transport.requests import Request
-        import os
-        import pickle
-
         SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly']
 
         creds = None
@@ -154,9 +159,6 @@ class GoogleSheetsReader(BaseSheetReader):
         Returns:
             Authenticated gspread client
         """
-        import gspread
-        from google.oauth2.service_account import Credentials
-
         if not self.credentials_path:
             raise ValueError("Service account requires credentials_path to service account JSON")
 
@@ -264,5 +266,3 @@ class SheetWriter:
         except Exception as e:
             logger.error(f"Error writing failed records: {e}")
             raise
-
-

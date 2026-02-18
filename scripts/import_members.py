@@ -132,7 +132,13 @@ Examples:
         '--batch-size',
         type=int,
         default=50,
-        help='Number of records to process per batch (default: 50)'
+        help='Number of records to prepare per batch before firing API calls (default: 50)'
+    )
+    parser.add_argument(
+        '--concurrency',
+        type=int,
+        default=10,
+        help='Maximum number of parallel API creation calls per batch (default: 10)'
     )
     parser.add_argument(
         '--log-level',
@@ -225,7 +231,9 @@ def main():
         success_records, failed_records, duplicate_records = importer.import_members(
             records=records,
             dry_run=args.dry_run,
-            batch_size=args.batch_size
+            batch_size=args.batch_size,
+            stop_on_error=args.stop_on_error,
+            concurrency=args.concurrency,
         )
 
         # Generate output path for failed records

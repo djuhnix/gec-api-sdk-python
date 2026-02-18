@@ -35,8 +35,11 @@ class DuplicateChecker:
             total_loaded = 0
 
             while True:
-                # Get collection with pagination
-                response = self.member_api.api_members_get_collection(page=page)
+                # Request plain JSON to avoid @context fields that the model rejects
+                response = self.member_api.api_members_get_collection(
+                    page=page,
+                    _headers={'Accept': 'application/json'},
+                )
 
                 # Extract members from response
                 # The response structure is ApiMembersGetCollection200Response

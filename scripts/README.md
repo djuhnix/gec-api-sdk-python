@@ -293,21 +293,24 @@ You can correct the errors and re-import the failed records file.
 
 ```
 scripts/
-├── __init__.py              # Package initialization
-├── config.py                # Configuration and constants
-├── utils.py                 # Utility functions
-├── data_processor.py        # Data cleaning and validation
-├── sheet_reader.py          # Excel and Google Sheets readers
-├── duplicate_checker.py     # Duplicate detection
-├── member_importer.py       # Main import orchestration
-└── import_members.py        # CLI entry point
+.
+├── helpers
+│ ├── config.py             # Configuration and constants
+│ ├── data_processor.py     # Data cleaning and validation
+│ ├── duplicate_checker.py  # Duplicate detection
+│ ├── member_importer.py    # Main import orchestration
+│ ├── sheet_reader.py       # Excel and Google Sheets readers
+│ └── utils.py              # Utility functions
+├── import_members.py       # CLI entry point
+├── sample_data.csv         # Sample Excel data for testing
+└── test_setup.py           # Test setup
 ```
 
 ## Development
 
 ### Adding New Column Mappings
 
-Edit `scripts/config.py`:
+Edit `scripts/helpers/config.py`:
 
 ```python
 EXCEL_COLUMN_MAP = {
@@ -318,7 +321,7 @@ EXCEL_COLUMN_MAP = {
 
 ### Customizing Data Cleaning
 
-Edit `scripts/data_processor.py` in the `MemberDataProcessor` class:
+Edit `scripts/helpers/data_processor.py` in the `MemberDataProcessor` class:
 
 ```python
 def clean_custom_field(self, value):
@@ -337,4 +340,3 @@ python import_members.py --source excel --input test.xlsx --dry-run --log-level 
 ## License
 
 Part of the GEC API SDK project.
-

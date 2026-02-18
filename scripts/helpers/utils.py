@@ -8,6 +8,16 @@ import re
 from datetime import datetime
 from typing import Dict, Optional, Any
 
+try:
+    from dotenv import load_dotenv
+except ImportError:
+    load_dotenv = None
+
+
+def _md5_hash(text: str, length: int = 6) -> str:
+    """Return a hex MD5 hash of text, truncated to length characters."""
+    return hashlib.md5(text.lower().encode()).hexdigest()[:length]
+
 
 def setup_logging(level: str = 'INFO') -> None:
     """
@@ -71,10 +81,9 @@ def load_env_variables() -> Dict[str, str]:
     Raises:
         ValueError: If required variables are missing
     """
-    from dotenv import load_dotenv
-
     # Load .env file if it exists
-    load_dotenv()
+    if load_dotenv is not None:
+        load_dotenv()
 
     api_host = os.getenv('GEC_API_HOST', 'http://localhost')
     api_token = os.getenv('GEC_API_TOKEN', '')
@@ -108,8 +117,13 @@ def format_summary_table(summary: Dict) -> str:
         f"Failed:            {summary.get('failed', 0)}",
         f"Duplicates:        {summary.get('duplicates', 0)}",
         f"Skipped:           {summary.get('skipped', 0)}",
-        "=" * 50,
     ]
+
+    not_processed = summary.get('not_processed', 0)
+    if not_processed > 0:
+        lines.append(f"Not Processed:     {not_processed}  ⚠️  (stop-on-error — re-run remaining rows)")
+
+    lines.append("=" * 50)
 
     if summary.get('failed', 0) > 0:
         lines.append(f"Failed records saved to: {summary.get('failed_file', 'N/A')}")
@@ -189,12 +203,12 @@ def anonymize_email(email: str) -> str:
         return email
 
     # Create a hash of the email
-    email_hash = hashlib.md5(email.lower().encode()).hexdigest()[:8]
+    email_hash = _md5_hash(email, 8)
 
     # Get domain, ensure it's valid
     parts = email.split('@')
     domain = parts[1] if len(parts) > 1 and parts[1] else 'example.com'
-    
+
     # Ensure domain has proper format (must have at least one dot for most validators)
     if '.' not in domain:
         domain = f"{domain}.com"
@@ -217,7 +231,7 @@ def anonymize_name(name: str, prefix: str = "User") -> str:
         return name
 
     # Create a short hash
-    name_hash = hashlib.md5(name.lower().encode()).hexdigest()[:6]
+    name_hash = _md5_hash(name)
     return f"{prefix}_{name_hash}"
 
 
@@ -234,14 +248,25 @@ def anonymize_phone(phone: str) -> str:
     if not phone:
         return phone
 
+    # Handle NaN string (from pandas empty cells) and other non-phone strings
+    if str(phone).lower() in ('nan', 'none', ''):
+        return ''
+
+    # Strip Unicode invisible/directional control characters (e.g. U+202A LTR embedding)
+    phone = re.sub(r'[\u200b-\u200f\u202a-\u202e\u2066-\u2069\ufeff]', '', str(phone))
+
+    # Remove float artifact (e.g. '33612345678.0' from pandas numeric cells)
+    if isinstance(phone, str) and phone.endswith('.0') and phone[:-2].lstrip('+').isdigit():
+        phone = phone[:-2]
+
     # Keep country code and format, anonymize the rest
     if phone.startswith('+33'):
         return '+33600000000'
     elif phone.startswith('+242'):
         return '+242000000000'
     else:
-        # Generic anonymization
-        return re.sub(r'\d', '0', phone)
+        # Generic anonymization: replace digits and + to avoid producing invalid +000... numbers
+        return re.sub(r'[\d+]', '0', phone)
 
 
 def anonymize_address(address: str) -> str:
@@ -258,7 +283,7 @@ def anonymize_address(address: str) -> str:
         return address
 
     # Create a generic address based on hash
-    addr_hash = hashlib.md5(address.lower().encode()).hexdigest()[:4]
+    addr_hash = _md5_hash(address, 4)
     return f"{addr_hash.upper()} Anonymous Street"
 
 
@@ -277,7 +302,7 @@ def anonymize_generic_text(text: str, prefix: str = "Text") -> str:
         return text
 
     # Create a hash-based pseudonym
-    text_hash = hashlib.md5(text.lower().encode()).hexdigest()[:6]
+    text_hash = _md5_hash(text)
     return f"{prefix}_{text_hash}"
 
 
@@ -295,14 +320,13 @@ def anonymize_postal_code(postal_code: str) -> str:
         return postal_code
 
     # Create a hash and take first 5 digits to create a fake postal code
-    code_hash = hashlib.md5(postal_code.lower().encode()).hexdigest()
-    # Use first 10 hex chars and convert to look like a postal code
+    # Use first 5 hex chars and convert to look like a postal code
     # Format: XXXXX (5 chars) or XX-XXX (6 chars with dash)
-    fake_code = ''.join(filter(str.isalnum, code_hash[:5])).upper()
-    
+    fake_code = ''.join(filter(str.isalnum, _md5_hash(postal_code, 5))).upper()
+
     # Pad with zeros if needed to ensure consistent length
     fake_code = fake_code.ljust(5, '0')[:5]
-    
+
     return fake_code
 
 
@@ -357,5 +381,3 @@ def anonymize_record(record: Dict[str, Any], fields_to_anonymize: list = None) -
             anonymized[field] = anonymize_generic_text(value, "City")
 
     return anonymized
-
-

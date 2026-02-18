@@ -3,9 +3,17 @@ Data processor for cleaning and transforming member data.
 """
 
 import logging
+import math
 import re
 from datetime import datetime
 from typing import Dict, List, Optional, Tuple, Any
+
+try:
+    import numpy as np
+    import pandas as pd
+    _PANDAS_AVAILABLE = True
+except ImportError:
+    _PANDAS_AVAILABLE = False
 
 try:
     from scripts.helpers.config import (
@@ -23,6 +31,27 @@ except ImportError:
         CONTRIBUTION_STATUS_VALUES,
         DEFAULT_STATUS, DEFAULT_MEMBERSHIP_TYPE, DEFAULT_CONTRIBUTION_STATUS, normalize_column_name
     )
+
+# String representations treated as empty/missing
+_EMPTY_STRINGS = frozenset(('', 'nan', 'nat', 'none'))
+
+# Dispatch table: api_field → (cleaner_method_name, use_none_check)
+# use_none_check=True means store value when `cleaned is not None` (needed for booleans where False is valid)
+_FIELD_CLEANERS: Dict[str, tuple] = {
+    'birthDate':         ('clean_date', False),
+    'phoneNumberFr':     ('clean_phone', False),
+    'phoneNumberCg':     ('clean_phone', False),
+    'gender':            ('clean_gender', False),
+    'email':             ('clean_email', False),
+    'status':            ('clean_status', False),
+    'membershipType':    ('clean_membership_type', False),
+    'trainingCycle':     ('clean_training_cycle', False),
+    'studyLevel':        ('clean_study_level', False),
+    'otherAssociations': ('clean_boolean', True),
+}
+
+# Document fields that may contain boolean values or URLs
+_DOCUMENT_FIELDS = frozenset({'hasPassportCg', 'hasVisa', 'hasSchoolCertificate'})
 
 logger = logging.getLogger(__name__)
 
@@ -57,6 +86,42 @@ class MemberDataProcessor:
         normalized = normalize_column_name(df_column)
         return self.normalized_map.get(normalized)
 
+    def _is_empty(self, value: Any) -> bool:
+        """Return True if value should be treated as empty/missing (None, NaN, empty string)."""
+        if value is None:
+            return True
+        if isinstance(value, float) and math.isnan(value):
+            return True
+        if _PANDAS_AVAILABLE:
+            try:
+                if pd.isna(value):
+                    return True
+            except (TypeError, ValueError):
+                pass
+        if isinstance(value, str):
+            return value.strip().lower() in _EMPTY_STRINGS
+        return False
+
+    def _clean_enum(self, value: Any, enum_map: dict, enum_values, field_name: str) -> Tuple[Optional[str], Optional[str]]:
+        """Clean and validate an enum field using a translation map and valid-values set."""
+        if self._is_empty(value):
+            return None, None
+        str_val = str(value).lower().strip()
+        if str_val in enum_map:
+            return enum_map[str_val], None
+        if str_val in enum_values:
+            return str_val, None
+        return None, f"Unknown {field_name} value: {value}"
+
+    def _clean_mapped_text(self, value: Any, text_map: dict) -> Tuple[Optional[str], Optional[str]]:
+        """Clean a text field, applying a translation map but keeping original value if not found."""
+        if self._is_empty(value):
+            return None, None
+        str_val = str(value).lower().strip()
+        if str_val in text_map:
+            return text_map[str_val], None
+        return str(value).strip(), None
+
     def clean_date(self, value: Any) -> Tuple[Optional[str], Optional[str]]:
         """
         Parse and clean date value.
@@ -67,17 +132,8 @@ class MemberDataProcessor:
         Returns:
             Tuple of (ISO format date string or None, error message or None)
         """
-        if value is None or (isinstance(value, str) and not value.strip()):
+        if self._is_empty(value):
             return None, None
-
-        # Handle pandas NaN and numpy NaN
-        try:
-            import pandas as pd
-            import numpy as np
-            if pd.isna(value) or (isinstance(value, float) and np.isnan(value)):
-                return None, None
-        except (ImportError, TypeError):
-            pass
 
         # If already a datetime object
         if isinstance(value, datetime):
@@ -85,9 +141,9 @@ class MemberDataProcessor:
 
         # Convert to string
         date_str = str(value).strip()
-        
-        # Check for NaN string representation
-        if date_str.lower() in ('nan', 'nat', 'none', ''):
+
+        # Safety net for NaT string representation
+        if date_str.lower() in _EMPTY_STRINGS:
             return None, None
 
         # Handle datetime strings with time component (e.g., "1993-06-13 00:00:00")
@@ -115,11 +171,14 @@ class MemberDataProcessor:
         Returns:
             Tuple of (cleaned phone or None, error message or None)
         """
-        if value is None or (isinstance(value, str) and not value.strip()):
+        if self._is_empty(value):
             return None, None
 
         # Convert to string and clean
         phone = str(value).strip()
+
+        # Strip Unicode invisible/directional control characters (e.g. U+202A LTR embedding)
+        phone = re.sub(r'[\u200b-\u200f\u202a-\u202e\u2066-\u2069\ufeff]', '', phone)
 
         # Remove common separators
         phone = phone.replace(' ', '').replace('-', '').replace('.', '').replace('(', '').replace(')', '')
@@ -157,7 +216,7 @@ class MemberDataProcessor:
         Returns:
             Tuple of (boolean or None, error message or None)
         """
-        if value is None:
+        if self._is_empty(value):
             return None, None
 
         # If already a boolean
@@ -166,13 +225,6 @@ class MemberDataProcessor:
 
         # Convert to string and normalize
         str_value = str(value).lower().strip()
-
-        if not str_value:
-            return None, None
-
-        # Handle NaN values (pandas NaN becomes string 'nan')
-        if str_value == 'nan':
-            return None, None
 
         # Check if it's a year value (4 digits)
         if str_value.isdigit() and len(str_value) == 4:
@@ -204,20 +256,7 @@ class MemberDataProcessor:
         Returns:
             Tuple of (gender enum or None, error message or None)
         """
-        if value is None or (isinstance(value, str) and not value.strip()):
-            return None, None
-
-        gender_str = str(value).lower().strip()
-
-        # Check in gender map
-        if gender_str in GENDER_MAP:
-            return GENDER_MAP[gender_str], None
-
-        # Check if already a valid enum value
-        if gender_str in GENDER_VALUES:
-            return gender_str, None
-
-        return None, f"Unknown gender value: {value}"
+        return self._clean_enum(value, GENDER_MAP, GENDER_VALUES, 'gender')
 
     def clean_email(self, value: Any) -> Tuple[Optional[str], Optional[str]]:
         """
@@ -229,8 +268,8 @@ class MemberDataProcessor:
         Returns:
             Tuple of (cleaned email or None, error message or None)
         """
-        if value is None or (isinstance(value, str) and not value.strip()):
-            return None, "Email is required"
+        if self._is_empty(value):
+            return None, None
 
         email = str(value).strip().lower()
 
@@ -267,20 +306,7 @@ class MemberDataProcessor:
         Returns:
             Tuple of (status enum or None, error message or None)
         """
-        if value is None or (isinstance(value, str) and not value.strip()):
-            return None, None
-
-        status_str = str(value).lower().strip()
-
-        # Check in status map
-        if status_str in STATUS_MAP:
-            return STATUS_MAP[status_str], None
-
-        # Check if already a valid enum value
-        if status_str in STATUS_VALUES:
-            return status_str, None
-
-        return None, f"Unknown status value: {value}"
+        return self._clean_enum(value, STATUS_MAP, STATUS_VALUES, 'status')
 
     def clean_membership_type(self, value: Any) -> Tuple[Optional[str], Optional[str]]:
         """
@@ -292,20 +318,7 @@ class MemberDataProcessor:
         Returns:
             Tuple of (membership type enum or None, error message or None)
         """
-        if value is None or (isinstance(value, str) and not value.strip()):
-            return None, None
-
-        type_str = str(value).lower().strip()
-
-        # Check in membership type map
-        if type_str in MEMBERSHIP_TYPE_MAP:
-            return MEMBERSHIP_TYPE_MAP[type_str], None
-
-        # Check if already a valid enum value
-        if type_str in MEMBERSHIP_TYPE_VALUES:
-            return type_str, None
-
-        return None, f"Unknown membership type: {value}"
+        return self._clean_enum(value, MEMBERSHIP_TYPE_MAP, MEMBERSHIP_TYPE_VALUES, 'membership type')
 
     def clean_training_cycle(self, value: Any) -> Tuple[Optional[str], Optional[str]]:
         """
@@ -317,17 +330,7 @@ class MemberDataProcessor:
         Returns:
             Tuple of (cleaned training cycle or None, error message or None)
         """
-        if value is None or (isinstance(value, str) and not value.strip()):
-            return None, None
-
-        cycle_str = str(value).lower().strip()
-
-        # Check in training cycle map
-        if cycle_str in TRAINING_CYCLE_MAP:
-            return TRAINING_CYCLE_MAP[cycle_str], None
-
-        # Return as-is if not in map (keep original formatting)
-        return str(value).strip(), None
+        return self._clean_mapped_text(value, TRAINING_CYCLE_MAP)
 
     def clean_study_level(self, value: Any) -> Tuple[Optional[str], Optional[str]]:
         """
@@ -339,17 +342,7 @@ class MemberDataProcessor:
         Returns:
             Tuple of (cleaned study level or None, error message or None)
         """
-        if value is None or (isinstance(value, str) and not value.strip()):
-            return None, None
-
-        level_str = str(value).lower().strip()
-
-        # Check in study level map
-        if level_str in STUDY_LEVEL_MAP:
-            return STUDY_LEVEL_MAP[level_str], None
-
-        # Return as-is if not in map (keep original formatting)
-        return str(value).strip(), None
+        return self._clean_mapped_text(value, STUDY_LEVEL_MAP)
 
     def clean_document_field(self, value: Any, field_name: str = '') -> Tuple[Optional[bool], Optional[str], Optional[str]]:
         """
@@ -367,9 +360,8 @@ class MemberDataProcessor:
         Returns:
             Tuple of (boolean or None, error message or None, document_url or None)
         """
-        if value is None:
-            # hasVisa defaults to False, others to None
-            default_value = False if 'visa' in field_name.lower() else None
+        default_value = False if 'visa' in field_name.lower() else None
+        if self._is_empty(value):
             return default_value, None, None
 
         # If already a boolean
@@ -378,17 +370,6 @@ class MemberDataProcessor:
 
         # Convert to string and normalize
         str_value = str(value).strip()
-
-        if not str_value:
-            # Empty: hasVisa defaults to False, others to None
-            default_value = False if 'visa' in field_name.lower() else None
-            return default_value, None, None
-
-        # Handle NaN
-        if str_value.lower() == 'nan':
-            # NaN: hasVisa defaults to False, others to None
-            default_value = False if 'visa' in field_name.lower() else None
-            return default_value, None, None
 
         # Check if it's a URL (contains http:// or https://)
         if str_value.startswith('http://') or str_value.startswith('https://'):
@@ -433,165 +414,60 @@ class MemberDataProcessor:
         # Map columns
         for source_col, value in row_dict.items():
             api_field = self._match_column(source_col)
-            source_col_normalized = normalize_column_name(source_col)
 
             if api_field is None:
                 continue  # Skip unmapped columns
 
-            # Special handling for isFirstYearStudy field - prefer is_first_year_study over first_year
+            # isFirstYearStudy: prefer is_first_year_study (boolean) column over first_year (year value)
             if api_field == 'isFirstYearStudy':
-                # Skip 'first_year' (year value) if 'is_first_year_study' (boolean) column exists
-                if source_col_normalized == normalize_column_name('first_year') and has_is_first_year_study:
-                    continue  # Skip the year column, use is_first_year_study instead
-                # Only process if it's is_first_year_study OR first_year when is_first_year_study doesn't exist
+                if normalize_column_name(source_col) == normalize_column_name('first_year') and has_is_first_year_study:
+                    continue
                 cleaned, error = self.clean_boolean(value)
                 if error:
                     field_errors[api_field] = error
                 if cleaned is not None:
                     transformed[api_field] = cleaned
-                continue
 
-            # Apply appropriate cleaning based on field type
-            if api_field == 'birthDate':
-                cleaned, error = self.clean_date(value)
+            # Simple fields: look up cleaner in dispatch table
+            elif api_field in _FIELD_CLEANERS:
+                method_name, use_none_check = _FIELD_CLEANERS[api_field]
+                cleaned, error = getattr(self, method_name)(value)
                 if error:
                     field_errors[api_field] = error
-                if cleaned:
+                if (cleaned is not None) if use_none_check else cleaned:
                     transformed[api_field] = cleaned
 
-            elif api_field in ['phoneNumberFr', 'phoneNumberCg']:
-                cleaned, error = self.clean_phone(value)
-                if error:
-                    field_errors[api_field] = error
-                if cleaned:
-                    transformed[api_field] = cleaned
-
-            elif api_field in ['hasPassportCg', 'hasVisa', 'hasSchoolCertificate']:
-                # These fields may contain URLs to documents
+            # Document fields (boolean + optional URL)
+            elif api_field in _DOCUMENT_FIELDS:
                 cleaned, error, document_url = self.clean_document_field(value, api_field)
                 if error:
                     field_errors[api_field] = error
                 if cleaned is not None:
                     transformed[api_field] = cleaned
-                # If there's a document URL, create a document entry
                 if document_url:
-                    # Determine document type from field name
-                    doc_type = api_field.replace('has', '')  # PassportCg, Visa, SchoolCertificate
-                    documents.append({
-                        'type': doc_type,
-                        'url': document_url,
-                        'field': api_field
-                    })
-
-            elif api_field == 'otherAssociations':
-                # Regular boolean field
-                cleaned, error = self.clean_boolean(value)
-                if error:
-                    field_errors[api_field] = error
-                if cleaned is not None:
-                    transformed[api_field] = cleaned
-
-            elif api_field == 'gender':
-                cleaned, error = self.clean_gender(value)
-                if error:
-                    field_errors[api_field] = error
-                if cleaned:
-                    transformed[api_field] = cleaned
-
-            elif api_field == 'email':
-                cleaned, error = self.clean_email(value)
-                if error:
-                    field_errors[api_field] = error
-                if cleaned:
-                    transformed[api_field] = cleaned
-
-            elif api_field == 'status':
-                cleaned, error = self.clean_status(value)
-                if error:
-                    field_errors[api_field] = error
-                if cleaned:
-                    transformed[api_field] = cleaned
-
-            elif api_field == 'membershipType':
-                cleaned, error = self.clean_membership_type(value)
-                if error:
-                    field_errors[api_field] = error
-                if cleaned:
-                    transformed[api_field] = cleaned
-
-            elif api_field == 'trainingCycle':
-                cleaned, error = self.clean_training_cycle(value)
-                if error:
-                    field_errors[api_field] = error
-                if cleaned:
-                    transformed[api_field] = cleaned
-
-            elif api_field == 'studyLevel':
-                cleaned, error = self.clean_study_level(value)
-                if error:
-                    field_errors[api_field] = error
-                if cleaned:
-                    transformed[api_field] = cleaned
+                    doc_type = api_field.replace('has', '')
+                    documents.append({'type': doc_type, 'url': document_url, 'field': api_field})
 
             elif api_field == 'contribution':
-                # Special handling: Check if it's 'nan' first
-                if value is None:
+                if self._is_empty(value):
                     continue
-                
-                # Handle pandas/numpy NaN
+                str_value = str(value).strip()
+                clean_num = str_value.replace('€', '').replace('$', '').replace(',', '.').strip()
                 try:
-                    import pandas as pd
-                    import numpy as np
-                    if pd.isna(value) or (isinstance(value, float) and np.isnan(value)):
-                        continue
-                except (ImportError, TypeError):
-                    pass
-                
-                # Check for NaN string representation
-                if isinstance(value, str) and value.strip().lower() in ('nan', 'nat', 'none', ''):
-                    continue
-
-                # Try to parse as number
-                try:
-                    str_value = str(value).strip()
-                    # Check again after conversion to string
-                    if str_value.lower() in ('nan', 'nat', 'none', ''):
-                        continue
-                    # Remove currency symbols
-                    clean_num = str_value.replace('€', '').replace('$', '').replace(',', '.').strip()
                     amount = float(clean_num)
-                    # Final check: ensure the float is not NaN
-                    if amount != amount:  # NaN != NaN is True
-                        continue
-                    transformed['contribution'] = amount
+                    if not math.isnan(amount):
+                        transformed['contribution'] = amount
                 except (ValueError, AttributeError):
-                    # Not a number - treat as status string
-                    status_str = str(value).lower().strip()
+                    status_str = str_value.lower()
                     if status_str in CONTRIBUTION_STATUS_MAP:
                         transformed['contributionStatus'] = CONTRIBUTION_STATUS_MAP[status_str]
                     else:
-                        # Invalid status - default to pending
                         transformed['contributionStatus'] = 'pending'
 
             elif api_field == 'contributionStatus':
-                # Direct contribution status field
-                if value is None:
+                if self._is_empty(value):
                     continue
-                
-                # Handle pandas/numpy NaN
-                try:
-                    import pandas as pd
-                    import numpy as np
-                    if pd.isna(value) or (isinstance(value, float) and np.isnan(value)):
-                        continue
-                except (ImportError, TypeError):
-                    pass
-                
-                # Check for NaN string representation
                 status_str = str(value).lower().strip()
-                if status_str in ('nan', 'nat', 'none', ''):
-                    continue
-
                 if status_str in CONTRIBUTION_STATUS_MAP:
                     transformed[api_field] = CONTRIBUTION_STATUS_MAP[status_str]
                 elif status_str in CONTRIBUTION_STATUS_VALUES:
@@ -600,24 +476,9 @@ class MemberDataProcessor:
                     field_errors[api_field] = f"Unknown contribution status: {value}"
 
             else:
-                # Text fields - but skip 'nan' values
-                if value is None:
+                # Generic text field
+                if self._is_empty(value):
                     continue
-                
-                # Handle pandas/numpy NaN
-                try:
-                    import pandas as pd
-                    import numpy as np
-                    if pd.isna(value) or (isinstance(value, float) and np.isnan(value)):
-                        continue
-                except (ImportError, TypeError):
-                    pass
-                
-                # Check for NaN string representation
-                str_value = str(value).strip()
-                if str_value.lower() in ('nan', 'nat', 'none', ''):
-                    continue
-                
                 cleaned = self.clean_text(value)
                 if cleaned:
                     transformed[api_field] = cleaned
@@ -634,13 +495,13 @@ class MemberDataProcessor:
         Returns:
             Data with defaults applied
         """
-        if 'status' not in data or not data['status']:
+        if not data.get('status'):
             data['status'] = DEFAULT_STATUS
 
-        if 'membershipType' not in data or not data['membershipType']:
+        if not data.get('membershipType'):
             data['membershipType'] = DEFAULT_MEMBERSHIP_TYPE
 
-        if 'contributionStatus' not in data or not data['contributionStatus']:
+        if not data.get('contributionStatus'):
             data['contributionStatus'] = DEFAULT_CONTRIBUTION_STATUS
 
         return data
@@ -658,24 +519,19 @@ class MemberDataProcessor:
         errors = []
 
         # Check required fields
-        required_fields = ['firstName', 'lastName', 'email', 'status', 'membershipType']
+        required_fields = ['firstName', 'lastName', 'status', 'membershipType']
         for field in required_fields:
-            if field not in data or not data[field]:
+            if not data.get(field):
                 errors.append(f"Missing required field: {field}")
 
         # Validate enum values
-        if 'gender' in data and data['gender']:
-            if data['gender'] not in GENDER_VALUES:
-                errors.append(f"Invalid gender value: {data['gender']}")
+        if data.get('gender') and data['gender'] not in GENDER_VALUES:
+            errors.append(f"Invalid gender value: {data['gender']}")
 
-        if 'status' in data and data['status']:
-            if data['status'] not in STATUS_VALUES:
-                errors.append(f"Invalid status value: {data['status']}")
+        if data.get('status') and data['status'] not in STATUS_VALUES:
+            errors.append(f"Invalid status value: {data['status']}")
 
-        if 'membershipType' in data and data['membershipType']:
-            if data['membershipType'] not in MEMBERSHIP_TYPE_VALUES:
-                errors.append(f"Invalid membershipType value: {data['membershipType']}")
+        if data.get('membershipType') and data['membershipType'] not in MEMBERSHIP_TYPE_VALUES:
+            errors.append(f"Invalid membershipType value: {data['membershipType']}")
 
         return len(errors) == 0, errors
-
-

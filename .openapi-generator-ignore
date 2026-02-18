@@ -24,6 +24,7 @@
 
 .gitignore
 scripts
+scripts-requirements.txt
 bin
 test/scripts
 .github/**/*.md
