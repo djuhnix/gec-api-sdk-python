@@ -1,180 +1,130 @@
-# Quick Start Guide - Member Import
+# Quick Start — Member Import
 
-This guide will help you get started with importing member data.
+This guide gets you from zero to your first import in 5 steps.
+For full documentation, see [README.md](README.md).
 
-## Step 1: Install Dependencies
+---
+
+## Step 1 — Install dependencies
+
+Open a terminal in the **project root** (not the `scripts/` folder):
 
 ```bash
-cd /home/outscale/PhpstormProjects/gec-api-sdk-python
+# Create an isolated Python environment (only needed once)
+python3 -m venv .venv
+
+# Activate it (do this every time you open a new terminal)
+source .venv/bin/activate       # macOS / Linux
+# .venv\Scripts\activate        # Windows
+
+# Install packages
 pip install -r requirements.txt
+pip install -e .
 ```
 
-## Step 2: Configure Environment
+Your prompt will show `(.venv)` when the environment is active.
+
+---
+
+## Step 2 — Configure your credentials
 
 ```bash
-# Copy the example environment file
 cp .env.example .env
-
-# Edit .env with your values
-nano .env
 ```
 
-Set these values in `.env`:
+Open `.env` in any text editor and set:
+
 ```env
-GEC_API_HOST=http://localhost:8000  # Your API URL
-GEC_API_TOKEN=your_jwt_token_here   # Your JWT token
+GEC_API_HOST=http://localhost:8080   # URL of the API server
+GEC_API_TOKEN=eyJhbGci...            # Your JWT token (ask your admin)
 ```
 
-## Step 3: Test the Setup
+---
+
+## Step 3 — Verify the setup
 
 ```bash
 cd scripts
-python test_setup.py
+python3 test_setup.py
 ```
 
-This will verify all modules and dependencies are correctly installed.
+If everything is green, you're ready to import.
 
-## Step 4: Try a Dry Run
+---
 
-Test with the sample data (validation only, no database changes):
+## Step 4 — Dry run with your file
+
+Always validate your data first — this checks for errors without touching the database:
 
 ```bash
-python import_members.py --source excel --input sample_data.csv --dry-run
+python3 import_members.py --source excel --input ../data/members.xlsx --dry-run
 ```
 
-## Step 5: Import Real Data
+Read the output. If records show validation errors, fix them in your file and repeat.
 
-### From Excel:
+---
+
+## Step 5 — Run the real import
 
 ```bash
-python import_members.py --source excel --input /path/to/your/file.xlsx
+python3 import_members.py --source excel --input ../data/members.xlsx
 ```
 
-### From Google Sheets (OAuth2):
+When it finishes, you'll see a summary:
 
-```bash
-# First time - you'll be prompted to authorize in browser
-python import_members.py \
-    --source gsheet \
-    --input "https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID" \
-    --auth-method oauth2 \
-    --credentials-path /path/to/credentials.json
-```
-
-## Common Use Cases
-
-### 1. Validate Data Before Import
-
-```bash
-python import_members.py --source excel --input data.xlsx --dry-run
-```
-
-### 2. Import with Custom Output Path for Failures
-
-```bash
-python import_members.py \
-    --source excel \
-    --input data.xlsx \
-    --output-failed failures_2026.xlsx
-```
-
-### 3. Import with Debug Logging
-
-```bash
-python import_members.py \
-    --source excel \
-    --input data.xlsx \
-    --log-level DEBUG
-```
-
-### 4. Import Specific Google Sheet Tab
-
-```bash
-python import_members.py \
-    --source gsheet \
-    --input "YOUR_SHEET_ID" \
-    --sheet-name "Demande d'adhésion" \
-    --auth-method oauth2
-```
-
-## Understanding the Output
-
-### Successful Import:
 ```
 ==================================================
 IMPORT SUMMARY
 ==================================================
 Total Records:     100
-Success:           95
-Failed:            5
-Duplicates:        0
-Skipped:           0
+Success:            95
+Failed:              5
+Duplicates:          0
 ==================================================
-Failed records saved to: failed_imports_20260214_143022.xlsx
+Failed records saved to: failed_imports_20260223_182700.xlsx
 ==================================================
 ```
 
-### Failed Records File:
+Failed records are saved to an Excel file. Fix the errors in that file and re-import it.
 
-The failed records Excel file contains:
-- All original columns from your source
-- `error_reason`: Why it failed (e.g., "Invalid email format")
-- `error_timestamp`: When the error occurred
+---
 
-You can:
-1. Fix the errors in the Excel file
-2. Remove the error columns
-3. Re-import the corrected file
+## Common commands
 
-## Troubleshooting
-
-### "No module named 'pandas'"
-
-Install dependencies:
 ```bash
-pip install -r requirements.txt
+# Show all available options
+python3 import_members.py --help
+
+# Import from Google Sheets (OAuth2 — opens a browser to authorize)
+python3 import_members.py \
+    --source gsheet \
+    --input "https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID" \
+    --auth-method oauth2 \
+    --credentials-path ../credentials.json
+
+# Save failures to a specific path
+python3 import_members.py --source excel --input data.xlsx \
+    --output-failed my_failures.xlsx
+
+# Show detailed logs (useful when something goes wrong)
+python3 import_members.py --source excel --input data.xlsx --log-level DEBUG
+
+# Stop at the first error instead of continuing
+python3 import_members.py --source excel --input data.xlsx --stop-on-error
 ```
 
-### "API token is required"
+---
 
-Set your token in `.env` or pass it via command line:
-```bash
-python import_members.py --source excel --input data.xlsx --api-token YOUR_TOKEN
-```
+## Something went wrong?
 
-### "Invalid email format"
+| Symptom | Fix |
+|---|---|
+| `No module named '...'` | Run `pip install -r requirements.txt && pip install -e .` with the venv active |
+| `401 Unauthorized` | Your token is invalid or expired — update `GEC_API_TOKEN` in `.env` |
+| `Connection refused` | Check `GEC_API_HOST` in `.env` and that the server is running |
+| Column not recognized | Check the column name against the [Column Reference](README.md#column-reference) |
+| Validation errors | Run with `--dry-run --log-level DEBUG` to see what the script sees |
 
-Check your data has valid email addresses. The script expects standard format:
-`name@domain.com`
+See [README.md — Troubleshooting](README.md#troubleshooting) for more.
 
-### "Duplicate email"
-
-The email already exists in the database. The script skips duplicates by default.
-(Future: use `--update-duplicates` to update existing records)
-
-### Google Sheets: "SpreadsheetNotFound"
-
-- Verify the spreadsheet URL/ID is correct
-- For service account: Share the sheet with the service account email
-- For OAuth2: Make sure you authorize when prompted
-
-## Next Steps
-
-- Read the full documentation: `scripts/README.md`
-- Check column mappings for your data format
-- Set up automated imports with cron jobs
-- Customize data cleaning rules in `scripts/config.py`
-
-## Getting Help
-
-Check the logs for detailed error messages:
-```bash
-python import_members.py --source excel --input data.xlsx --log-level DEBUG
-```
-
-The log will show:
-- Which columns were found
-- Data transformation steps
-- Validation errors
-- API communication details
 
