@@ -17,11 +17,12 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
 from gec_api_sdk.models.hydra_collection_base_schema_all_of_view import HydraCollectionBaseSchemaAllOfView
 from gec_api_sdk.models.hydra_collection_base_schema_no_pagination_search import HydraCollectionBaseSchemaNoPaginationSearch
+from gec_api_sdk.models.hydra_item_base_schema_context import HydraItemBaseSchemaContext
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -31,8 +32,11 @@ class HydraCollectionBaseSchema(BaseModel):
     """ # noqa: E501
     total_items: Optional[Annotated[int, Field(strict=True, ge=0)]] = Field(default=None, alias="totalItems")
     search: Optional[HydraCollectionBaseSchemaNoPaginationSearch] = None
+    context: Optional[HydraItemBaseSchemaContext] = Field(default=None, alias="@context")
+    id: StrictStr = Field(alias="@id")
+    type: StrictStr = Field(alias="@type")
     view: Optional[HydraCollectionBaseSchemaAllOfView] = None
-    __properties: ClassVar[List[str]] = ["totalItems", "search", "view"]
+    __properties: ClassVar[List[str]] = ["totalItems", "search", "@context", "@id", "@type", "view"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -76,6 +80,9 @@ class HydraCollectionBaseSchema(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of search
         if self.search:
             _dict['search'] = self.search.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of context
+        if self.context:
+            _dict['@context'] = self.context.to_dict()
         # override the default output from pydantic by calling `to_dict()` of view
         if self.view:
             _dict['view'] = self.view.to_dict()
@@ -98,6 +105,9 @@ class HydraCollectionBaseSchema(BaseModel):
         _obj = cls.model_validate({
             "totalItems": obj.get("totalItems"),
             "search": HydraCollectionBaseSchemaNoPaginationSearch.from_dict(obj["search"]) if obj.get("search") is not None else None,
+            "@context": HydraItemBaseSchemaContext.from_dict(obj["@context"]) if obj.get("@context") is not None else None,
+            "@id": obj.get("@id"),
+            "@type": obj.get("@type"),
             "view": HydraCollectionBaseSchemaAllOfView.from_dict(obj["view"]) if obj.get("view") is not None else None
         })
         return _obj

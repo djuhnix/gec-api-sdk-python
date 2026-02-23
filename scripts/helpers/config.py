@@ -16,7 +16,7 @@ DEFAULT_STATUS = 'expired'
 DEFAULT_MEMBERSHIP_TYPE = 'student'
 DEFAULT_CONTRIBUTION_STATUS = 'pending'  # Default for missing contribution status
 
-# Enum validation sets (from MemberMemberWrite model)
+# Enum validation sets (from MemberWrite model)
 STATUS_VALUES = {'active', 'pending', 'expired', 'suspended'}
 MEMBERSHIP_TYPE_VALUES = {'student', 'active', 'sponsor', 'alumni'}
 GENDER_VALUES = {'male', 'female', 'other'}

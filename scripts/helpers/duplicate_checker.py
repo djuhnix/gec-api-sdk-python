@@ -3,7 +3,9 @@ Duplicate checker for member records.
 """
 
 import logging
-from typing import Dict, Optional, Tuple, Any
+from typing import Dict, Optional, Any
+
+from scripts.helpers.utils import load_env_variables
 
 logger = logging.getLogger(__name__)
 
@@ -35,29 +37,7 @@ class DuplicateChecker:
             total_loaded = 0
 
             while True:
-                # Request plain JSON to avoid @context fields that the model rejects
-                response = self.member_api.api_members_get_collection(
-                    page=page,
-                    _headers={'Accept': 'application/json'},
-                )
-
-                # Extract members from response
-                # The response structure is ApiMembersGetCollection200Response
-                if hasattr(response, 'hydra_member'):
-                    members = response.hydra_member
-                elif hasattr(response, 'member'):
-                    members = response.member
-                else:
-                    # Try to get members from the response object
-                    members = []
-                    if hasattr(response, '__dict__'):
-                        for key, value in response.__dict__.items():
-                            if isinstance(value, list) and value:
-                                members = value
-                                break
-
-                if not members:
-                    break
+                members = self.member_api.list_members(page=page) or []
 
                 # Add to cache
                 for member in members:
@@ -71,15 +51,11 @@ class DuplicateChecker:
                         }
                         total_loaded += 1
 
-                # Check if there are more pages
-                if hasattr(response, 'hydra_view') and response.hydra_view:
-                    if hasattr(response.hydra_view, 'hydra_next'):
-                        page += 1
-                    else:
-                        break
-                else:
-                    # No pagination info, assume single page
+                # Fewer than a full page (including 0) means we've reached the end
+                if len(members) < 30:
                     break
+
+                page += 1
 
             self._loaded = True
             logger.info(f"Loaded {total_loaded} existing members")
@@ -134,3 +110,25 @@ class DuplicateChecker:
         self._loaded = False
         self.load_existing_members()
 
+if __name__ == "__main__":
+    # Example usage
+    from gec_api_sdk import ApiClient, Configuration
+    from gec_api_sdk.api import MemberApi
+
+    # Configure API client (replace with actual config)
+    # Load environment variables
+    env_vars = load_env_variables()
+
+    # Get API configuration
+    api_host = env_vars['api_host']
+    api_token = env_vars['api_token']
+    api_client = ApiClient(
+        Configuration(
+            host=api_host,
+            access_token=api_token
+        )
+    )
+    member_api = MemberApi(api_client)
+
+    duplicate_checker = DuplicateChecker(api_client, member_api)
+    duplicate_checker.load_existing_members()

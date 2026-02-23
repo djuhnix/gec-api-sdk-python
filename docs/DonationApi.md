@@ -4,19 +4,19 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**api_donations_get_collection**](DonationApi.md#api_donations_get_collection) | **GET** /api/donations | Retrieves the collection of Donation resources.
-[**api_donations_id_delete**](DonationApi.md#api_donations_id_delete) | **DELETE** /api/donations/{id} | Removes the Donation resource.
-[**api_donations_id_get**](DonationApi.md#api_donations_id_get) | **GET** /api/donations/{id} | Retrieves a Donation resource.
-[**api_donations_id_put**](DonationApi.md#api_donations_id_put) | **PUT** /api/donations/{id} | Replaces the Donation resource.
-[**api_donations_post**](DonationApi.md#api_donations_post) | **POST** /api/donations | Creates a Donation resource.
+[**create_donation**](DonationApi.md#create_donation) | **POST** /api/donations | Creates a Donation resource.
+[**delete_donation**](DonationApi.md#delete_donation) | **DELETE** /api/donations/{id} | Removes the Donation resource.
+[**get_donation**](DonationApi.md#get_donation) | **GET** /api/donations/{id} | Retrieves a Donation resource.
+[**list_donations**](DonationApi.md#list_donations) | **GET** /api/donations | Retrieves the collection of Donation resources.
+[**update_donation**](DonationApi.md#update_donation) | **PUT** /api/donations/{id} | Replaces the Donation resource.
 
 
-# **api_donations_get_collection**
-> ApiDonationsGetCollection200Response api_donations_get_collection(page=page)
+# **create_donation**
+> DonationRead create_donation(donation_write)
 
-Retrieves the collection of Donation resources.
+Creates a Donation resource.
 
-Retrieves the collection of Donation resources.
+Creates a Donation resource.
 
 ### Example
 
@@ -24,7 +24,8 @@ Retrieves the collection of Donation resources.
 
 ```python
 import gec_api_sdk
-from gec_api_sdk.models.api_donations_get_collection200_response import ApiDonationsGetCollection200Response
+from gec_api_sdk.models.donation_read import DonationRead
+from gec_api_sdk.models.donation_write import DonationWrite
 from gec_api_sdk.rest import ApiException
 from pprint import pprint
 
@@ -48,15 +49,15 @@ configuration = gec_api_sdk.Configuration(
 with gec_api_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = gec_api_sdk.DonationApi(api_client)
-    page = 1 # int | The collection page number (optional) (default to 1)
+    donation_write = gec_api_sdk.DonationWrite() # DonationWrite | The new Donation resource
 
     try:
-        # Retrieves the collection of Donation resources.
-        api_response = api_instance.api_donations_get_collection(page=page)
-        print("The response of DonationApi->api_donations_get_collection:\n")
+        # Creates a Donation resource.
+        api_response = api_instance.create_donation(donation_write)
+        print("The response of DonationApi->create_donation:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling DonationApi->api_donations_get_collection: %s\n" % e)
+        print("Exception when calling DonationApi->create_donation: %s\n" % e)
 ```
 
 
@@ -66,11 +67,11 @@ with gec_api_sdk.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **page** | **int**| The collection page number | [optional] [default to 1]
+ **donation_write** | [**DonationWrite**](DonationWrite.md)| The new Donation resource | 
 
 ### Return type
 
-[**ApiDonationsGetCollection200Response**](ApiDonationsGetCollection200Response.md)
+[**DonationRead**](DonationRead.md)
 
 ### Authorization
 
@@ -78,19 +79,21 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/ld+json, application/json, application/x-yaml, text/csv
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Donation collection |  -  |
+**201** | Donation resource created |  -  |
+**400** | Invalid input |  -  |
+**422** | An error occurred |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **api_donations_id_delete**
-> api_donations_id_delete(id)
+# **delete_donation**
+> delete_donation(id)
 
 Removes the Donation resource.
 
@@ -129,9 +132,9 @@ with gec_api_sdk.ApiClient(configuration) as api_client:
 
     try:
         # Removes the Donation resource.
-        api_instance.api_donations_id_delete(id)
+        api_instance.delete_donation(id)
     except Exception as e:
-        print("Exception when calling DonationApi->api_donations_id_delete: %s\n" % e)
+        print("Exception when calling DonationApi->delete_donation: %s\n" % e)
 ```
 
 
@@ -154,7 +157,7 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/ld+json, application/problem+json, application/json
+ - **Accept**: application/json
 
 ### HTTP response details
 
@@ -165,8 +168,8 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **api_donations_id_get**
-> DonationJsonldDonationRead api_donations_id_get(id)
+# **get_donation**
+> DonationRead get_donation(id)
 
 Retrieves a Donation resource.
 
@@ -178,7 +181,7 @@ Retrieves a Donation resource.
 
 ```python
 import gec_api_sdk
-from gec_api_sdk.models.donation_jsonld_donation_read import DonationJsonldDonationRead
+from gec_api_sdk.models.donation_read import DonationRead
 from gec_api_sdk.rest import ApiException
 from pprint import pprint
 
@@ -206,11 +209,11 @@ with gec_api_sdk.ApiClient(configuration) as api_client:
 
     try:
         # Retrieves a Donation resource.
-        api_response = api_instance.api_donations_id_get(id)
-        print("The response of DonationApi->api_donations_id_get:\n")
+        api_response = api_instance.get_donation(id)
+        print("The response of DonationApi->get_donation:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling DonationApi->api_donations_id_get: %s\n" % e)
+        print("Exception when calling DonationApi->get_donation: %s\n" % e)
 ```
 
 
@@ -224,7 +227,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**DonationJsonldDonationRead**](DonationJsonldDonationRead.md)
+[**DonationRead**](DonationRead.md)
 
 ### Authorization
 
@@ -233,7 +236,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/ld+json, application/json, application/x-yaml, text/csv, application/problem+json
+ - **Accept**: application/json
 
 ### HTTP response details
 
@@ -244,8 +247,86 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **api_donations_id_put**
-> DonationJsonldDonationRead api_donations_id_put(id, donation_donation_write)
+# **list_donations**
+> List[DonationRead] list_donations(page=page)
+
+Retrieves the collection of Donation resources.
+
+Retrieves the collection of Donation resources.
+
+### Example
+
+* Bearer (JWT) Authentication (JWT):
+
+```python
+import gec_api_sdk
+from gec_api_sdk.models.donation_read import DonationRead
+from gec_api_sdk.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost
+# See configuration.py for a list of all supported configuration parameters.
+configuration = gec_api_sdk.Configuration(
+    host = "http://localhost"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization (JWT): JWT
+configuration = gec_api_sdk.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+with gec_api_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = gec_api_sdk.DonationApi(api_client)
+    page = 1 # int | The collection page number (optional) (default to 1)
+
+    try:
+        # Retrieves the collection of Donation resources.
+        api_response = api_instance.list_donations(page=page)
+        print("The response of DonationApi->list_donations:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling DonationApi->list_donations: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **page** | **int**| The collection page number | [optional] [default to 1]
+
+### Return type
+
+[**List[DonationRead]**](DonationRead.md)
+
+### Authorization
+
+[JWT](../README.md#JWT)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Donation collection |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **update_donation**
+> DonationRead update_donation(id, donation_write)
 
 Replaces the Donation resource.
 
@@ -257,8 +338,8 @@ Replaces the Donation resource.
 
 ```python
 import gec_api_sdk
-from gec_api_sdk.models.donation_donation_write import DonationDonationWrite
-from gec_api_sdk.models.donation_jsonld_donation_read import DonationJsonldDonationRead
+from gec_api_sdk.models.donation_read import DonationRead
+from gec_api_sdk.models.donation_write import DonationWrite
 from gec_api_sdk.rest import ApiException
 from pprint import pprint
 
@@ -283,15 +364,15 @@ with gec_api_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = gec_api_sdk.DonationApi(api_client)
     id = 'id_example' # str | Donation identifier
-    donation_donation_write = gec_api_sdk.DonationDonationWrite() # DonationDonationWrite | The updated Donation resource
+    donation_write = gec_api_sdk.DonationWrite() # DonationWrite | The updated Donation resource
 
     try:
         # Replaces the Donation resource.
-        api_response = api_instance.api_donations_id_put(id, donation_donation_write)
-        print("The response of DonationApi->api_donations_id_put:\n")
+        api_response = api_instance.update_donation(id, donation_write)
+        print("The response of DonationApi->update_donation:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling DonationApi->api_donations_id_put: %s\n" % e)
+        print("Exception when calling DonationApi->update_donation: %s\n" % e)
 ```
 
 
@@ -302,11 +383,11 @@ with gec_api_sdk.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| Donation identifier | 
- **donation_donation_write** | [**DonationDonationWrite**](DonationDonationWrite.md)| The updated Donation resource | 
+ **donation_write** | [**DonationWrite**](DonationWrite.md)| The updated Donation resource | 
 
 ### Return type
 
-[**DonationJsonldDonationRead**](DonationJsonldDonationRead.md)
+[**DonationRead**](DonationRead.md)
 
 ### Authorization
 
@@ -314,8 +395,8 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/ld+json, application/json, application/x-yaml, text/csv
- - **Accept**: application/ld+json, application/json, application/x-yaml, text/csv, application/problem+json
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 ### HTTP response details
 
@@ -325,87 +406,6 @@ Name | Type | Description  | Notes
 **400** | Invalid input |  -  |
 **422** | An error occurred |  -  |
 **404** | Not found |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **api_donations_post**
-> DonationJsonldDonationRead api_donations_post(donation_donation_write)
-
-Creates a Donation resource.
-
-Creates a Donation resource.
-
-### Example
-
-* Bearer (JWT) Authentication (JWT):
-
-```python
-import gec_api_sdk
-from gec_api_sdk.models.donation_donation_write import DonationDonationWrite
-from gec_api_sdk.models.donation_jsonld_donation_read import DonationJsonldDonationRead
-from gec_api_sdk.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to http://localhost
-# See configuration.py for a list of all supported configuration parameters.
-configuration = gec_api_sdk.Configuration(
-    host = "http://localhost"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure Bearer authorization (JWT): JWT
-configuration = gec_api_sdk.Configuration(
-    access_token = os.environ["BEARER_TOKEN"]
-)
-
-# Enter a context with an instance of the API client
-with gec_api_sdk.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = gec_api_sdk.DonationApi(api_client)
-    donation_donation_write = gec_api_sdk.DonationDonationWrite() # DonationDonationWrite | The new Donation resource
-
-    try:
-        # Creates a Donation resource.
-        api_response = api_instance.api_donations_post(donation_donation_write)
-        print("The response of DonationApi->api_donations_post:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling DonationApi->api_donations_post: %s\n" % e)
-```
-
-
-
-### Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **donation_donation_write** | [**DonationDonationWrite**](DonationDonationWrite.md)| The new Donation resource | 
-
-### Return type
-
-[**DonationJsonldDonationRead**](DonationJsonldDonationRead.md)
-
-### Authorization
-
-[JWT](../README.md#JWT)
-
-### HTTP request headers
-
- - **Content-Type**: application/ld+json, application/json, application/x-yaml, text/csv
- - **Accept**: application/ld+json, application/json, application/x-yaml, text/csv, application/problem+json
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**201** | Donation resource created |  -  |
-**400** | Invalid input |  -  |
-**422** | An error occurred |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

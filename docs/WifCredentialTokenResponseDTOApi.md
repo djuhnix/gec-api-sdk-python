@@ -72,7 +72,7 @@ This endpoint does not need any parameter.
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, application/ld+json, application/problem+json
+ - **Accept**: application/json
 
 ### HTTP response details
 
@@ -152,7 +152,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/json, application/ld+json, application/problem+json
+ - **Accept**: application/json
 
 ### HTTP response details
 

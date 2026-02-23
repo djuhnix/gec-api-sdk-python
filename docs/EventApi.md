@@ -4,19 +4,19 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**api_events_get_collection**](EventApi.md#api_events_get_collection) | **GET** /api/events | Retrieves the collection of Event resources.
-[**api_events_id_delete**](EventApi.md#api_events_id_delete) | **DELETE** /api/events/{id} | Removes the Event resource.
-[**api_events_id_get**](EventApi.md#api_events_id_get) | **GET** /api/events/{id} | Retrieves a Event resource.
-[**api_events_id_put**](EventApi.md#api_events_id_put) | **PUT** /api/events/{id} | Replaces the Event resource.
-[**api_events_post**](EventApi.md#api_events_post) | **POST** /api/events | Creates a Event resource.
+[**create_event**](EventApi.md#create_event) | **POST** /api/events | Creates a Event resource.
+[**delete_event**](EventApi.md#delete_event) | **DELETE** /api/events/{id} | Removes the Event resource.
+[**get_event**](EventApi.md#get_event) | **GET** /api/events/{id} | Retrieves a Event resource.
+[**list_events**](EventApi.md#list_events) | **GET** /api/events | Retrieves the collection of Event resources.
+[**update_event**](EventApi.md#update_event) | **PUT** /api/events/{id} | Replaces the Event resource.
 
 
-# **api_events_get_collection**
-> ApiEventsGetCollection200Response api_events_get_collection(page=page)
+# **create_event**
+> EventRead create_event(event_write)
 
-Retrieves the collection of Event resources.
+Creates a Event resource.
 
-Retrieves the collection of Event resources.
+Creates a Event resource.
 
 ### Example
 
@@ -24,7 +24,8 @@ Retrieves the collection of Event resources.
 
 ```python
 import gec_api_sdk
-from gec_api_sdk.models.api_events_get_collection200_response import ApiEventsGetCollection200Response
+from gec_api_sdk.models.event_read import EventRead
+from gec_api_sdk.models.event_write import EventWrite
 from gec_api_sdk.rest import ApiException
 from pprint import pprint
 
@@ -48,15 +49,15 @@ configuration = gec_api_sdk.Configuration(
 with gec_api_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = gec_api_sdk.EventApi(api_client)
-    page = 1 # int | The collection page number (optional) (default to 1)
+    event_write = gec_api_sdk.EventWrite() # EventWrite | The new Event resource
 
     try:
-        # Retrieves the collection of Event resources.
-        api_response = api_instance.api_events_get_collection(page=page)
-        print("The response of EventApi->api_events_get_collection:\n")
+        # Creates a Event resource.
+        api_response = api_instance.create_event(event_write)
+        print("The response of EventApi->create_event:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling EventApi->api_events_get_collection: %s\n" % e)
+        print("Exception when calling EventApi->create_event: %s\n" % e)
 ```
 
 
@@ -66,11 +67,11 @@ with gec_api_sdk.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **page** | **int**| The collection page number | [optional] [default to 1]
+ **event_write** | [**EventWrite**](EventWrite.md)| The new Event resource | 
 
 ### Return type
 
-[**ApiEventsGetCollection200Response**](ApiEventsGetCollection200Response.md)
+[**EventRead**](EventRead.md)
 
 ### Authorization
 
@@ -78,19 +79,21 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/ld+json, application/json, application/x-yaml, text/csv
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Event collection |  -  |
+**201** | Event resource created |  -  |
+**400** | Invalid input |  -  |
+**422** | An error occurred |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **api_events_id_delete**
-> api_events_id_delete(id)
+# **delete_event**
+> delete_event(id)
 
 Removes the Event resource.
 
@@ -129,9 +132,9 @@ with gec_api_sdk.ApiClient(configuration) as api_client:
 
     try:
         # Removes the Event resource.
-        api_instance.api_events_id_delete(id)
+        api_instance.delete_event(id)
     except Exception as e:
-        print("Exception when calling EventApi->api_events_id_delete: %s\n" % e)
+        print("Exception when calling EventApi->delete_event: %s\n" % e)
 ```
 
 
@@ -154,7 +157,7 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/ld+json, application/problem+json, application/json
+ - **Accept**: application/json
 
 ### HTTP response details
 
@@ -165,8 +168,8 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **api_events_id_get**
-> EventJsonldEventRead api_events_id_get(id)
+# **get_event**
+> EventRead get_event(id)
 
 Retrieves a Event resource.
 
@@ -178,7 +181,7 @@ Retrieves a Event resource.
 
 ```python
 import gec_api_sdk
-from gec_api_sdk.models.event_jsonld_event_read import EventJsonldEventRead
+from gec_api_sdk.models.event_read import EventRead
 from gec_api_sdk.rest import ApiException
 from pprint import pprint
 
@@ -206,11 +209,11 @@ with gec_api_sdk.ApiClient(configuration) as api_client:
 
     try:
         # Retrieves a Event resource.
-        api_response = api_instance.api_events_id_get(id)
-        print("The response of EventApi->api_events_id_get:\n")
+        api_response = api_instance.get_event(id)
+        print("The response of EventApi->get_event:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling EventApi->api_events_id_get: %s\n" % e)
+        print("Exception when calling EventApi->get_event: %s\n" % e)
 ```
 
 
@@ -224,7 +227,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**EventJsonldEventRead**](EventJsonldEventRead.md)
+[**EventRead**](EventRead.md)
 
 ### Authorization
 
@@ -233,7 +236,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/ld+json, application/json, application/x-yaml, text/csv, application/problem+json
+ - **Accept**: application/json
 
 ### HTTP response details
 
@@ -244,8 +247,86 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **api_events_id_put**
-> EventJsonldEventRead api_events_id_put(id, event_event_write)
+# **list_events**
+> List[EventRead] list_events(page=page)
+
+Retrieves the collection of Event resources.
+
+Retrieves the collection of Event resources.
+
+### Example
+
+* Bearer (JWT) Authentication (JWT):
+
+```python
+import gec_api_sdk
+from gec_api_sdk.models.event_read import EventRead
+from gec_api_sdk.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost
+# See configuration.py for a list of all supported configuration parameters.
+configuration = gec_api_sdk.Configuration(
+    host = "http://localhost"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization (JWT): JWT
+configuration = gec_api_sdk.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+with gec_api_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = gec_api_sdk.EventApi(api_client)
+    page = 1 # int | The collection page number (optional) (default to 1)
+
+    try:
+        # Retrieves the collection of Event resources.
+        api_response = api_instance.list_events(page=page)
+        print("The response of EventApi->list_events:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling EventApi->list_events: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **page** | **int**| The collection page number | [optional] [default to 1]
+
+### Return type
+
+[**List[EventRead]**](EventRead.md)
+
+### Authorization
+
+[JWT](../README.md#JWT)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Event collection |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **update_event**
+> EventRead update_event(id, event_write)
 
 Replaces the Event resource.
 
@@ -257,8 +338,8 @@ Replaces the Event resource.
 
 ```python
 import gec_api_sdk
-from gec_api_sdk.models.event_event_write import EventEventWrite
-from gec_api_sdk.models.event_jsonld_event_read import EventJsonldEventRead
+from gec_api_sdk.models.event_read import EventRead
+from gec_api_sdk.models.event_write import EventWrite
 from gec_api_sdk.rest import ApiException
 from pprint import pprint
 
@@ -283,15 +364,15 @@ with gec_api_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = gec_api_sdk.EventApi(api_client)
     id = 'id_example' # str | Event identifier
-    event_event_write = gec_api_sdk.EventEventWrite() # EventEventWrite | The updated Event resource
+    event_write = gec_api_sdk.EventWrite() # EventWrite | The updated Event resource
 
     try:
         # Replaces the Event resource.
-        api_response = api_instance.api_events_id_put(id, event_event_write)
-        print("The response of EventApi->api_events_id_put:\n")
+        api_response = api_instance.update_event(id, event_write)
+        print("The response of EventApi->update_event:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling EventApi->api_events_id_put: %s\n" % e)
+        print("Exception when calling EventApi->update_event: %s\n" % e)
 ```
 
 
@@ -302,11 +383,11 @@ with gec_api_sdk.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| Event identifier | 
- **event_event_write** | [**EventEventWrite**](EventEventWrite.md)| The updated Event resource | 
+ **event_write** | [**EventWrite**](EventWrite.md)| The updated Event resource | 
 
 ### Return type
 
-[**EventJsonldEventRead**](EventJsonldEventRead.md)
+[**EventRead**](EventRead.md)
 
 ### Authorization
 
@@ -314,8 +395,8 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/ld+json, application/json, application/x-yaml, text/csv
- - **Accept**: application/ld+json, application/json, application/x-yaml, text/csv, application/problem+json
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 ### HTTP response details
 
@@ -325,87 +406,6 @@ Name | Type | Description  | Notes
 **400** | Invalid input |  -  |
 **422** | An error occurred |  -  |
 **404** | Not found |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **api_events_post**
-> EventJsonldEventRead api_events_post(event_event_write)
-
-Creates a Event resource.
-
-Creates a Event resource.
-
-### Example
-
-* Bearer (JWT) Authentication (JWT):
-
-```python
-import gec_api_sdk
-from gec_api_sdk.models.event_event_write import EventEventWrite
-from gec_api_sdk.models.event_jsonld_event_read import EventJsonldEventRead
-from gec_api_sdk.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to http://localhost
-# See configuration.py for a list of all supported configuration parameters.
-configuration = gec_api_sdk.Configuration(
-    host = "http://localhost"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure Bearer authorization (JWT): JWT
-configuration = gec_api_sdk.Configuration(
-    access_token = os.environ["BEARER_TOKEN"]
-)
-
-# Enter a context with an instance of the API client
-with gec_api_sdk.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = gec_api_sdk.EventApi(api_client)
-    event_event_write = gec_api_sdk.EventEventWrite() # EventEventWrite | The new Event resource
-
-    try:
-        # Creates a Event resource.
-        api_response = api_instance.api_events_post(event_event_write)
-        print("The response of EventApi->api_events_post:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling EventApi->api_events_post: %s\n" % e)
-```
-
-
-
-### Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **event_event_write** | [**EventEventWrite**](EventEventWrite.md)| The new Event resource | 
-
-### Return type
-
-[**EventJsonldEventRead**](EventJsonldEventRead.md)
-
-### Authorization
-
-[JWT](../README.md#JWT)
-
-### HTTP request headers
-
- - **Content-Type**: application/ld+json, application/json, application/x-yaml, text/csv
- - **Accept**: application/ld+json, application/json, application/x-yaml, text/csv, application/problem+json
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**201** | Event resource created |  -  |
-**400** | Invalid input |  -  |
-**422** | An error occurred |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

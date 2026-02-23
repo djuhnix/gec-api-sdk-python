@@ -388,13 +388,10 @@ class MemberImporter:
             logger.debug(f"Creating member with data: {member_data}")
 
             # Create Pydantic model from dictionary
-            # The API expects a MemberMemberWrite object, not a dict
-            member_model = gec_api_sdk.MemberMemberWrite(**member_data)
+            member_model = gec_api_sdk.MemberWrite(**member_data)
             logger.debug(f"Created Pydantic model: {member_model.model_dump(by_alias=True)}")
 
-            # Call API to create member with correct parameter name
-            # NOTE: The parameter is 'member_member_write', NOT 'body'
-            created_member = self.member_api.api_members_post(member_member_write=member_model)
+            created_member = self.member_api.create_member(member_write=member_model)
 
             logger.info(f"Successfully created member in API: {getattr(created_member, 'id', 'unknown')}")
 
@@ -429,12 +426,12 @@ class MemberImporter:
 
         for doc in documents:
             try:
-                document_data = {
-                    'type': doc['type'],
-                    'url': doc['url'],
-                    'member': f'/api/members/{member_id}'  # IRI reference to member
-                }
-                created_doc = document_api.api_documents_post(body=document_data)
+                doc_model = gec_api_sdk.DocumentWrite(
+                    type=doc['type'],
+                    url=doc['url'],
+                    member=f'/api/members/{member_id}'
+                )
+                document_api.create_document(document_write=doc_model)
                 logger.info(f"Created document {doc['type']} for member {member_id}: {doc['url']}")
             except Exception as e:
                 logger.warning(f"Failed to create document {doc['type']} for member {member_id}: {e}")
