@@ -6,36 +6,35 @@ DTO for HelloAsso webhook notification.
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **str** |  | [optional] [readonly] 
-**first_name** | **str** |  | 
-**last_name** | **str** |  | 
-**email** | **str** |  | 
-**birth_date** | **datetime** |  | [optional] 
-**gender** | **str** |  | [optional] 
-**phone_number_fr** | **str** |  | [optional] 
-**phone_number_cg** | **str** |  | [optional] 
-**postal_address** | **str** |  | [optional] 
-**postal_code** | **str** |  | [optional] 
-**city** | **str** |  | [optional] 
-**first_year** | **bool** |  | [optional] 
-**formation** | **str** |  | [optional] 
-**establishment** | **str** |  | [optional] 
-**study_level** | **str** |  | [optional] 
-**training_cycle** | **str** |  | [optional] 
-**other_associations** | **bool** |  | [optional] 
-**association_names** | **str** |  | [optional] 
-**has_passport_cg** | **bool** |  | [optional] 
-**has_visa** | **bool** |  | [optional] 
-**has_school_certificate** | **bool** |  | [optional] 
-**photo_url** | **str** |  | [optional] 
-**status** | **str** |  | 
-**membership_type** | **str** |  | 
-**contribution** | **str** |  | [optional] 
-**created_at** | **datetime** |  | [optional] [readonly] 
-**updated_at** | **datetime** |  | [optional] 
-**documents** | **List[str]** |  | [optional] 
-**rsvps** | **List[str]** |  | [optional] 
-**donations** | **List[str]** |  | [optional] 
+**id** | **str** | Unique identifier (UUID). | [optional] [readonly] 
+**first_name** | **str** | Member&#39;s first name. | 
+**last_name** | **str** | Member&#39;s last name. | 
+**email** | **str** | Unique email address. | [optional] 
+**birth_date** | **date** | Date of birth. | [optional] 
+**gender** | **str** | Gender. | [optional] 
+**phone_number_fr** | **str** | French phone number. | [optional] 
+**phone_number_cg** | **str** | Congolese phone number. | [optional] 
+**postal_address** | **str** | Street address. | [optional] 
+**postal_code** | **str** | Postal/zip code. | [optional] 
+**city** | **str** | City of residence. | [optional] 
+**other_associations** | **bool** | Whether the member belongs to other associations. | [optional] 
+**association_names** | **str** | Names of other associations the member belongs to. | [optional] 
+**has_passport_cg** | **bool** | Whether the member holds a Congolese passport. | [optional] 
+**has_visa** | **bool** | Whether the member holds a valid visa. | [optional] 
+**has_school_certificate** | **bool** | Whether the member has provided a school certificate. | [optional] 
+**photo_url** | **str** | URL of the member&#39;s profile photo. | [optional] 
+**status** | **str** | Membership status: active, pending, expired, or suspended. | 
+**membership_type** | **str** | Membership type: student, active, sponsor, or alumni. | 
+**membership_start_date** | **date** | Date when the current membership period started. | [optional] 
+**contribution** | **float** | Membership fee amount paid (in euros). | [optional] 
+**contribution_status** | **str** | Contribution payment status: paid, pending, or expired. | [optional] 
+**created_at** | **datetime** | Timestamp when the member record was created. | [optional] [readonly] 
+**updated_at** | **datetime** | Timestamp of the last update to this member record. | [optional] 
+**user** | **str** | IRI of the linked authentication user account, if any. | [optional] 
+**education** | [**Education**](Education.md) |  | [optional] 
+**documents** | **List[str]** | IRIs of documents attached to this member. | [optional] 
+**rsvps** | **List[str]** | IRIs of event RSVPs for this member. | [optional] 
+**donations** | **List[str]** | IRIs of donations made by this member. | [optional] 
 
 ## Example
 

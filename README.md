@@ -55,10 +55,10 @@ import gec_api_sdk
 from gec_api_sdk.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://multisegmented-diane-superexpressively.ngrok-free.dev
 # See configuration.py for a list of all supported configuration parameters.
 configuration = gec_api_sdk.Configuration(
-    host = "http://localhost"
+    host = "https://multisegmented-diane-superexpressively.ngrok-free.dev"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -90,7 +90,7 @@ with gec_api_sdk.ApiClient(configuration) as api_client:
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *http://localhost*
+All URIs are relative to *https://multisegmented-diane-superexpressively.ngrok-free.dev*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
@@ -114,12 +114,15 @@ Class | Method | HTTP request | Description
 *EventApi* | [**get_event**](docs/EventApi.md#get_event) | **GET** /api/events/{id} | Retrieves a Event resource.
 *EventApi* | [**list_events**](docs/EventApi.md#list_events) | **GET** /api/events | Retrieves the collection of Event resources.
 *EventApi* | [**update_event**](docs/EventApi.md#update_event) | **PUT** /api/events/{id} | Replaces the Event resource.
+*HelloAssoWebhooksApi* | [**api_hello_assowebhook_post**](docs/HelloAssoWebhooksApi.md#api_hello_assowebhook_post) | **POST** /api/hello_asso/webhook | Receive HelloAsso webhook notifications
 *LoginCheckApi* | [**login_check_post**](docs/LoginCheckApi.md#login_check_post) | **POST** /api/auth | Creates a user token.
 *MemberApi* | [**create_member**](docs/MemberApi.md#create_member) | **POST** /api/members | Creates a Member resource.
 *MemberApi* | [**delete_member**](docs/MemberApi.md#delete_member) | **DELETE** /api/members/{id} | Removes the Member resource.
 *MemberApi* | [**get_member**](docs/MemberApi.md#get_member) | **GET** /api/members/{id} | Retrieves a Member resource.
 *MemberApi* | [**list_members**](docs/MemberApi.md#list_members) | **GET** /api/members | Retrieves the collection of Member resources.
 *MemberApi* | [**update_member**](docs/MemberApi.md#update_member) | **PUT** /api/members/{id} | Replaces the Member resource.
+*MemberPublicViewApi* | [**get_public_member**](docs/MemberPublicViewApi.md#get_public_member) | **GET** /api/public/members/{id} | Retrieves a MemberPublicView resource.
+*MemberPublicViewApi* | [**list_public_members**](docs/MemberPublicViewApi.md#list_public_members) | **GET** /api/public/members | Retrieves the collection of MemberPublicView resources.
 *RsvpApi* | [**create_rsvp**](docs/RsvpApi.md#create_rsvp) | **POST** /api/rsvps | Creates a Rsvp resource.
 *RsvpApi* | [**delete_rsvp**](docs/RsvpApi.md#delete_rsvp) | **DELETE** /api/rsvps | Removes the Rsvp resource.
 *RsvpApi* | [**list_rsvps**](docs/RsvpApi.md#list_rsvps) | **GET** /api/rsvps | Retrieves the collection of Rsvp resources.
@@ -135,8 +138,6 @@ Class | Method | HTTP request | Description
 *UserApi* | [**list_users**](docs/UserApi.md#list_users) | **GET** /api/users | Retrieves the collection of User resources.
 *UserApi* | [**patch_user**](docs/UserApi.md#patch_user) | **PATCH** /api/users/{id} | Updates the User resource.
 *UserApi* | [**update_user**](docs/UserApi.md#update_user) | **PUT** /api/users/{id} | Replaces the User resource.
-*WifCredentialTokenResponseDTOApi* | [**api_internalwifcredential_token_get**](docs/WifCredentialTokenResponseDTOApi.md#api_internalwifcredential_token_get) | **GET** /api/internal/wif/credential-token | Retrieves a WifCredentialTokenResponseDTO resource.
-*WifCredentialTokenResponseDTOApi* | [**api_internalwifcredential_token_post**](docs/WifCredentialTokenResponseDTOApi.md#api_internalwifcredential_token_post) | **POST** /api/internal/wif/credential-token | Creates a WifCredentialTokenResponseDTO resource.
 
 
 ## Documentation For Models
@@ -147,13 +148,26 @@ Class | Method | HTTP request | Description
  - [DocumentWrite](docs/DocumentWrite.md)
  - [DonationRead](docs/DonationRead.md)
  - [DonationWrite](docs/DonationWrite.md)
+ - [Education](docs/Education.md)
+ - [EducationRead](docs/EducationRead.md)
+ - [EducationWrite](docs/EducationWrite.md)
  - [EmailTemplateRead](docs/EmailTemplateRead.md)
  - [EmailTemplateWrite](docs/EmailTemplateWrite.md)
  - [Error](docs/Error.md)
  - [EventRead](docs/EventRead.md)
  - [EventWrite](docs/EventWrite.md)
+ - [HelloAssoAmountDTO](docs/HelloAssoAmountDTO.md)
+ - [HelloAssoCustomFieldDTO](docs/HelloAssoCustomFieldDTO.md)
+ - [HelloAssoDataDTO](docs/HelloAssoDataDTO.md)
+ - [HelloAssoItemDTO](docs/HelloAssoItemDTO.md)
+ - [HelloAssoMetaDTO](docs/HelloAssoMetaDTO.md)
+ - [HelloAssoPayerDTO](docs/HelloAssoPayerDTO.md)
+ - [HelloAssoPaymentDTO](docs/HelloAssoPaymentDTO.md)
+ - [HelloAssoWebhookDTO](docs/HelloAssoWebhookDTO.md)
+ - [HelloAssoWebhookDTOMember](docs/HelloAssoWebhookDTOMember.md)
  - [LoginCheckPost200Response](docs/LoginCheckPost200Response.md)
  - [LoginCheckPostRequest](docs/LoginCheckPostRequest.md)
+ - [MemberPublicViewPublicRead](docs/MemberPublicViewPublicRead.md)
  - [MemberRead](docs/MemberRead.md)
  - [MemberWrite](docs/MemberWrite.md)
  - [RsvpRead](docs/RsvpRead.md)
@@ -162,8 +176,6 @@ Class | Method | HTTP request | Description
  - [TaskWrite](docs/TaskWrite.md)
  - [UserRead](docs/UserRead.md)
  - [UserWrite](docs/UserWrite.md)
- - [WifCredentialTokenResponseDTO](docs/WifCredentialTokenResponseDTO.md)
- - [WifCredentialTokenResponseDTOWifCredentialTokenRequestDTO](docs/WifCredentialTokenResponseDTOWifCredentialTokenRequestDTO.md)
 
 
 <a id="documentation-for-authorization"></a>

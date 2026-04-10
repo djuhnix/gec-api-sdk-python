@@ -1,7 +1,6 @@
 # HelloAssoMetaDTO
 
 
-
 ## Properties
 
 Name | Type | Description | Notes

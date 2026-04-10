@@ -1,18 +1,18 @@
-# gec_api_sdk.LoginCheckApi
+# gec_api_sdk.HelloAssoWebhooksApi
 
 All URIs are relative to *https://multisegmented-diane-superexpressively.ngrok-free.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**login_check_post**](LoginCheckApi.md#login_check_post) | **POST** /api/auth | Creates a user token.
+[**api_hello_assowebhook_post**](HelloAssoWebhooksApi.md#api_hello_assowebhook_post) | **POST** /api/hello_asso/webhook | Receive HelloAsso webhook notifications
 
 
-# **login_check_post**
-> LoginCheckPost200Response login_check_post(login_check_post_request)
+# **api_hello_assowebhook_post**
+> HelloAssoWebhookDTOMember api_hello_assowebhook_post(hello_asso_webhook_dto)
 
-Creates a user token.
+Receive HelloAsso webhook notifications
 
-Creates a user token.
+Endpoint to receive webhook notifications from HelloAsso. The payload will be processed and stored in the database.
 
 ### Example
 
@@ -20,8 +20,8 @@ Creates a user token.
 
 ```python
 import gec_api_sdk
-from gec_api_sdk.models.login_check_post200_response import LoginCheckPost200Response
-from gec_api_sdk.models.login_check_post_request import LoginCheckPostRequest
+from gec_api_sdk.models.hello_asso_webhook_dto import HelloAssoWebhookDTO
+from gec_api_sdk.models.hello_asso_webhook_dto_member import HelloAssoWebhookDTOMember
 from gec_api_sdk.rest import ApiException
 from pprint import pprint
 
@@ -44,16 +44,16 @@ configuration = gec_api_sdk.Configuration(
 # Enter a context with an instance of the API client
 with gec_api_sdk.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = gec_api_sdk.LoginCheckApi(api_client)
-    login_check_post_request = gec_api_sdk.LoginCheckPostRequest() # LoginCheckPostRequest | The login data
+    api_instance = gec_api_sdk.HelloAssoWebhooksApi(api_client)
+    hello_asso_webhook_dto = gec_api_sdk.HelloAssoWebhookDTO() # HelloAssoWebhookDTO | The new HelloAssoWebhookDTO resource
 
     try:
-        # Creates a user token.
-        api_response = api_instance.login_check_post(login_check_post_request)
-        print("The response of LoginCheckApi->login_check_post:\n")
+        # Receive HelloAsso webhook notifications
+        api_response = api_instance.api_hello_assowebhook_post(hello_asso_webhook_dto)
+        print("The response of HelloAssoWebhooksApi->api_hello_assowebhook_post:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling LoginCheckApi->login_check_post: %s\n" % e)
+        print("Exception when calling HelloAssoWebhooksApi->api_hello_assowebhook_post: %s\n" % e)
 ```
 
 
@@ -63,11 +63,11 @@ with gec_api_sdk.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **login_check_post_request** | [**LoginCheckPostRequest**](LoginCheckPostRequest.md)| The login data | 
+ **hello_asso_webhook_dto** | [**HelloAssoWebhookDTO**](HelloAssoWebhookDTO.md)| The new HelloAssoWebhookDTO resource | 
 
 ### Return type
 
-[**LoginCheckPost200Response**](LoginCheckPost200Response.md)
+[**HelloAssoWebhookDTOMember**](HelloAssoWebhookDTOMember.md)
 
 ### Authorization
 
@@ -82,7 +82,9 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | User token created |  -  |
+**201** | HelloAssoWebhookDTO resource created |  -  |
+**400** | Invalid input |  -  |
+**422** | An error occurred |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

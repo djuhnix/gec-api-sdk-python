@@ -19,13 +19,26 @@ from gec_api_sdk.models.document_read import DocumentRead
 from gec_api_sdk.models.document_write import DocumentWrite
 from gec_api_sdk.models.donation_read import DonationRead
 from gec_api_sdk.models.donation_write import DonationWrite
+from gec_api_sdk.models.education import Education
+from gec_api_sdk.models.education_read import EducationRead
+from gec_api_sdk.models.education_write import EducationWrite
 from gec_api_sdk.models.email_template_read import EmailTemplateRead
 from gec_api_sdk.models.email_template_write import EmailTemplateWrite
 from gec_api_sdk.models.error import Error
 from gec_api_sdk.models.event_read import EventRead
 from gec_api_sdk.models.event_write import EventWrite
+from gec_api_sdk.models.hello_asso_amount_dto import HelloAssoAmountDTO
+from gec_api_sdk.models.hello_asso_custom_field_dto import HelloAssoCustomFieldDTO
+from gec_api_sdk.models.hello_asso_data_dto import HelloAssoDataDTO
+from gec_api_sdk.models.hello_asso_item_dto import HelloAssoItemDTO
+from gec_api_sdk.models.hello_asso_meta_dto import HelloAssoMetaDTO
+from gec_api_sdk.models.hello_asso_payer_dto import HelloAssoPayerDTO
+from gec_api_sdk.models.hello_asso_payment_dto import HelloAssoPaymentDTO
+from gec_api_sdk.models.hello_asso_webhook_dto import HelloAssoWebhookDTO
+from gec_api_sdk.models.hello_asso_webhook_dto_member import HelloAssoWebhookDTOMember
 from gec_api_sdk.models.login_check_post200_response import LoginCheckPost200Response
 from gec_api_sdk.models.login_check_post_request import LoginCheckPostRequest
+from gec_api_sdk.models.member_public_view_public_read import MemberPublicViewPublicRead
 from gec_api_sdk.models.member_read import MemberRead
 from gec_api_sdk.models.member_write import MemberWrite
 from gec_api_sdk.models.rsvp_read import RsvpRead
@@ -34,6 +47,4 @@ from gec_api_sdk.models.task_read import TaskRead
 from gec_api_sdk.models.task_write import TaskWrite
 from gec_api_sdk.models.user_read import UserRead
 from gec_api_sdk.models.user_write import UserWrite
-from gec_api_sdk.models.wif_credential_token_response_dto import WifCredentialTokenResponseDTO
-from gec_api_sdk.models.wif_credential_token_response_dto_wif_credential_token_request_dto import WifCredentialTokenResponseDTOWifCredentialTokenRequestDTO
 

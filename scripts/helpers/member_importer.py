@@ -388,7 +388,9 @@ class MemberImporter:
             logger.debug(f"Creating member with data: {member_data}")
 
             # Create Pydantic model from dictionary
-            member_model = gec_api_sdk.MemberWrite(**member_data)
+            education_data = member_data.pop('education', None)
+            education_model = gec_api_sdk.EducationWrite(**education_data) if education_data else None
+            member_model = gec_api_sdk.MemberWrite(**member_data, education=education_model)
             logger.debug(f"Created Pydantic model: {member_model.model_dump(by_alias=True)}")
 
             created_member = self.member_api.create_member(member_write=member_model)

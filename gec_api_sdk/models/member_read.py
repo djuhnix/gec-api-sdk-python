@@ -20,6 +20,8 @@ import json
 from datetime import date, datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictFloat, StrictInt, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional, Union
+from typing_extensions import Annotated
+from gec_api_sdk.models.education_read import EducationRead
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -28,8 +30,8 @@ class MemberRead(BaseModel):
     MemberRead
     """ # noqa: E501
     id: Optional[StrictStr] = Field(default=None, description="Unique identifier (UUID).")
-    first_name: StrictStr = Field(description="Member's first name.", alias="firstName")
-    last_name: StrictStr = Field(description="Member's last name.", alias="lastName")
+    first_name: Annotated[str, Field(strict=True, max_length=255)] = Field(description="Member's first name.", alias="firstName")
+    last_name: Annotated[str, Field(strict=True, max_length=255)] = Field(description="Member's last name.", alias="lastName")
     email: Optional[StrictStr] = Field(default=None, description="Unique email address.")
     birth_date: Optional[date] = Field(default=None, description="Date of birth.", alias="birthDate")
     gender: Optional[StrictStr] = Field(default=None, description="Gender.")
@@ -38,12 +40,6 @@ class MemberRead(BaseModel):
     postal_address: Optional[StrictStr] = Field(default=None, description="Street address.", alias="postalAddress")
     postal_code: Optional[StrictStr] = Field(default=None, description="Postal/zip code.", alias="postalCode")
     city: Optional[StrictStr] = Field(default=None, description="City of residence.")
-    is_first_year_study: Optional[StrictBool] = Field(default=None, description="Whether this is the member's first year of study.", alias="isFirstYearStudy")
-    first_year: Optional[date] = Field(default=None, description="Start date of the first year of study.", alias="firstYear")
-    formation: Optional[StrictStr] = Field(default=None, description="Field of study / training programme.")
-    establishment: Optional[StrictStr] = Field(default=None, description="Educational establishment (school or university).")
-    study_level: Optional[StrictStr] = Field(default=None, description="Current study level (e.g. Licence 1, Master 2).", alias="studyLevel")
-    training_cycle: Optional[StrictStr] = Field(default=None, description="Training cycle: initial, apprenticeship, or continuing education.", alias="trainingCycle")
     other_associations: Optional[StrictBool] = Field(default=None, description="Whether the member belongs to other associations.", alias="otherAssociations")
     association_names: Optional[StrictStr] = Field(default=None, description="Names of other associations the member belongs to.", alias="associationNames")
     has_passport_cg: Optional[StrictBool] = Field(default=None, description="Whether the member holds a Congolese passport.", alias="hasPassportCg")
@@ -57,10 +53,12 @@ class MemberRead(BaseModel):
     contribution_status: Optional[StrictStr] = Field(default=None, description="Contribution payment status: paid, pending, or expired.", alias="contributionStatus")
     created_at: Optional[datetime] = Field(default=None, description="Timestamp when the member record was created.", alias="createdAt")
     updated_at: Optional[datetime] = Field(default=None, description="Timestamp of the last update to this member record.", alias="updatedAt")
+    user: Optional[StrictStr] = Field(default=None, description="IRI of the linked authentication user account, if any.")
+    education: Optional[EducationRead] = None
     documents: Optional[List[StrictStr]] = Field(default=None, description="IRIs of documents attached to this member.")
     rsvps: Optional[List[StrictStr]] = Field(default=None, description="IRIs of event RSVPs for this member.")
     donations: Optional[List[StrictStr]] = Field(default=None, description="IRIs of donations made by this member.")
-    __properties: ClassVar[List[str]] = ["id", "firstName", "lastName", "email", "birthDate", "gender", "phoneNumberFr", "phoneNumberCg", "postalAddress", "postalCode", "city", "isFirstYearStudy", "firstYear", "formation", "establishment", "studyLevel", "trainingCycle", "otherAssociations", "associationNames", "hasPassportCg", "hasVisa", "hasSchoolCertificate", "photoUrl", "status", "membershipType", "membershipStartDate", "contribution", "contributionStatus", "createdAt", "updatedAt", "documents", "rsvps", "donations"]
+    __properties: ClassVar[List[str]] = ["id", "firstName", "lastName", "email", "birthDate", "gender", "phoneNumberFr", "phoneNumberCg", "postalAddress", "postalCode", "city", "otherAssociations", "associationNames", "hasPassportCg", "hasVisa", "hasSchoolCertificate", "photoUrl", "status", "membershipType", "membershipStartDate", "contribution", "contributionStatus", "createdAt", "updatedAt", "user", "education", "documents", "rsvps", "donations"]
 
     @field_validator('gender')
     def gender_validate_enum(cls, value):
@@ -70,16 +68,6 @@ class MemberRead(BaseModel):
 
         if value not in set(['male', 'female', 'other', 'unknown_default_open_api']):
             raise ValueError("must be one of enum values ('male', 'female', 'other', 'unknown_default_open_api')")
-        return value
-
-    @field_validator('training_cycle')
-    def training_cycle_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        if value not in set(['initial', 'apprenticeship', 'continuing_education', 'unknown_default_open_api']):
-            raise ValueError("must be one of enum values ('initial', 'apprenticeship', 'continuing_education', 'unknown_default_open_api')")
         return value
 
     @field_validator('status')
@@ -155,6 +143,9 @@ class MemberRead(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of education
+        if self.education:
+            _dict['education'] = self.education.to_dict()
         # set to None if id (nullable) is None
         # and model_fields_set contains the field
         if self.id is None and "id" in self.model_fields_set:
@@ -199,36 +190,6 @@ class MemberRead(BaseModel):
         # and model_fields_set contains the field
         if self.city is None and "city" in self.model_fields_set:
             _dict['city'] = None
-
-        # set to None if is_first_year_study (nullable) is None
-        # and model_fields_set contains the field
-        if self.is_first_year_study is None and "is_first_year_study" in self.model_fields_set:
-            _dict['isFirstYearStudy'] = None
-
-        # set to None if first_year (nullable) is None
-        # and model_fields_set contains the field
-        if self.first_year is None and "first_year" in self.model_fields_set:
-            _dict['firstYear'] = None
-
-        # set to None if formation (nullable) is None
-        # and model_fields_set contains the field
-        if self.formation is None and "formation" in self.model_fields_set:
-            _dict['formation'] = None
-
-        # set to None if establishment (nullable) is None
-        # and model_fields_set contains the field
-        if self.establishment is None and "establishment" in self.model_fields_set:
-            _dict['establishment'] = None
-
-        # set to None if study_level (nullable) is None
-        # and model_fields_set contains the field
-        if self.study_level is None and "study_level" in self.model_fields_set:
-            _dict['studyLevel'] = None
-
-        # set to None if training_cycle (nullable) is None
-        # and model_fields_set contains the field
-        if self.training_cycle is None and "training_cycle" in self.model_fields_set:
-            _dict['trainingCycle'] = None
 
         # set to None if other_associations (nullable) is None
         # and model_fields_set contains the field
@@ -285,6 +246,16 @@ class MemberRead(BaseModel):
         if self.contribution_status is None and "contribution_status" in self.model_fields_set:
             _dict['contributionStatus'] = None
 
+        # set to None if user (nullable) is None
+        # and model_fields_set contains the field
+        if self.user is None and "user" in self.model_fields_set:
+            _dict['user'] = None
+
+        # set to None if education (nullable) is None
+        # and model_fields_set contains the field
+        if self.education is None and "education" in self.model_fields_set:
+            _dict['education'] = None
+
         return _dict
 
     @classmethod
@@ -313,12 +284,6 @@ class MemberRead(BaseModel):
             "postalAddress": obj.get("postalAddress"),
             "postalCode": obj.get("postalCode"),
             "city": obj.get("city"),
-            "isFirstYearStudy": obj.get("isFirstYearStudy"),
-            "firstYear": obj.get("firstYear"),
-            "formation": obj.get("formation"),
-            "establishment": obj.get("establishment"),
-            "studyLevel": obj.get("studyLevel"),
-            "trainingCycle": obj.get("trainingCycle"),
             "otherAssociations": obj.get("otherAssociations"),
             "associationNames": obj.get("associationNames"),
             "hasPassportCg": obj.get("hasPassportCg"),
@@ -332,6 +297,8 @@ class MemberRead(BaseModel):
             "contributionStatus": obj.get("contributionStatus"),
             "createdAt": obj.get("createdAt"),
             "updatedAt": obj.get("updatedAt"),
+            "user": obj.get("user"),
+            "education": EducationRead.from_dict(obj["education"]) if obj.get("education") is not None else None,
             "documents": obj.get("documents"),
             "rsvps": obj.get("rsvps"),
             "donations": obj.get("donations")

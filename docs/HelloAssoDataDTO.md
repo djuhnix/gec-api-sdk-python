@@ -1,14 +1,13 @@
 # HelloAssoDataDTO
 
 
-
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **payer** | [**HelloAssoPayerDTO**](HelloAssoPayerDTO.md) |  | 
-**items** | **List[str]** |  | 
-**payments** | **List[str]** |  | 
+**items** | [**List[HelloAssoItemDTO]**](HelloAssoItemDTO.md) |  | 
+**payments** | [**List[HelloAssoPaymentDTO]**](HelloAssoPaymentDTO.md) |  | 
 **amount** | [**HelloAssoAmountDTO**](HelloAssoAmountDTO.md) |  | 
 **id** | **int** |  | 
 **var_date** | **str** |  | 

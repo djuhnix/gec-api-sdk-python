@@ -1,7 +1,6 @@
 # HelloAssoPayerDTO
 
 
-
 ## Properties
 
 Name | Type | Description | Notes

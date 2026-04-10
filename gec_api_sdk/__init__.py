@@ -22,12 +22,13 @@ __all__ = [
     "DonationApi",
     "EmailTemplateApi",
     "EventApi",
+    "HelloAssoWebhooksApi",
     "LoginCheckApi",
     "MemberApi",
+    "MemberPublicViewApi",
     "RsvpApi",
     "TaskApi",
     "UserApi",
-    "WifCredentialTokenResponseDTOApi",
     "ApiResponse",
     "ApiClient",
     "Configuration",
@@ -43,13 +44,26 @@ __all__ = [
     "DocumentWrite",
     "DonationRead",
     "DonationWrite",
+    "Education",
+    "EducationRead",
+    "EducationWrite",
     "EmailTemplateRead",
     "EmailTemplateWrite",
     "Error",
     "EventRead",
     "EventWrite",
+    "HelloAssoAmountDTO",
+    "HelloAssoCustomFieldDTO",
+    "HelloAssoDataDTO",
+    "HelloAssoItemDTO",
+    "HelloAssoMetaDTO",
+    "HelloAssoPayerDTO",
+    "HelloAssoPaymentDTO",
+    "HelloAssoWebhookDTO",
+    "HelloAssoWebhookDTOMember",
     "LoginCheckPost200Response",
     "LoginCheckPostRequest",
+    "MemberPublicViewPublicRead",
     "MemberRead",
     "MemberWrite",
     "RsvpRead",
@@ -58,8 +72,6 @@ __all__ = [
     "TaskWrite",
     "UserRead",
     "UserWrite",
-    "WifCredentialTokenResponseDTO",
-    "WifCredentialTokenResponseDTOWifCredentialTokenRequestDTO",
 ]
 
 # import apis into sdk package
@@ -67,12 +79,13 @@ from gec_api_sdk.api.document_api import DocumentApi as DocumentApi
 from gec_api_sdk.api.donation_api import DonationApi as DonationApi
 from gec_api_sdk.api.email_template_api import EmailTemplateApi as EmailTemplateApi
 from gec_api_sdk.api.event_api import EventApi as EventApi
+from gec_api_sdk.api.hello_asso_webhooks_api import HelloAssoWebhooksApi as HelloAssoWebhooksApi
 from gec_api_sdk.api.login_check_api import LoginCheckApi as LoginCheckApi
 from gec_api_sdk.api.member_api import MemberApi as MemberApi
+from gec_api_sdk.api.member_public_view_api import MemberPublicViewApi as MemberPublicViewApi
 from gec_api_sdk.api.rsvp_api import RsvpApi as RsvpApi
 from gec_api_sdk.api.task_api import TaskApi as TaskApi
 from gec_api_sdk.api.user_api import UserApi as UserApi
-from gec_api_sdk.api.wif_credential_token_response_dto_api import WifCredentialTokenResponseDTOApi as WifCredentialTokenResponseDTOApi
 
 # import ApiClient
 from gec_api_sdk.api_response import ApiResponse as ApiResponse
@@ -92,13 +105,26 @@ from gec_api_sdk.models.document_read import DocumentRead as DocumentRead
 from gec_api_sdk.models.document_write import DocumentWrite as DocumentWrite
 from gec_api_sdk.models.donation_read import DonationRead as DonationRead
 from gec_api_sdk.models.donation_write import DonationWrite as DonationWrite
+from gec_api_sdk.models.education import Education as Education
+from gec_api_sdk.models.education_read import EducationRead as EducationRead
+from gec_api_sdk.models.education_write import EducationWrite as EducationWrite
 from gec_api_sdk.models.email_template_read import EmailTemplateRead as EmailTemplateRead
 from gec_api_sdk.models.email_template_write import EmailTemplateWrite as EmailTemplateWrite
 from gec_api_sdk.models.error import Error as Error
 from gec_api_sdk.models.event_read import EventRead as EventRead
 from gec_api_sdk.models.event_write import EventWrite as EventWrite
+from gec_api_sdk.models.hello_asso_amount_dto import HelloAssoAmountDTO as HelloAssoAmountDTO
+from gec_api_sdk.models.hello_asso_custom_field_dto import HelloAssoCustomFieldDTO as HelloAssoCustomFieldDTO
+from gec_api_sdk.models.hello_asso_data_dto import HelloAssoDataDTO as HelloAssoDataDTO
+from gec_api_sdk.models.hello_asso_item_dto import HelloAssoItemDTO as HelloAssoItemDTO
+from gec_api_sdk.models.hello_asso_meta_dto import HelloAssoMetaDTO as HelloAssoMetaDTO
+from gec_api_sdk.models.hello_asso_payer_dto import HelloAssoPayerDTO as HelloAssoPayerDTO
+from gec_api_sdk.models.hello_asso_payment_dto import HelloAssoPaymentDTO as HelloAssoPaymentDTO
+from gec_api_sdk.models.hello_asso_webhook_dto import HelloAssoWebhookDTO as HelloAssoWebhookDTO
+from gec_api_sdk.models.hello_asso_webhook_dto_member import HelloAssoWebhookDTOMember as HelloAssoWebhookDTOMember
 from gec_api_sdk.models.login_check_post200_response import LoginCheckPost200Response as LoginCheckPost200Response
 from gec_api_sdk.models.login_check_post_request import LoginCheckPostRequest as LoginCheckPostRequest
+from gec_api_sdk.models.member_public_view_public_read import MemberPublicViewPublicRead as MemberPublicViewPublicRead
 from gec_api_sdk.models.member_read import MemberRead as MemberRead
 from gec_api_sdk.models.member_write import MemberWrite as MemberWrite
 from gec_api_sdk.models.rsvp_read import RsvpRead as RsvpRead
@@ -107,6 +133,4 @@ from gec_api_sdk.models.task_read import TaskRead as TaskRead
 from gec_api_sdk.models.task_write import TaskWrite as TaskWrite
 from gec_api_sdk.models.user_read import UserRead as UserRead
 from gec_api_sdk.models.user_write import UserWrite as UserWrite
-from gec_api_sdk.models.wif_credential_token_response_dto import WifCredentialTokenResponseDTO as WifCredentialTokenResponseDTO
-from gec_api_sdk.models.wif_credential_token_response_dto_wif_credential_token_request_dto import WifCredentialTokenResponseDTOWifCredentialTokenRequestDTO as WifCredentialTokenResponseDTOWifCredentialTokenRequestDTO
 

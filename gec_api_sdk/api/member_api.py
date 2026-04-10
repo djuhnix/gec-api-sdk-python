@@ -97,6 +97,7 @@ class MemberApi:
             '201': "MemberRead",
             '400': "Error",
             '422': "ConstraintViolation",
+            '403': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -166,6 +167,7 @@ class MemberApi:
             '201': "MemberRead",
             '400': "Error",
             '422': "ConstraintViolation",
+            '403': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -235,6 +237,7 @@ class MemberApi:
             '201': "MemberRead",
             '400': "Error",
             '422': "ConstraintViolation",
+            '403': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -375,6 +378,7 @@ class MemberApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '204': None,
+            '403': "Error",
             '404': "Error",
         }
         response_data = self.api_client.call_api(
@@ -443,6 +447,7 @@ class MemberApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '204': None,
+            '403': "Error",
             '404': "Error",
         }
         response_data = self.api_client.call_api(
@@ -511,6 +516,7 @@ class MemberApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '204': None,
+            '403': "Error",
             '404': "Error",
         }
         response_data = self.api_client.call_api(
@@ -639,6 +645,7 @@ class MemberApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "MemberRead",
+            '403': "Error",
             '404': "Error",
         }
         response_data = self.api_client.call_api(
@@ -707,6 +714,7 @@ class MemberApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "MemberRead",
+            '403': "Error",
             '404': "Error",
         }
         response_data = self.api_client.call_api(
@@ -775,6 +783,7 @@ class MemberApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "MemberRead",
+            '403': "Error",
             '404': "Error",
         }
         response_data = self.api_client.call_api(
@@ -903,6 +912,7 @@ class MemberApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[MemberRead]",
+            '403': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -970,6 +980,7 @@ class MemberApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[MemberRead]",
+            '403': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1037,6 +1048,7 @@ class MemberApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[MemberRead]",
+            '403': "Error",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1172,6 +1184,7 @@ class MemberApi:
             '200': "MemberRead",
             '400': "Error",
             '422': "ConstraintViolation",
+            '403': "Error",
             '404': "Error",
         }
         response_data = self.api_client.call_api(
@@ -1246,6 +1259,7 @@ class MemberApi:
             '200': "MemberRead",
             '400': "Error",
             '422': "ConstraintViolation",
+            '403': "Error",
             '404': "Error",
         }
         response_data = self.api_client.call_api(
@@ -1320,6 +1334,7 @@ class MemberApi:
             '200': "MemberRead",
             '400': "Error",
             '422': "ConstraintViolation",
+            '403': "Error",
             '404': "Error",
         }
         response_data = self.api_client.call_api(

@@ -53,6 +53,16 @@ _FIELD_CLEANERS: Dict[str, tuple] = {
 # Document fields that may contain boolean values or URLs
 _DOCUMENT_FIELDS = frozenset({'hasPassportCg', 'hasVisa', 'hasSchoolCertificate'})
 
+# Mapping from document boolean field name to the SDK DocumentWrite type enum value
+_DOCUMENT_TYPE_MAP = {
+    'hasPassportCg': 'passport',
+    'hasVisa': 'visa',
+    'hasSchoolCertificate': 'school_certificate',
+}
+
+# Education fields that must be nested under MemberWrite.education (EducationWrite)
+_EDUCATION_FIELDS = frozenset({'isFirstYearStudy', 'formation', 'establishment', 'studyLevel', 'trainingCycle'})
+
 logger = logging.getLogger(__name__)
 
 
@@ -426,7 +436,7 @@ class MemberDataProcessor:
                 if error:
                     field_errors[api_field] = error
                 if cleaned is not None:
-                    transformed[api_field] = cleaned
+                    transformed.setdefault('education', {})[api_field] = cleaned
 
             # Simple fields: look up cleaner in dispatch table
             elif api_field in _FIELD_CLEANERS:
@@ -435,7 +445,10 @@ class MemberDataProcessor:
                 if error:
                     field_errors[api_field] = error
                 if (cleaned is not None) if use_none_check else cleaned:
-                    transformed[api_field] = cleaned
+                    if api_field in _EDUCATION_FIELDS:
+                        transformed.setdefault('education', {})[api_field] = cleaned
+                    else:
+                        transformed[api_field] = cleaned
 
             # Document fields (boolean + optional URL)
             elif api_field in _DOCUMENT_FIELDS:
@@ -445,7 +458,7 @@ class MemberDataProcessor:
                 if cleaned is not None:
                     transformed[api_field] = cleaned
                 if document_url:
-                    doc_type = api_field.replace('has', '')
+                    doc_type = _DOCUMENT_TYPE_MAP[api_field]
                     documents.append({'type': doc_type, 'url': document_url, 'field': api_field})
 
             elif api_field == 'contribution':

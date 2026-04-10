@@ -20,6 +20,8 @@ import json
 from datetime import date
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictFloat, StrictInt, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional, Union
+from typing_extensions import Annotated
+from gec_api_sdk.models.education_write import EducationWrite
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -27,8 +29,8 @@ class MemberWrite(BaseModel):
     """
     MemberWrite
     """ # noqa: E501
-    first_name: StrictStr = Field(description="Member's first name.", alias="firstName")
-    last_name: StrictStr = Field(description="Member's last name.", alias="lastName")
+    first_name: Annotated[str, Field(strict=True, max_length=255)] = Field(description="Member's first name.", alias="firstName")
+    last_name: Annotated[str, Field(strict=True, max_length=255)] = Field(description="Member's last name.", alias="lastName")
     email: Optional[StrictStr] = Field(default=None, description="Unique email address.")
     birth_date: Optional[date] = Field(default=None, description="Date of birth.", alias="birthDate")
     gender: Optional[StrictStr] = Field(default=None, description="Gender.")
@@ -37,12 +39,6 @@ class MemberWrite(BaseModel):
     postal_address: Optional[StrictStr] = Field(default=None, description="Street address.", alias="postalAddress")
     postal_code: Optional[StrictStr] = Field(default=None, description="Postal/zip code.", alias="postalCode")
     city: Optional[StrictStr] = Field(default=None, description="City of residence.")
-    is_first_year_study: Optional[StrictBool] = Field(default=None, description="Whether this is the member's first year of study.", alias="isFirstYearStudy")
-    first_year: Optional[date] = Field(default=None, description="Start date of the first year of study.", alias="firstYear")
-    formation: Optional[StrictStr] = Field(default=None, description="Field of study / training programme.")
-    establishment: Optional[StrictStr] = Field(default=None, description="Educational establishment (school or university).")
-    study_level: Optional[StrictStr] = Field(default=None, description="Current study level (e.g. Licence 1, Master 2).", alias="studyLevel")
-    training_cycle: Optional[StrictStr] = Field(default=None, description="Training cycle: initial, apprenticeship, or continuing education.", alias="trainingCycle")
     other_associations: Optional[StrictBool] = Field(default=None, description="Whether the member belongs to other associations.", alias="otherAssociations")
     association_names: Optional[StrictStr] = Field(default=None, description="Names of other associations the member belongs to.", alias="associationNames")
     has_passport_cg: Optional[StrictBool] = Field(default=None, description="Whether the member holds a Congolese passport.", alias="hasPassportCg")
@@ -54,7 +50,8 @@ class MemberWrite(BaseModel):
     membership_start_date: Optional[date] = Field(default=None, description="Date when the current membership period started.", alias="membershipStartDate")
     contribution: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Membership fee amount paid (in euros).")
     contribution_status: Optional[StrictStr] = Field(default=None, description="Contribution payment status: paid, pending, or expired.", alias="contributionStatus")
-    __properties: ClassVar[List[str]] = ["firstName", "lastName", "email", "birthDate", "gender", "phoneNumberFr", "phoneNumberCg", "postalAddress", "postalCode", "city", "isFirstYearStudy", "firstYear", "formation", "establishment", "studyLevel", "trainingCycle", "otherAssociations", "associationNames", "hasPassportCg", "hasVisa", "hasSchoolCertificate", "photoUrl", "status", "membershipType", "membershipStartDate", "contribution", "contributionStatus"]
+    education: Optional[EducationWrite] = None
+    __properties: ClassVar[List[str]] = ["firstName", "lastName", "email", "birthDate", "gender", "phoneNumberFr", "phoneNumberCg", "postalAddress", "postalCode", "city", "otherAssociations", "associationNames", "hasPassportCg", "hasVisa", "hasSchoolCertificate", "photoUrl", "status", "membershipType", "membershipStartDate", "contribution", "contributionStatus", "education"]
 
     @field_validator('gender')
     def gender_validate_enum(cls, value):
@@ -64,16 +61,6 @@ class MemberWrite(BaseModel):
 
         if value not in set(['male', 'female', 'other', 'unknown_default_open_api']):
             raise ValueError("must be one of enum values ('male', 'female', 'other', 'unknown_default_open_api')")
-        return value
-
-    @field_validator('training_cycle')
-    def training_cycle_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        if value not in set(['initial', 'apprenticeship', 'continuing_education', 'unknown_default_open_api']):
-            raise ValueError("must be one of enum values ('initial', 'apprenticeship', 'continuing_education', 'unknown_default_open_api')")
         return value
 
     @field_validator('status')
@@ -145,6 +132,9 @@ class MemberWrite(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of education
+        if self.education:
+            _dict['education'] = self.education.to_dict()
         # set to None if email (nullable) is None
         # and model_fields_set contains the field
         if self.email is None and "email" in self.model_fields_set:
@@ -184,36 +174,6 @@ class MemberWrite(BaseModel):
         # and model_fields_set contains the field
         if self.city is None and "city" in self.model_fields_set:
             _dict['city'] = None
-
-        # set to None if is_first_year_study (nullable) is None
-        # and model_fields_set contains the field
-        if self.is_first_year_study is None and "is_first_year_study" in self.model_fields_set:
-            _dict['isFirstYearStudy'] = None
-
-        # set to None if first_year (nullable) is None
-        # and model_fields_set contains the field
-        if self.first_year is None and "first_year" in self.model_fields_set:
-            _dict['firstYear'] = None
-
-        # set to None if formation (nullable) is None
-        # and model_fields_set contains the field
-        if self.formation is None and "formation" in self.model_fields_set:
-            _dict['formation'] = None
-
-        # set to None if establishment (nullable) is None
-        # and model_fields_set contains the field
-        if self.establishment is None and "establishment" in self.model_fields_set:
-            _dict['establishment'] = None
-
-        # set to None if study_level (nullable) is None
-        # and model_fields_set contains the field
-        if self.study_level is None and "study_level" in self.model_fields_set:
-            _dict['studyLevel'] = None
-
-        # set to None if training_cycle (nullable) is None
-        # and model_fields_set contains the field
-        if self.training_cycle is None and "training_cycle" in self.model_fields_set:
-            _dict['trainingCycle'] = None
 
         # set to None if other_associations (nullable) is None
         # and model_fields_set contains the field
@@ -270,6 +230,11 @@ class MemberWrite(BaseModel):
         if self.contribution_status is None and "contribution_status" in self.model_fields_set:
             _dict['contributionStatus'] = None
 
+        # set to None if education (nullable) is None
+        # and model_fields_set contains the field
+        if self.education is None and "education" in self.model_fields_set:
+            _dict['education'] = None
+
         return _dict
 
     @classmethod
@@ -297,12 +262,6 @@ class MemberWrite(BaseModel):
             "postalAddress": obj.get("postalAddress"),
             "postalCode": obj.get("postalCode"),
             "city": obj.get("city"),
-            "isFirstYearStudy": obj.get("isFirstYearStudy"),
-            "firstYear": obj.get("firstYear"),
-            "formation": obj.get("formation"),
-            "establishment": obj.get("establishment"),
-            "studyLevel": obj.get("studyLevel"),
-            "trainingCycle": obj.get("trainingCycle"),
             "otherAssociations": obj.get("otherAssociations"),
             "associationNames": obj.get("associationNames"),
             "hasPassportCg": obj.get("hasPassportCg"),
@@ -313,7 +272,8 @@ class MemberWrite(BaseModel):
             "membershipType": obj.get("membershipType"),
             "membershipStartDate": obj.get("membershipStartDate"),
             "contribution": obj.get("contribution"),
-            "contributionStatus": obj.get("contributionStatus")
+            "contributionStatus": obj.get("contributionStatus"),
+            "education": EducationWrite.from_dict(obj["education"]) if obj.get("education") is not None else None
         })
         return _obj
 

@@ -17,21 +17,28 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List
 from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
 
-class HelloAssoPayerDTO(BaseModel):
+class HelloAssoCustomFieldDTO(BaseModel):
     """
-    HelloAssoPayerDTO
+    HelloAssoCustomFieldDTO
     """ # noqa: E501
-    email: StrictStr
-    country: StrictStr
-    first_name: Annotated[str, Field(min_length=1, strict=True, max_length=255)] = Field(alias="firstName")
-    last_name: Annotated[str, Field(min_length=1, strict=True, max_length=255)] = Field(alias="lastName")
-    __properties: ClassVar[List[str]] = ["email", "country", "firstName", "lastName"]
+    id: Annotated[int, Field(strict=True, ge=0)]
+    name: StrictStr
+    type: StrictStr
+    answer: StrictStr
+    __properties: ClassVar[List[str]] = ["id", "name", "type", "answer"]
+
+    @field_validator('type')
+    def type_validate_enum(cls, value):
+        """Validates the enum"""
+        if value not in set(['TextInput', 'Date', 'ChoiceList', 'Phone', 'YesNo', 'File', 'Zipcode', 'Email', 'unknown_default_open_api']):
+            raise ValueError("must be one of enum values ('TextInput', 'Date', 'ChoiceList', 'Phone', 'YesNo', 'File', 'Zipcode', 'Email', 'unknown_default_open_api')")
+        return value
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -51,7 +58,7 @@ class HelloAssoPayerDTO(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of HelloAssoPayerDTO from a JSON string"""
+        """Create an instance of HelloAssoCustomFieldDTO from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -76,7 +83,7 @@ class HelloAssoPayerDTO(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of HelloAssoPayerDTO from a dict"""
+        """Create an instance of HelloAssoCustomFieldDTO from a dict"""
         if obj is None:
             return None
 
@@ -86,13 +93,13 @@ class HelloAssoPayerDTO(BaseModel):
         # raise errors for additional fields in the input
         for _key in obj.keys():
             if _key not in cls.__properties:
-                raise ValueError("Error due to additional fields (not defined in HelloAssoPayerDTO) in the input: " + _key)
+                raise ValueError("Error due to additional fields (not defined in HelloAssoCustomFieldDTO) in the input: " + _key)
 
         _obj = cls.model_validate({
-            "email": obj.get("email"),
-            "country": obj.get("country"),
-            "firstName": obj.get("firstName"),
-            "lastName": obj.get("lastName")
+            "id": obj.get("id"),
+            "name": obj.get("name"),
+            "type": obj.get("type"),
+            "answer": obj.get("answer")
         })
         return _obj
 

@@ -1,6 +1,6 @@
 # gec_api_sdk.MemberApi
 
-All URIs are relative to *http://localhost*
+All URIs are relative to *https://multisegmented-diane-superexpressively.ngrok-free.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -29,10 +29,10 @@ from gec_api_sdk.models.member_write import MemberWrite
 from gec_api_sdk.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://multisegmented-diane-superexpressively.ngrok-free.dev
 # See configuration.py for a list of all supported configuration parameters.
 configuration = gec_api_sdk.Configuration(
-    host = "http://localhost"
+    host = "https://multisegmented-diane-superexpressively.ngrok-free.dev"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -89,6 +89,7 @@ Name | Type | Description  | Notes
 **201** | Member resource created |  -  |
 **400** | Invalid input |  -  |
 **422** | An error occurred |  -  |
+**403** | Forbidden |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -108,10 +109,10 @@ import gec_api_sdk
 from gec_api_sdk.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://multisegmented-diane-superexpressively.ngrok-free.dev
 # See configuration.py for a list of all supported configuration parameters.
 configuration = gec_api_sdk.Configuration(
-    host = "http://localhost"
+    host = "https://multisegmented-diane-superexpressively.ngrok-free.dev"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -164,6 +165,7 @@ void (empty response body)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **204** | Member resource deleted |  -  |
+**403** | Forbidden |  -  |
 **404** | Not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -185,10 +187,10 @@ from gec_api_sdk.models.member_read import MemberRead
 from gec_api_sdk.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://multisegmented-diane-superexpressively.ngrok-free.dev
 # See configuration.py for a list of all supported configuration parameters.
 configuration = gec_api_sdk.Configuration(
-    host = "http://localhost"
+    host = "https://multisegmented-diane-superexpressively.ngrok-free.dev"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -243,6 +245,7 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Member resource |  -  |
+**403** | Forbidden |  -  |
 **404** | Not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -264,10 +267,10 @@ from gec_api_sdk.models.member_read import MemberRead
 from gec_api_sdk.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://multisegmented-diane-superexpressively.ngrok-free.dev
 # See configuration.py for a list of all supported configuration parameters.
 configuration = gec_api_sdk.Configuration(
-    host = "http://localhost"
+    host = "https://multisegmented-diane-superexpressively.ngrok-free.dev"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -322,6 +325,7 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Member collection |  -  |
+**403** | Forbidden |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -343,10 +347,10 @@ from gec_api_sdk.models.member_write import MemberWrite
 from gec_api_sdk.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://multisegmented-diane-superexpressively.ngrok-free.dev
 # See configuration.py for a list of all supported configuration parameters.
 configuration = gec_api_sdk.Configuration(
-    host = "http://localhost"
+    host = "https://multisegmented-diane-superexpressively.ngrok-free.dev"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -405,6 +409,7 @@ Name | Type | Description  | Notes
 **200** | Member resource updated |  -  |
 **400** | Invalid input |  -  |
 **422** | An error occurred |  -  |
+**403** | Forbidden |  -  |
 **404** | Not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

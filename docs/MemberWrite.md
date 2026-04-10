@@ -15,12 +15,6 @@ Name | Type | Description | Notes
 **postal_address** | **str** | Street address. | [optional] 
 **postal_code** | **str** | Postal/zip code. | [optional] 
 **city** | **str** | City of residence. | [optional] 
-**is_first_year_study** | **bool** | Whether this is the member&#39;s first year of study. | [optional] 
-**first_year** | **date** | Start date of the first year of study. | [optional] 
-**formation** | **str** | Field of study / training programme. | [optional] 
-**establishment** | **str** | Educational establishment (school or university). | [optional] 
-**study_level** | **str** | Current study level (e.g. Licence 1, Master 2). | [optional] 
-**training_cycle** | **str** | Training cycle: initial, apprenticeship, or continuing education. | [optional] 
 **other_associations** | **bool** | Whether the member belongs to other associations. | [optional] 
 **association_names** | **str** | Names of other associations the member belongs to. | [optional] 
 **has_passport_cg** | **bool** | Whether the member holds a Congolese passport. | [optional] 
@@ -32,6 +26,7 @@ Name | Type | Description | Notes
 **membership_start_date** | **date** | Date when the current membership period started. | [optional] 
 **contribution** | **float** | Membership fee amount paid (in euros). | [optional] 
 **contribution_status** | **str** | Contribution payment status: paid, pending, or expired. | [optional] 
+**education** | [**EducationWrite**](EducationWrite.md) |  | [optional] 
 
 ## Example
 
